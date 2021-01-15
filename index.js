@@ -40,7 +40,7 @@ if (!fs.existsSync(envPath) && typeof process.env.UserToken == "undefined") {
       .then((text) => {
         fs.writeFile(".env", "UserToken=" + text.token, (err) => {
           if (err) throw err;
-          console.log("正常に書き込みが完了しました");
+          console.log("トークンを取得しました。");
         });
       })
       .catch((err) => console.error(err));
