@@ -104,7 +104,10 @@ export default function Note(props) {
             {data.user.instance ? (
               <span
                 className="instance"
-                style={{ backgroundColor: data.user.instance.themeColor }}
+                style={{
+                  backgroundColor: data.user.instance.themeColor,
+                  color: "#ffffff",
+                }}
               >
                 <img src={data.user.instance.faviconUrl} alt="" />
                 <p>{data.user.instance.name}</p>

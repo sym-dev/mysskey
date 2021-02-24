@@ -5,40 +5,56 @@ import {
   IoAddCircle,
   IoEllipsisHorizontal,
 } from "react-icons/io5";
-import { useRenoteModalContext } from "../ModalContext";
+import { useRenoteModalContext, usePostModalContext } from "../ModalContext";
 
 export default function NoteFooter(props) {
-  let data = props.data;
+  const data = props.data;
+  const actualData = !props.data.renoteId ? props.data : props.data.renote;
   const { updateRenoteModal, updateRenoteProp } = useRenoteModalContext();
+  const { updatePostModal, updatePostProp } = usePostModalContext();
   return (
     <footer className="noteFooter">
-      <button>
-        <IoArrowUndo fontSize="1.5em" />
-      </button>
+      <div>
+        <button
+          onClick={() => {
+            updatePostModal(true);
+            updatePostProp(data);
+          }}
+        >
+          <IoArrowUndo fontSize="1.2em" />
+        </button>
+        <span>{actualData.repliesCount}</span>
+      </div>
 
       {data.visibility === "specified" || data.visibility === "followers" ? (
-        <button disabled>
-          <IoBan fontSize="1.5em" />
-        </button>
+        <div>
+          <button disabled>
+            <IoBan fontSize="1.2em" />
+          </button>
+        </div>
       ) : (
-        <>
+        <div>
           <button
             onClick={() => {
               updateRenoteModal(true);
               updateRenoteProp(data);
             }}
           >
-            <IoRepeat fontSize="1.5em" />
+            <IoRepeat fontSize="1.2em" />
           </button>
-        </>
+          <span>{actualData.renoteCount}</span>
+        </div>
       )}
-
-      <button>
-        <IoAddCircle fontSize="1.5em" />
-      </button>
-      <button>
-        <IoEllipsisHorizontal fontSize="1.5em" />
-      </button>
+      <div>
+        <button>
+          <IoAddCircle fontSize="1.2em" />
+        </button>
+      </div>
+      <div>
+        <button>
+          <IoEllipsisHorizontal fontSize="1.2em" />
+        </button>
+      </div>
     </footer>
   );
 }

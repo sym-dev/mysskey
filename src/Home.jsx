@@ -1,7 +1,12 @@
 import TimeLine from "./TimeLine";
+import { PostModalProvider } from "./ModalContext";
 
 function Home() {
-  return <TimeLine />;
+  return (
+    <PostModalProvider>
+      <TimeLine />
+    </PostModalProvider>
+  );
 }
 
 export default Home;

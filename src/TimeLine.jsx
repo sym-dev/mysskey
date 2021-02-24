@@ -1,22 +1,22 @@
 import React, { useState, useEffect, useRef } from "react";
-import { IoHome, IoPencil, IoCloseCircle } from "react-icons/io5";
-import { useForm } from "react-hook-form";
-import Modal from "react-modal";
+import { IoHome, IoPencil } from "react-icons/io5";
 import Note from "./components/Note";
 import NoteFooter from "./components/NoteFooter";
 import Loading from "./components/Loading";
+import PostModal from "./components/PostModal";
 import ImageModal from "./components/ImageModal";
 import RenoteModal from "./components/RenoteModal";
-import { ImageModalProvider, RenoteModalProvider } from "./ModalContext";
-
-Modal.setAppElement("#root");
+import {
+  usePostModalContext,
+  ImageModalProvider,
+  RenoteModalProvider,
+} from "./ModalContext";
 
 function TimeLine() {
   const [notes, addNote] = useState([]);
   const [oldestNoteId, updateOldest] = useState();
   const [moreState, updateMore] = useState(false);
-  const [postFormState, updatePostForm] = useState(false);
-  const { register, handleSubmit } = useForm();
+  const { postModal, updatePostModal } = usePostModalContext();
   const socketRef = useRef();
   useEffect(() => {
     socketRef.current = new WebSocket(
@@ -93,35 +93,21 @@ function TimeLine() {
   }, []);
   useEffect(() => {
     document.addEventListener(
-      "keydown",
+      "keyup",
       (e) => {
-        if (!postFormState && e.key === "n") {
-          document.removeEventListener("keydown", () => {});
-          updatePostForm(true);
+        if (!postModal && e.key === "n") {
+          document.removeEventListener("keyup", () => {});
+          // updatePostForm(true);
+          updatePostModal(true);
         }
       },
       false
     );
 
     return () => {
-      document.removeEventListener("keydown", () => {});
+      document.removeEventListener("keyup", () => {});
     };
-  }, [postFormState]);
-  const onSubmitNote = (data) => {
-    let createNoteObject = {
-      type: "api",
-      body: {
-        id: "create",
-        endpoint: "notes/create",
-        data: {
-          i: localStorage.getItem("UserToken"),
-          text: data.text,
-        },
-      },
-    };
-    socketRef.current.send(JSON.stringify(createNoteObject));
-    updatePostForm(false);
-  };
+  }, [postModal, updatePostModal]);
   const moreNoteObject = {
     type: "api",
     body: {
@@ -143,37 +129,13 @@ function TimeLine() {
       <button
         className="post-button"
         onClick={() => {
-          document.removeEventListener("keydown", () => {});
-          updatePostForm(true);
+          document.removeEventListener("keyup", () => {});
+          updatePostModal(true);
         }}
       >
         <IoPencil fontSize="2em" />
       </button>
       <main>
-        <Modal
-          isOpen={postFormState}
-          onRequestClose={() => updatePostForm(false)}
-          className="postModal"
-          overlayClassName="Overlay"
-        >
-          <IoCloseCircle
-            fontSize="3em"
-            className="close"
-            onClick={() => updatePostForm(false)}
-          />
-          <div>
-            <form onSubmit={handleSubmit(onSubmitNote)}>
-              <textarea
-                name="text"
-                onSubmit={handleSubmit(onSubmitNote)}
-                ref={register}
-                placeholder="何を考えていますか？"
-                required
-              ></textarea>
-              <input type="submit" value="投稿" />
-            </form>
-          </div>
-        </Modal>
         <RenoteModalProvider>
           <ImageModalProvider>
             {notes.length <= 0 ? (
@@ -209,6 +171,7 @@ function TimeLine() {
               </>
             )}
             <ImageModal />
+            <PostModal socket={socketRef.current} />
             <RenoteModal socket={socketRef.current} />
           </ImageModalProvider>
         </RenoteModalProvider>

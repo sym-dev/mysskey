@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { ImageModalProvider } from "./ModalContext";
+import ImageModal from "./components/ImageModal";
 import Loading from "./components/Loading";
 import Note from "./components/Note";
 
@@ -33,29 +35,32 @@ function Notes() {
   }, [noteId]);
   return (
     <>
-      <header>
-        <h3>Notes</h3>
-        <Link to="/">戻る</Link>
-      </header>
-      <main>
-        {note === null ? (
-          <Loading />
-        ) : (
-          <div key={note.id} className="note">
-            <Note
-              data={note}
-              depth={0}
-              type={
-                !note.renoteId
-                  ? "general"
-                  : note.text || note.files.length
-                  ? "quote"
-                  : "renote"
-              }
-            />
-          </div>
-        )}
-      </main>
+      <ImageModalProvider>
+        <header>
+          <h3>Notes</h3>
+          <Link to="/">戻る</Link>
+        </header>
+        <main>
+          {note === null ? (
+            <Loading />
+          ) : (
+            <div key={note.id} className="note">
+              <Note
+                data={note}
+                depth={0}
+                type={
+                  !note.renoteId
+                    ? "general"
+                    : note.text || note.files.length
+                    ? "quote"
+                    : "renote"
+                }
+              />
+            </div>
+          )}
+        </main>
+        <ImageModal />
+      </ImageModalProvider>
     </>
   );
 }

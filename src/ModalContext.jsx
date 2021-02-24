@@ -4,6 +4,8 @@ const ImageModalContext = createContext();
 
 const RenoteModalContext = createContext();
 
+const PostModalContext = createContext();
+
 const ImageModalProvider = ({ children }) => {
   const [imageModal, updateImageModal] = useState(false);
   const [imageProp, updateImageProp] = useState({
@@ -32,12 +34,27 @@ const RenoteModalProvider = ({ children }) => {
   );
 };
 
+const PostModalProvider = ({ children }) => {
+  const [postModal, updatePostModal] = useState(false);
+  const [postProp, updatePostProp] = useState("");
+  return (
+    <PostModalContext.Provider
+      value={{ postModal, updatePostModal, postProp, updatePostProp }}
+    >
+      {children}
+    </PostModalContext.Provider>
+  );
+};
+
 const useImageModalContext = () => useContext(ImageModalContext);
 const useRenoteModalContext = () => useContext(RenoteModalContext);
+const usePostModalContext = () => useContext(PostModalContext);
 
 export {
   ImageModalProvider,
   RenoteModalProvider,
+  PostModalProvider,
   useImageModalContext,
   useRenoteModalContext,
+  usePostModalContext,
 };

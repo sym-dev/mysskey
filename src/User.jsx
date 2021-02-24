@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import { IoPin } from "react-icons/io5";
 import { useLocation } from "react-router-dom";
-import { ImageModalProvider, RenoteModalProvider } from "./ModalContext";
+import { ImageModalProvider } from "./ModalContext";
+import ImageModal from "./components/ImageModal";
 import reactStringReplace from "react-string-replace";
 import Loading from "./components/Loading";
 import Note from "./components/Note";
@@ -41,43 +42,42 @@ function User() {
   return (
     <>
       <ImageModalProvider>
-        <RenoteModalProvider>
-          <header className="middle-header">
-            <h3>{userName}</h3>
-          </header>
-          <section>
-            {user === null ? <Loading /> : <UserSection data={user} />}
-          </section>
-          <main>
-            {user === null ? (
-              <></>
-            ) : user.pinnedNotes.length > 0 ? (
-              <div className="pinned-posts">
-                <p>
-                  <IoPin fontSize="1.2em" />
-                  ピン止めされた投稿
-                </p>
-                {user.pinnedNotes.map((data) => (
-                  <div key={data.id} className="note">
-                    <Note
-                      data={data}
-                      depth={0}
-                      type={
-                        !data.renoteId
-                          ? "general"
-                          : data.text || data.files.length
-                          ? "quote"
-                          : "renote"
-                      }
-                    />
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <></>
-            )}
-          </main>
-        </RenoteModalProvider>
+        <header className="middle-header">
+          <h3>{userName}</h3>
+        </header>
+        <section>
+          {user === null ? <Loading /> : <UserSection data={user} />}
+        </section>
+        <main>
+          {user === null ? (
+            <></>
+          ) : user.pinnedNotes.length > 0 ? (
+            <div className="pinned-posts">
+              <p>
+                <IoPin fontSize="1.2em" />
+                ピン止めされた投稿
+              </p>
+              {user.pinnedNotes.map((data) => (
+                <div key={data.id} className="note">
+                  <Note
+                    data={data}
+                    depth={0}
+                    type={
+                      !data.renoteId
+                        ? "general"
+                        : data.text || data.files.length
+                        ? "quote"
+                        : "renote"
+                    }
+                  />
+                </div>
+              ))}
+            </div>
+          ) : (
+            <></>
+          )}
+        </main>
+        <ImageModal />
       </ImageModalProvider>
     </>
   );
