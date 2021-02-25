@@ -27,7 +27,9 @@ export default function Note(props) {
               />
             </div>
           ) : (
-            <Link to={"/notes/" + data.renote.id}>RN: ...</Link>
+            <div className="deepQuoteLink">
+              <Link to={"/notes/" + data.renote.id}>RN: ...</Link>
+            </div>
           )}
         </>
       );
@@ -60,7 +62,7 @@ export default function Note(props) {
           </div>
           <Note
             data={data.renote}
-            depth={1}
+            depth={0}
             type={
               !data.renote.renoteId
                 ? "general"

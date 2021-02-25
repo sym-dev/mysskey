@@ -266,7 +266,6 @@
 }
 
 .quote {
-  display: flex;
   padding: 5px 0.5em;
   margin: 0.3em 0;
   border-radius: 5px;
@@ -274,6 +273,10 @@
   > div {
     width: 100%;
   }
+}
+
+.deepQuoteLink {
+  padding-left: 3.5em;
 }
 
 .noteFooter {
