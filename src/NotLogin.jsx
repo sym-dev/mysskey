@@ -11,7 +11,7 @@ function NotLogin() {
     const id = uuid();
     const serviceURL = document.location.href.replace("localhost", "127.0.0.1");
     const instanceURL = data.instance;
-    const checkURL = "http://" + instanceURL + "/api/endpoints";
+    const checkURL = "https://" + instanceURL + "/api/endpoints";
     fetch(checkURL, {
       method: "POST",
     })
