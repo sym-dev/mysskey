@@ -1,5 +1,12 @@
 import { Link } from "react-router-dom";
-import { IoRepeat } from "react-icons/io5";
+import {
+  IoRepeat,
+  IoGlobeOutline,
+  IoHome,
+  IoLockClosed,
+  IoMail,
+  IoFastFood,
+} from "react-icons/io5";
 import reactStringReplace from "react-string-replace";
 import File from "./File";
 
@@ -54,9 +61,15 @@ export default function Note(props) {
                   {data.user.name ? data.user.name : data.user.username}
                   <span className="renote"> Renoted</span>
                 </Link>
-                <Link to={"/notes/" + data.id} className="createdAt">
-                  {getTime(data.createdAt)}
-                </Link>
+                <span className="noteInfo">
+                  <Link to={"/notes/" + data.id} className="createdAt">
+                    {getTime(data.createdAt)}
+                  </Link>
+                  <GetVisibility
+                    visibility={data.visibility}
+                    local={data.localOnly}
+                  />
+                </span>
               </p>
             </div>
           </div>
@@ -99,9 +112,15 @@ export default function Note(props) {
                     : " @" + data.user.username + "@" + data.user.host}
                 </span>
               </span>
-              <Link to={"/notes/" + data.id} className="createdAt">
-                {getTime(data.createdAt)}
-              </Link>
+              <span className="noteInfo">
+                <Link to={"/notes/" + data.id} className="createdAt">
+                  {getTime(data.createdAt)}
+                </Link>
+                <GetVisibility
+                  visibility={data.visibility}
+                  local={data.localOnly}
+                />
+              </span>
             </p>
             {data.user.instance ? (
               <span
@@ -150,12 +169,39 @@ export default function Note(props) {
   return <>{note}</>;
 }
 
+function GetVisibility(props) {
+  let v = null;
+  let l = props.local ? <IoFastFood /> : null;
+  switch (props.visibility) {
+    case "home":
+      v = <IoHome />;
+      break;
+    case "followers":
+      v = <IoLockClosed />;
+      break;
+    case "specified":
+      v = <IoMail />;
+      break;
+    default:
+      v = <IoGlobeOutline />;
+      break;
+  }
+  return (
+    <>
+      {v}
+      {l}
+    </>
+  );
+}
+
 const getTime = (date) => {
   const d = Date.parse(date);
   const n = Date.now();
   const t = n - d;
   if (t < 0) {
     return "未来";
+  } else if (t / (365 * 24 * 60 * 60 * 1000) > 1) {
+    return (t / (365 * 24 * 60 * 60 * 1000)).toFixed() + "年";
   } else if (t / (24 * 60 * 60 * 1000) > 1) {
     return (t / (24 * 60 * 60 * 1000)).toFixed() + "日";
   } else if (t / (60 * 60 * 1000) > 1) {
