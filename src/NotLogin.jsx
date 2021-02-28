@@ -26,7 +26,7 @@ function NotLogin() {
           localStorage.setItem("instanceURL", instanceURL);
           const appName = data.appName;
           const authURL =
-            "http://" +
+            "https://" +
             instanceURL +
             "/miauth/" +
             id +
