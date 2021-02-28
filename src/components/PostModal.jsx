@@ -1,5 +1,5 @@
 import Modal from "react-modal";
-import { usePostModalContext } from "../ModalContext";
+import { usePostModalContext } from "../utils/ModalContext";
 import { useForm } from "react-hook-form";
 import Note from "./Note";
 
@@ -8,8 +8,10 @@ export default function PostModal(props) {
   const {
     postModal,
     updatePostModal,
-    postProp,
-    updatePostProp,
+    replyProp,
+    updateReplyProp,
+    renoteProp,
+    updateRenoteProp,
   } = usePostModalContext();
   const { register, handleSubmit } = useForm();
   const onSubmitPost = (data) => {
@@ -21,33 +23,36 @@ export default function PostModal(props) {
         data: {
           i: localStorage.getItem("UserToken"),
           text: data.text ? data.text : null,
-          replyId: data.id ? data.id : null,
+          replyId: data.replyId ? data.replyId : null,
+          renoteId: data.renoteId ? data.renoteId : null,
         },
       },
     };
     socket.send(JSON.stringify(createNoteObject));
-    updatePostProp("");
+    updateReplyProp("");
+    updateRenoteProp("");
     updatePostModal(false);
   };
   return (
     <Modal
       isOpen={postModal}
       onRequestClose={() => {
-        updatePostProp("");
+        updateReplyProp("");
+        updateRenoteProp("");
         updatePostModal(false);
       }}
       className="postModal"
       overlayClassName="Overlay"
     >
-      {postProp && (
+      {replyProp && (
         <div className="note">
           <Note
-            data={postProp}
+            data={replyProp}
             depth={1}
             type={
-              !postProp.renoteId
+              !replyProp.renoteId
                 ? "general"
-                : postProp.text || postProp.files.length
+                : replyProp.text || replyProp.files.length
                 ? "quote"
                 : "renote"
             }
@@ -59,7 +64,11 @@ export default function PostModal(props) {
           name="text"
           ref={register}
           placeholder={
-            postProp ? "このノートに返信..." : "何を考えていますか？"
+            replyProp
+              ? "このノートに返信..."
+              : renoteProp
+              ? "引用(空だと通常のRenoteになります)"
+              : "何を考えていますか？"
           }
           onSubmit={handleSubmit(onSubmitPost)}
           autoFocus
@@ -67,12 +76,33 @@ export default function PostModal(props) {
         ></textarea>
         <input
           type="hidden"
-          name="id"
-          value={postProp ? postProp.id : undefined}
+          name="replyId"
+          value={replyProp ? replyProp.id : ""}
+          ref={register}
+        ></input>
+        <input
+          type="hidden"
+          name="renoteId"
+          value={renoteProp ? renoteProp.id : ""}
           ref={register}
         ></input>
         <input type="submit" value="投稿" />
       </form>
+      {renoteProp && (
+        <div className="note">
+          <Note
+            data={renoteProp}
+            depth={1}
+            type={
+              !renoteProp.renoteId
+                ? "general"
+                : renoteProp.text || renoteProp.files.length
+                ? "quote"
+                : "renote"
+            }
+          />
+        </div>
+      )}
     </Modal>
   );
 }

@@ -5,20 +5,23 @@ import {
   IoAddCircle,
   IoEllipsisHorizontal,
 } from "react-icons/io5";
-import { useRenoteModalContext, usePostModalContext } from "../ModalContext";
+import { usePostModalContext } from "../utils/ModalContext";
 
 export default function NoteFooter(props) {
   const data = props.data;
   const actualData = !props.data.renoteId ? props.data : props.data.renote;
-  const { updateRenoteModal, updateRenoteProp } = useRenoteModalContext();
-  const { updatePostModal, updatePostProp } = usePostModalContext();
+  const {
+    updatePostModal,
+    updateReplyProp,
+    updateRenoteProp,
+  } = usePostModalContext();
   return (
     <footer className="noteFooter">
       <div>
         <button
           onClick={() => {
             updatePostModal(true);
-            updatePostProp(data);
+            updateReplyProp(data);
           }}
         >
           <IoArrowUndo fontSize="1.2em" />
@@ -36,7 +39,7 @@ export default function NoteFooter(props) {
         <div>
           <button
             onClick={() => {
-              updateRenoteModal(true);
+              updatePostModal(true);
               updateRenoteProp(data);
             }}
           >

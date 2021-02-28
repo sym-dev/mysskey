@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { ImageModalProvider } from "./ModalContext";
+import { ImageModalProvider } from "./utils/ModalContext";
 import ImageModal from "./components/ImageModal";
 import Loading from "./components/Loading";
 import Note from "./components/Note";

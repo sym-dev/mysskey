@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useImageModalContext } from "../ModalContext";
+import { useImageModalContext } from "../utils/ModalContext";
 import { IoEyeOff } from "react-icons/io5";
 
 export default function File({ data }) {

@@ -2,8 +2,6 @@ import { useState, createContext, useContext } from "react";
 
 const ImageModalContext = createContext();
 
-const RenoteModalContext = createContext();
-
 const PostModalContext = createContext();
 
 const ImageModalProvider = ({ children }) => {
@@ -22,24 +20,20 @@ const ImageModalProvider = ({ children }) => {
   );
 };
 
-const RenoteModalProvider = ({ children }) => {
-  const [renoteModal, updateRenoteModal] = useState(false);
-  const [renoteProp, updateRenoteProp] = useState({});
-  return (
-    <RenoteModalContext.Provider
-      value={{ renoteModal, updateRenoteModal, renoteProp, updateRenoteProp }}
-    >
-      {children}
-    </RenoteModalContext.Provider>
-  );
-};
-
 const PostModalProvider = ({ children }) => {
   const [postModal, updatePostModal] = useState(false);
-  const [postProp, updatePostProp] = useState("");
+  const [replyProp, updateReplyProp] = useState(false);
+  const [renoteProp, updateRenoteProp] = useState(false);
   return (
     <PostModalContext.Provider
-      value={{ postModal, updatePostModal, postProp, updatePostProp }}
+      value={{
+        postModal,
+        updatePostModal,
+        replyProp,
+        updateReplyProp,
+        renoteProp,
+        updateRenoteProp,
+      }}
     >
       {children}
     </PostModalContext.Provider>
@@ -47,14 +41,11 @@ const PostModalProvider = ({ children }) => {
 };
 
 const useImageModalContext = () => useContext(ImageModalContext);
-const useRenoteModalContext = () => useContext(RenoteModalContext);
 const usePostModalContext = () => useContext(PostModalContext);
 
 export {
   ImageModalProvider,
-  RenoteModalProvider,
   PostModalProvider,
   useImageModalContext,
-  useRenoteModalContext,
   usePostModalContext,
 };

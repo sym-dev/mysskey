@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { IoPin } from "react-icons/io5";
 import { useLocation } from "react-router-dom";
-import { ImageModalProvider } from "./ModalContext";
+import { ImageModalProvider } from "./utils/ModalContext";
 import ImageModal from "./components/ImageModal";
 import reactStringReplace from "react-string-replace";
 import Loading from "./components/Loading";

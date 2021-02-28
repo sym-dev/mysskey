@@ -5,12 +5,7 @@ import NoteFooter from "./components/NoteFooter";
 import Loading from "./components/Loading";
 import PostModal from "./components/PostModal";
 import ImageModal from "./components/ImageModal";
-import RenoteModal from "./components/RenoteModal";
-import {
-  usePostModalContext,
-  ImageModalProvider,
-  RenoteModalProvider,
-} from "./ModalContext";
+import { usePostModalContext, ImageModalProvider } from "./utils/ModalContext";
 
 function TimeLine() {
   const [notes, addNote] = useState([]);
@@ -136,45 +131,42 @@ function TimeLine() {
         <IoPencil fontSize="2em" />
       </button>
       <main>
-        <RenoteModalProvider>
-          <ImageModalProvider>
-            {notes.length <= 0 ? (
-              <Loading />
-            ) : (
-              <>
-                {notes.map((data) => (
-                  <div key={data.id} className="note">
-                    <Note
-                      data={data}
-                      socket={socketRef.current}
-                      depth={0}
-                      type={
-                        !data.renoteId
-                          ? "general"
-                          : data.text || data.files.length
-                          ? "quote"
-                          : "renote"
-                      }
-                    />
-                    <NoteFooter data={data} socket={socketRef.current} />
-                  </div>
-                ))}
-                <button
-                  className="motto"
-                  onClick={() => {
-                    socketRef.current.send(JSON.stringify(moreNoteObject));
-                    updateMore(true);
-                  }}
-                >
-                  {moreState ? <Loading size="small" /> : "もっと"}
-                </button>
-              </>
-            )}
-            <ImageModal />
-            <PostModal socket={socketRef.current} />
-            <RenoteModal socket={socketRef.current} />
-          </ImageModalProvider>
-        </RenoteModalProvider>
+        <ImageModalProvider>
+          {notes.length <= 0 ? (
+            <Loading />
+          ) : (
+            <>
+              {notes.map((data) => (
+                <div key={data.id} className="note">
+                  <Note
+                    data={data}
+                    socket={socketRef.current}
+                    depth={0}
+                    type={
+                      !data.renoteId
+                        ? "general"
+                        : data.text || data.files.length
+                        ? "quote"
+                        : "renote"
+                    }
+                  />
+                  <NoteFooter data={data} socket={socketRef.current} />
+                </div>
+              ))}
+              <button
+                className="motto"
+                onClick={() => {
+                  socketRef.current.send(JSON.stringify(moreNoteObject));
+                  updateMore(true);
+                }}
+              >
+                {moreState ? <Loading size="small" /> : "もっと"}
+              </button>
+            </>
+          )}
+          <ImageModal />
+          <PostModal socket={socketRef.current} />
+        </ImageModalProvider>
       </main>
     </>
   );

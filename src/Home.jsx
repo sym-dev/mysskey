@@ -1,5 +1,5 @@
 import TimeLine from "./TimeLine";
-import { PostModalProvider } from "./ModalContext";
+import { PostModalProvider } from "./utils/ModalContext";
 
 function Home() {
   return (
