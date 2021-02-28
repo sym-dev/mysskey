@@ -9,7 +9,8 @@ import { usePostModalContext } from "../utils/ModalContext";
 
 export default function NoteFooter(props) {
   const data = props.data;
-  const actualData = !props.data.renoteId ? props.data : props.data.renote;
+  const actualData =
+    props.data.renoteId && !props.data.text ? props.data.renote : props.data;
   const {
     updatePostModal,
     updateReplyProp,

@@ -138,9 +138,19 @@ export default function Note(props) {
             ) : (
               <></>
             )}
-            <p className="noteText">
-              {parseEmojis(parseURL(parseMFM(data.text)), data.emojis)}
-            </p>
+            {data.cw ? (
+              <details>
+                <summary>{data.cw}</summary>
+
+                <p className="noteText">
+                  {parseEmojis(parseURL(parseMFM(data.text)), data.emojis)}
+                </p>
+              </details>
+            ) : (
+              <p className="noteText">
+                {parseEmojis(parseURL(parseMFM(data.text)), data.emojis)}
+              </p>
+            )}
             {data.files.length <= 0 ? (
               <></>
             ) : (
