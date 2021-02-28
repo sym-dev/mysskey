@@ -10,6 +10,7 @@ import {
 import File from "./File";
 import parseEmojis from "../utils/parseEmojis";
 import parseURL from "../utils/parseURL";
+import parseMFM from "../utils/parseMFM";
 
 export default function Note(props) {
   let data = props.data;
@@ -138,7 +139,7 @@ export default function Note(props) {
               <></>
             )}
             <p className="noteText">
-              {parseEmojis(parseURL(data.text), data.emojis)}
+              {parseEmojis(parseURL(parseMFM(data.text)), data.emojis)}
             </p>
             {data.files.length <= 0 ? (
               <></>

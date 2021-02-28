@@ -3,10 +3,12 @@ import { IoPin } from "react-icons/io5";
 import { useLocation } from "react-router-dom";
 import { ImageModalProvider } from "./utils/ModalContext";
 import ImageModal from "./components/ImageModal";
-import reactStringReplace from "react-string-replace";
 import Loading from "./components/Loading";
 import Note from "./components/Note";
 import noimage from "./components/bg.png";
+import parseEmojis from "./utils/parseEmojis";
+import parseURL from "./utils/parseURL";
+import parseMFM from "./utils/parseMFM";
 
 function User() {
   const [user, update] = useState(null);
@@ -86,6 +88,7 @@ function User() {
 export default User;
 
 function UserSection(props) {
+  // console.log(props.data);
   return (
     <>
       <div className="userpage">
@@ -102,19 +105,9 @@ function UserSection(props) {
               <h1>{props.data.name ? props.data.name : props.data.username}</h1>
               <p className="desc">
                 {props.data.description ? (
-                  reactStringReplace(
-                    props.data.description,
-                    /(<?https?:\/\/\S+)/g,
-                    (match, i) => (
-                      <a
-                        key={match.replace(">", "").replace("<", "") + i}
-                        href={match.replace(">", "").replace("<", "")}
-                        target="_blank"
-                        rel="noreferrer"
-                      >
-                        {decodeURI(match.replace(">", "").replace("<", ""))}
-                      </a>
-                    )
+                  parseEmojis(
+                    parseURL(parseMFM(props.data.description)),
+                    props.data.emojis
                   )
                 ) : (
                   <i>no description provided.</i>
