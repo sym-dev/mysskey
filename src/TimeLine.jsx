@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { IoHome, IoPencil } from "react-icons/io5";
 import Note from "./components/Note";
+import Reactions from "./components/Reactions";
 import NoteFooter from "./components/NoteFooter";
 import Loading from "./components/Loading";
 import PostModal from "./components/PostModal";
@@ -150,6 +151,7 @@ function TimeLine() {
                         : "renote"
                     }
                   />
+                  <Reactions data={data} socket={socketRef.current} />
                   <NoteFooter data={data} socket={socketRef.current} />
                 </div>
               ))}

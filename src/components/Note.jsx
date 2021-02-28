@@ -7,8 +7,9 @@ import {
   IoMail,
   IoFastFood,
 } from "react-icons/io5";
-import reactStringReplace from "react-string-replace";
 import File from "./File";
+import parseEmojis from "../utils/parseEmojis";
+import parseURL from "../utils/parseURL";
 
 export default function Note(props) {
   let data = props.data;
@@ -137,20 +138,7 @@ export default function Note(props) {
               <></>
             )}
             <p className="noteText">
-              {reactStringReplace(
-                data.text,
-                /(<?https?:\/\/\S+)/g,
-                (match, i) => (
-                  <a
-                    key={match.replace(">", "").replace("<", "") + i}
-                    href={match.replace(">", "").replace("<", "")}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    {decodeURI(match.replace(">", "").replace("<", ""))}
-                  </a>
-                )
-              )}
+              {parseEmojis(parseURL(data.text), data.emojis)}
             </p>
             {data.files.length <= 0 ? (
               <></>

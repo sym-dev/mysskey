@@ -190,7 +190,13 @@
 
     .noteText {
       word-break: break-word;
-      white-space: break-spaces;
+      white-space: pre-wrap;
+
+      .emoji {
+        height: 2em;
+        display: inline-block;
+        vertical-align: middle;
+      }
     }
 
     .fileContainer {
@@ -282,6 +288,22 @@
 
 .deepQuoteLink {
   padding-left: 3.5em;
+}
+
+.reactionBar {
+  display: flex;
+  flex-wrap: wrap;
+  padding-left: 3.5em;
+  button {
+    min-width: 2.5em;
+    padding: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .emoji {
+      height: 1em;
+    }
+  }
 }
 
 .noteFooter {
