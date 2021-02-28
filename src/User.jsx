@@ -65,11 +65,13 @@ function User() {
                     data={data}
                     depth={0}
                     type={
-                      !data.renoteId
-                        ? "general"
-                        : data.text || data.files.length
+                      data.renoteId && !data.text
+                        ? "renote"
+                        : data.renoteId
                         ? "quote"
-                        : "renote"
+                        : data.replyId
+                        ? "reply"
+                        : "generall"
                     }
                   />
                 </div>

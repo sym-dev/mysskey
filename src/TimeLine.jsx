@@ -10,7 +10,7 @@ import { usePostModalContext, ImageModalProvider } from "./utils/ModalContext";
 
 function TimeLine() {
   const [notes, addNote] = useState([]);
-  const [oldestNoteId, updateOldest] = useState();
+  const [oldestNoteId, updateOldest] = useState("");
   const [moreState, updateMore] = useState(false);
   const { postModal, updatePostModal } = usePostModalContext();
   const socketRef = useRef();
@@ -144,11 +144,13 @@ function TimeLine() {
                     socket={socketRef.current}
                     depth={0}
                     type={
-                      !data.renoteId
-                        ? "general"
-                        : data.text || data.files.length
+                      data.renoteId && !data.text
+                        ? "renote"
+                        : data.renoteId
                         ? "quote"
-                        : "renote"
+                        : data.replyId
+                        ? "reply"
+                        : "generall"
                     }
                   />
                   <Reactions data={data} socket={socketRef.current} />

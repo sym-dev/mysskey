@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import {
   IoRepeat,
+  IoArrowUndo,
   IoGlobeOutline,
   IoHome,
   IoLockClosed,
@@ -89,6 +90,16 @@ export default function Note(props) {
         </>
       );
       break;
+    case "reply":
+      note = (
+        <>
+          <div className="replyBlock">
+            <Note data={data.reply} depth={0} type={"general"} />
+          </div>
+          <Note data={data} depth={1} type={"general"} />
+        </>
+      );
+      break;
 
     default:
       note = (
@@ -124,7 +135,7 @@ export default function Note(props) {
                 />
               </span>
             </p>
-            {data.user.instance ? (
+            {data.user.instance && (
               <span
                 className="instance"
                 style={{
@@ -135,19 +146,19 @@ export default function Note(props) {
                 <img src={data.user.instance.faviconUrl} alt="" />
                 <p>{data.user.instance.name}</p>
               </span>
-            ) : (
-              <></>
             )}
             {data.cw ? (
               <details>
                 <summary>{data.cw}</summary>
 
                 <p className="noteText">
+                  {data.replyId && <IoArrowUndo />}
                   {parseEmojis(parseURL(parseMFM(data.text)), data.emojis)}
                 </p>
               </details>
             ) : (
               <p className="noteText">
+                {data.replyId && <IoArrowUndo />}
                 {parseEmojis(parseURL(parseMFM(data.text)), data.emojis)}
               </p>
             )}
