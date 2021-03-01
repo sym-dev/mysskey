@@ -209,7 +209,6 @@
     .fileContainer {
       width: 100%;
       max-height: 20em;
-      display: grid;
       gap: 5px;
       .imageBlock {
         background-color: #ffffff0a;
@@ -254,11 +253,18 @@
         width: 100%;
       }
     }
+
+    .fileContainer[num="1"] {
+      display: grid;
+    }
+
     .fileContainer[num="2"] {
+      display: grid;
       grid-template-columns: 1fr 1fr;
     }
 
     .fileContainer[num="3"] {
+      display: grid;
       grid-template-columns: 1fr 1fr;
       grid-template-rows: 1fr 1fr;
       img {
@@ -274,11 +280,17 @@
     }
 
     .fileContainer[num="4"] {
+      display: grid;
       grid-template-columns: 1fr 1fr;
       grid-template-rows: 1fr 1fr;
       img {
         max-height: 10em;
       }
+    }
+    .fileContainer:not([num="1"]):not([num="2"]):not([num="3"]):not([num="4"]) {
+      display: grid;
+      grid-auto-rows: 100px;
+      grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
     }
   }
 }
