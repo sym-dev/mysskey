@@ -162,13 +162,13 @@ export default function Note(props) {
                 </p>
               </details>
             ) : (
-              <p className="noteText">
+              <div className="noteText">
                 {data.replyId && <IoArrowUndo />}
                 {parseEmojis(
                   parseURL(parseMFM(twemojify(data.text, createImgElement))),
                   data.emojis
                 )}
-              </p>
+              </div>
             )}
             {data.files.length <= 0 ? (
               <></>

@@ -1,7 +1,13 @@
 .emoji {
   // twemoji
   height: 1.3em;
-  display: inline;
+  display: inline-block;
+}
+
+.customEmoji {
+  height: 2.5em;
+  display: inline-block;
+  vertical-align: middle;
 }
 
 .post-button {
@@ -197,12 +203,6 @@
     .noteText {
       word-break: break-word;
       white-space: pre-wrap;
-
-      .customEmoji {
-        height: 2.5em;
-        display: inline-block;
-        vertical-align: middle;
-      }
     }
 
     .codeBlock {
@@ -385,6 +385,16 @@
     padding: 1em 0;
     display: flex;
     justify-content: space-evenly;
+    .customEmoji {
+      height: 1.5em;
+    }
+    .username {
+      margin: 0;
+    }
+    .userid {
+      color: #97aac3;
+      margin-bottom: 1em;
+    }
     > div {
       min-width: 40%;
       max-width: 60%;

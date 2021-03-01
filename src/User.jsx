@@ -106,7 +106,7 @@ function UserSection(props) {
           <img className="icon" src={props.data.avatarUrl} alt="user icon" />
           <div>
             <div>
-              <h1>
+              <h1 className="username">
                 {props.data.name
                   ? parseEmojis(
                       twemojify(props.data.name, createImgElement),
@@ -114,7 +114,12 @@ function UserSection(props) {
                     )
                   : props.data.username}
               </h1>
-              <p className="desc">
+              <p className="userid">
+                {"@" +
+                  props.data.username +
+                  (props.data.host ? "@" + props.data.host : "")}
+              </p>
+              <div className="desc">
                 {props.data.description ? (
                   parseEmojis(
                     parseURL(
@@ -127,7 +132,7 @@ function UserSection(props) {
                 ) : (
                   <i>no description provided.</i>
                 )}
-              </p>
+              </div>
             </div>
             <div className="user-info">
               <div>
