@@ -1,4 +1,6 @@
 import parseEmojis from "../utils/parseEmojis";
+import { twemojify } from "react-twemojify";
+import { createImgElement } from "react-twemojify/lib/img";
 
 export default function Reactions(props) {
   const reactions =
@@ -13,7 +15,7 @@ export default function Reactions(props) {
     <div className="reactionBar">
       {Object.keys(reactions).map((key) => (
         <button key={key}>
-          {parseEmojis(key, emojis)}
+          {parseEmojis(twemojify(key, createImgElement), emojis)}
           <span>{reactions[key]}</span>
         </button>
       ))}

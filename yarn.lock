@@ -9130,6 +9130,13 @@ react-string-replace@^0.4.4:
   dependencies:
     lodash "^4.17.4"
 
+react-twemojify@^1.1.3:
+  version "1.1.3"
+  resolved "https://registry.yarnpkg.com/react-twemojify/-/react-twemojify-1.1.3.tgz#5a912352d9012b6e86e3d29142f9bb8090a201ba"
+  integrity sha512-PHYuFlCduELIpAovcpZE48nUs4x5zuPllIOk1YseJgkr+Ikx3AVLyGNmvjFoJ81a7oPFYweZHeVbiX4uRd/EXA==
+  dependencies:
+    twemoji-parser "^13.0.0"
+
 react@^17.0.1:
   version "17.0.1"
   resolved "https://registry.yarnpkg.com/react/-/react-17.0.1.tgz#6e0600416bd57574e3f86d92edba3d9008726127"
@@ -10679,6 +10686,11 @@ tweetnacl@^0.14.3, tweetnacl@~0.14.0:
   version "0.14.5"
   resolved "https://registry.yarnpkg.com/tweetnacl/-/tweetnacl-0.14.5.tgz#5ae68177f192d4456269d108afa93ff8743f4f64"
   integrity sha1-WuaBd/GS1EViadEIr6k/+HQ/T2Q=
+
+twemoji-parser@^13.0.0:
+  version "13.0.0"
+  resolved "https://registry.yarnpkg.com/twemoji-parser/-/twemoji-parser-13.0.0.tgz#bd9d1b98474f1651dc174696b45cabefdfa405af"
+  integrity sha512-zMaGdskpH8yKjT2RSE/HwE340R4Fm+fbie4AaqjDa4H/l07YUmAvxkSfNl6awVWNRRQ0zdzLQ8SAJZuY5MgstQ==
 
 type-check@^0.4.0, type-check@~0.4.0:
   version "0.4.0"

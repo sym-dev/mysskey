@@ -1,3 +1,9 @@
+.emoji {
+  // twemoji
+  height: 1.3em;
+  display: inline;
+}
+
 .post-button {
   position: fixed;
   padding: 0;
@@ -192,7 +198,7 @@
       word-break: break-word;
       white-space: pre-wrap;
 
-      .emoji {
+      .customEmoji {
         height: 2.5em;
         display: inline-block;
         vertical-align: middle;
@@ -329,8 +335,12 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    .emoji {
+    .customEmoji {
       height: 1em;
+    }
+    .emoji {
+      // twemoji
+      height: 1.2em;
     }
   }
 }
