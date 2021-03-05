@@ -149,7 +149,7 @@ export default function Note(props) {
                 <p>{data.user.instance.name}</p>
               </span>
             )}
-            {data.cw ? (
+            {data.cw || data.cw === "" ? (
               <details>
                 <summary>{data.cw}</summary>
 
