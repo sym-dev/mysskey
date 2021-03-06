@@ -71,8 +71,8 @@ export default function PostModal(props) {
               : "何を考えていますか？"
           }
           onSubmit={handleSubmit(onSubmitPost)}
+          required={!renoteProp}
           autoFocus
-          required
         ></textarea>
         <input
           type="hidden"

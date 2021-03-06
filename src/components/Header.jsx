@@ -18,7 +18,13 @@ function Logined() {
   const userName = localStorage.getItem("UserName");
   return (
     <header className="top-header">
-      <Link to="/" className="button">
+      <Link
+        to="/"
+        className="button"
+        onClick={() => {
+          window.scrollTo(0, 0);
+        }}
+      >
         TimeLine
       </Link>
       <div className="user-block">

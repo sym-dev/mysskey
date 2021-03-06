@@ -22,15 +22,24 @@
   background-color: #99acff;
   z-index: 2;
   filter: drop-shadow(2px 2px 3px #120c27a2);
+  svg {
+    vertical-align: middle;
+  }
 }
 
 .top-header {
+  position: sticky;
+  top: 0.3em;
+  background-color: #1b313f;
+  padding: 1em 0.5em;
+  border-radius: 10px;
   display: flex;
   justify-content: space-between;
   .user-block {
     display: flex;
     gap: 0.5em;
   }
+  z-index: 5;
 }
 
 .middle-header {
