@@ -2,10 +2,11 @@ import parseEmojis from "../utils/parseEmojis";
 import { twemojify } from "react-twemojify";
 import { createImgElement } from "react-twemojify/lib/img";
 import { useState } from "react";
+import { useSocketContext } from "../utils/SocketContext";
 
-export default function Reactions(props) {
-  const actualData =
-    props.data.renoteId && !props.data.text ? props.data.renote : props.data;
+export default function Reactions({ data }) {
+  const { socketRef } = useSocketContext();
+  const actualData = data.renoteId && !data.text ? data.renote : data;
   const [myReaction, updateMyReaction] = useState(actualData.myReaction);
 
   return (
@@ -17,7 +18,7 @@ export default function Reactions(props) {
           disabled={key.match(/\S+@\S+\.\S+/g)}
           onClick={() => {
             if (!myReaction) {
-              props.socket.send(
+              socketRef.current.send(
                 JSON.stringify({
                   type: "api",
                   body: {
@@ -34,7 +35,7 @@ export default function Reactions(props) {
               updateMyReaction(key);
             } else {
               if (key === myReaction) {
-                props.socket.send(
+                socketRef.current.send(
                   JSON.stringify({
                     type: "api",
                     body: {
@@ -49,7 +50,7 @@ export default function Reactions(props) {
                 );
                 updateMyReaction(false);
               } else {
-                props.socket.send(
+                socketRef.current.send(
                   JSON.stringify({
                     type: "api",
                     body: {

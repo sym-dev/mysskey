@@ -6,11 +6,11 @@ import {
   IoEllipsisHorizontal,
 } from "react-icons/io5";
 import { usePostModalContext } from "../utils/ModalContext";
+// import { useSocketContext } from "../utils/SocketContext";
 
-export default function NoteFooter(props) {
-  const data = props.data;
-  const actualData =
-    props.data.renoteId && !props.data.text ? props.data.renote : props.data;
+export default function NoteFooter({ data }) {
+  // const { socketRef } = useSocketContext();
+  const actualData = data.renoteId && !data.text ? data.renote : data;
   const {
     updatePostModal,
     updateReplyProp,

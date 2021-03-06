@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { IoHome, IoPencil } from "react-icons/io5";
 import Note from "./components/Note";
 import Reactions from "./components/Reactions";
@@ -8,30 +8,14 @@ import PostModal from "./components/PostModal";
 import ImageModal from "./components/ImageModal";
 import { usePostModalContext, ImageModalProvider } from "./utils/ModalContext";
 import { useNotesContext } from "./utils/NotesContext";
+import { useSocketContext } from "./utils/SocketContext";
 
 export default function TimeLine() {
   const { notes, dispatch } = useNotesContext();
   const { postModal, updatePostModal } = usePostModalContext();
   const [oldestNoteId, updateOldest] = useState("");
   const [moreState, updateMore] = useState(false);
-  const socketRef = useRef();
-  useEffect(() => {
-    socketRef.current = new WebSocket(
-      "wss://" +
-        localStorage.getItem("instanceURL") +
-        "/streaming?i=" +
-        localStorage.getItem("UserToken")
-    );
-
-    socketRef.current.onerror = (error) => {
-      console.error(error);
-    };
-
-    return () => {
-      socketRef.current.close();
-      // console.log("socket closed");
-    };
-  }, [dispatch]);
+  const { socketRef } = useSocketContext();
   useEffect(() => {
     socketRef.current.onopen = (e) => {
       const initNoteObject = {
@@ -45,7 +29,6 @@ export default function TimeLine() {
           },
         },
       };
-      // console.log("socket opend");
       const homeTimelineObject = {
         type: "connect",
         body: {
@@ -57,8 +40,9 @@ export default function TimeLine() {
       if (notes.length <= 0) {
         socketRef.current.send(JSON.stringify(initNoteObject));
       }
+      // console.log("socket opend");
     };
-  }, [notes]);
+  }, [notes, socketRef]);
   useEffect(() => {
     socketRef.current.onmessage = (event) => {
       let res = JSON.parse(event.data);
@@ -151,7 +135,7 @@ export default function TimeLine() {
         );
       }
     };
-  }, [dispatch]);
+  }, [dispatch, socketRef]);
   useEffect(() => {
     document.addEventListener(
       "keyup",
@@ -218,8 +202,8 @@ export default function TimeLine() {
                         : "generall"
                     }
                   />
-                  <Reactions data={data} socket={socketRef.current} />
-                  <NoteFooter data={data} socket={socketRef.current} />
+                  <Reactions data={data} />
+                  <NoteFooter data={data} />
                 </div>
               ))}
               <button
@@ -234,7 +218,7 @@ export default function TimeLine() {
             </>
           )}
           <ImageModal />
-          <PostModal socket={socketRef.current} />
+          <PostModal />
         </ImageModalProvider>
       </main>
     </>

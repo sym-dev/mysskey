@@ -1,10 +1,11 @@
 import Modal from "react-modal";
 import { usePostModalContext } from "../utils/ModalContext";
+import { useSocketContext } from "../utils/SocketContext";
 import { useForm } from "react-hook-form";
 import Note from "./Note";
 
-export default function PostModal(props) {
-  let socket = props.socket;
+export default function PostModal() {
+  const { socketRef } = useSocketContext();
   const {
     postModal,
     updatePostModal,
@@ -28,7 +29,7 @@ export default function PostModal(props) {
         },
       },
     };
-    socket.send(JSON.stringify(createNoteObject));
+    socketRef.current.send(JSON.stringify(createNoteObject));
     updateReplyProp("");
     updateRenoteProp("");
     updatePostModal(false);

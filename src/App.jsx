@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { NotesProvider } from "./utils/NotesContext";
 import { LoginProvider } from "./utils/LoginContext";
+import { SocketProvider } from "./utils/SocketContext";
 import Modal from "react-modal";
 import Auth from "./components/Auth";
 import Header from "./components/Header";
@@ -23,21 +24,23 @@ export default function App() {
             <Login />
           </Route>
           <Auth>
-            <NotesProvider>
-              <Switch>
-                <Route path="/notes">
-                  <ScrollToTop />
-                  <Notes />
-                </Route>
-                <Route path="/user">
-                  <ScrollToTop />
-                  <User />
-                </Route>
-                <Route path="/">
-                  <Home />
-                </Route>
-              </Switch>
-            </NotesProvider>
+            <SocketProvider>
+              <NotesProvider>
+                <Switch>
+                  <Route path="/notes">
+                    <ScrollToTop />
+                    <Notes />
+                  </Route>
+                  <Route path="/user">
+                    <ScrollToTop />
+                    <User />
+                  </Route>
+                  <Route path="/">
+                    <Home />
+                  </Route>
+                </Switch>
+              </NotesProvider>
+            </SocketProvider>
           </Auth>
         </Switch>
       </Router>
