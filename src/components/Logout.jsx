@@ -1,17 +1,14 @@
 import { Link } from "react-router-dom";
 import { IoPower } from "react-icons/io5";
-import { useContext } from "react";
-import { LoginContext } from "../App";
+import { useLoginContext } from "../utils/LoginContext";
 
 export default function Logout() {
-  const { dispatch } = useContext(LoginContext);
+  const { updateLogin } = useLoginContext();
   return (
     <Link
       onClick={() => {
         localStorage.clear();
-        dispatch({
-          type: "LOGOUT",
-        });
+        updateLogin(false);
       }}
       to="/login"
       className="button logout"

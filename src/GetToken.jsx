@@ -1,10 +1,9 @@
-import { useContext } from "react";
 import { useHistory } from "react-router-dom";
-import { LoginContext } from "./App";
+import { useLoginContext } from "./utils/LoginContext";
 
 const GetToken = (props) => {
   const history = useHistory();
-  const { dispatch } = useContext(LoginContext);
+  const { updateLogin } = useLoginContext();
   const tokenUrl =
     "https://" +
     localStorage.getItem("instanceURL") +
@@ -27,9 +26,7 @@ const GetToken = (props) => {
         localStorage.setItem("UserToken", text.token);
         localStorage.setItem("UserId", text.user.id);
         localStorage.setItem("UserName", text.user.username);
-        dispatch({
-          type: "LOGIN",
-        });
+        updateLogin(true);
         history.push("/");
       }
     })

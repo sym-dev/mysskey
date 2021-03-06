@@ -1,11 +1,10 @@
 import { Link } from "react-router-dom";
-import { useContext } from "react";
 import Logout from "./Logout";
-import { LoginContext } from "../App";
+import { useLoginContext } from "../utils/LoginContext";
 
 function Header() {
-  const loginState = useContext(LoginContext);
-  return loginState.state.isLogin || localStorage.getItem("isLogin") ? (
+  const { isLogin } = useLoginContext();
+  return isLogin || localStorage.getItem("isLogin") ? (
     <Logined />
   ) : (
     <NotLogined />
