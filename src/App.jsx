@@ -1,5 +1,6 @@
 import React, { useReducer } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { NotesProvider } from "./utils/NotesContext";
 import Modal from "react-modal";
 import Auth from "./components/Auth";
 import Header from "./components/Header";
@@ -51,19 +52,21 @@ export default function App() {
             <Login />
           </Route>
           <Auth>
-            <Switch>
-              <Route path="/notes">
-                <ScrollToTop />
-                <Notes />
-              </Route>
-              <Route path="/user">
-                <ScrollToTop />
-                <User />
-              </Route>
-              <Route path="/">
-                <Home />
-              </Route>
-            </Switch>
+            <NotesProvider>
+              <Switch>
+                <Route path="/notes">
+                  <ScrollToTop />
+                  <Notes />
+                </Route>
+                <Route path="/user">
+                  <ScrollToTop />
+                  <User />
+                </Route>
+                <Route path="/">
+                  <Home />
+                </Route>
+              </Switch>
+            </NotesProvider>
           </Auth>
         </Switch>
       </Router>

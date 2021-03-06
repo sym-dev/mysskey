@@ -162,8 +162,14 @@ input:disabled,
 select:disabled,
 button:disabled,
 textarea:disabled {
-  cursor: not-allowed;
-  opacity: 0.5;
+  background-color: #24354270;
+}
+
+input:disabled:hover,
+select:disabled:hover,
+button:disabled:hover,
+textarea:disabled:hover {
+  background-color: #243542;
 }
 
 ::-webkit-input-placeholder {

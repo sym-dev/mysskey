@@ -4,7 +4,7 @@ export default function parseEmojis(text, emojis) {
   emojis.forEach((emoji) => {
     text = reactStringReplace(text, ":" + emoji.name + ":", (match, i) => (
       <img
-        key={match + i}
+        key={match + i + Math.floor(Math.random() * (100 - 1) + 1)}
         src={emoji.url}
         alt={emoji.name}
         className="customEmoji"

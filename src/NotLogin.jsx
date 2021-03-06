@@ -35,7 +35,7 @@ function NotLogin() {
             appName +
             "&callback=" +
             serviceURL +
-            "&permission=read:account,write:account,write:notes";
+            "&permission=read:account,write:account,write:notes,read:reactions,write:reactions,read:notifications,write:notifications,read:messaging,write:messaging";
           window.location.href = authURL;
         } else {
           updateMiauthState(

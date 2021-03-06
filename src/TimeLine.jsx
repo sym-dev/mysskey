@@ -7,12 +7,13 @@ import Loading from "./components/Loading";
 import PostModal from "./components/PostModal";
 import ImageModal from "./components/ImageModal";
 import { usePostModalContext, ImageModalProvider } from "./utils/ModalContext";
+import { useNotesContext } from "./utils/NotesContext";
 
-function TimeLine() {
-  const [notes, addNote] = useState([]);
+export default function TimeLine() {
+  const { notes, dispatch } = useNotesContext();
+  const { postModal, updatePostModal } = usePostModalContext();
   const [oldestNoteId, updateOldest] = useState("");
   const [moreState, updateMore] = useState(false);
-  const { postModal, updatePostModal } = usePostModalContext();
   const socketRef = useRef();
   useEffect(() => {
     socketRef.current = new WebSocket(
@@ -21,8 +22,18 @@ function TimeLine() {
         "/streaming?i=" +
         localStorage.getItem("UserToken")
     );
+
+    socketRef.current.onerror = (error) => {
+      console.error(error);
+    };
+
+    return () => {
+      socketRef.current.close();
+      // console.log("socket closed");
+    };
+  }, [dispatch]);
+  useEffect(() => {
     socketRef.current.onopen = (e) => {
-      // console.log("socket opend");
       const initNoteObject = {
         type: "api",
         body: {
@@ -34,6 +45,7 @@ function TimeLine() {
           },
         },
       };
+      // console.log("socket opend");
       const homeTimelineObject = {
         type: "connect",
         body: {
@@ -42,9 +54,12 @@ function TimeLine() {
         },
       };
       socketRef.current.send(JSON.stringify(homeTimelineObject));
-      socketRef.current.send(JSON.stringify(initNoteObject));
+      if (notes.length <= 0) {
+        socketRef.current.send(JSON.stringify(initNoteObject));
+      }
     };
-
+  }, [notes]);
+  useEffect(() => {
     socketRef.current.onmessage = (event) => {
       let res = JSON.parse(event.data);
       let data = res.body;
@@ -54,7 +69,18 @@ function TimeLine() {
         case "api:init":
           // console.log("receive init notes");
           data.res.forEach((note) => {
-            addNote((n) => [...n, note]);
+            dispatch({
+              type: "addLower",
+              payload: note,
+            });
+            socketRef.current.send(
+              JSON.stringify({
+                type: "subNote",
+                body: {
+                  id: note.id,
+                },
+              })
+            );
             // console.log(note);
           });
           updateOldest(data.res[14].id);
@@ -63,10 +89,46 @@ function TimeLine() {
           // console.log("clicked motto");
           updateMore(false);
           data.res.forEach((note) => {
-            addNote((n) => [...n, note]);
+            dispatch({
+              type: "addLower",
+              payload: note,
+            });
+            socketRef.current.send(
+              JSON.stringify({
+                type: "subNote",
+                body: {
+                  id: note.id,
+                },
+              })
+            );
             // console.log(note);
           });
           updateOldest(data.res[14].id);
+          break;
+        case "noteUpdated":
+          // console.log(data);
+          switch (data.type) {
+            case "reacted":
+              dispatch({
+                type: "updateEmoji",
+                payload: data,
+              });
+              break;
+            case "unreacted":
+              dispatch({
+                type: "deleteEmoji",
+                payload: data,
+              });
+              break;
+            case "deleted":
+              dispatch({
+                type: "remove",
+                payload: data,
+              });
+              break;
+            default:
+              break;
+          }
           break;
         default:
           break;
@@ -74,19 +136,22 @@ function TimeLine() {
       if (data.id === "home") {
         // console.log("receive new note");
         // console.log(data.body);
-        addNote((n) => [data.body, ...n]);
+        // console.log(data);
+        dispatch({
+          type: "addUpper",
+          payload: data.body,
+        });
+        socketRef.current.send(
+          JSON.stringify({
+            type: "subNote",
+            body: {
+              id: data.body.id,
+            },
+          })
+        );
       }
     };
-
-    socketRef.current.onerror = (error) => {
-      console.error(error);
-    };
-
-    return () => {
-      socketRef.current.close();
-      // console.log("socket closed");
-    };
-  }, []);
+  }, [dispatch]);
   useEffect(() => {
     document.addEventListener(
       "keyup",
@@ -175,5 +240,3 @@ function TimeLine() {
     </>
   );
 }
-
-export default TimeLine;
