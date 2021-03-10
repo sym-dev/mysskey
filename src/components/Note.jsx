@@ -141,7 +141,7 @@ export default function Note(props) {
               <span
                 className="instance"
                 style={{
-                  backgroundColor: data.user.instance.themeColor,
+                  background: `linear-gradient(to right, ${data.user.instance.themeColor}, #00000000)`,
                   color: "#ffffff",
                 }}
               >

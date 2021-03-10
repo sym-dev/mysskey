@@ -7,20 +7,26 @@ export default function ImageModal() {
   return (
     <Modal
       isOpen={imageModal}
-      onRequestClose={() => updateImageModal(false)}
+      onRequestClose={() => {
+        updateImageModal(false);
+      }}
       className="imgModal"
       overlayClassName="Overlay"
     >
       <IoCloseCircle
         fontSize="3em"
         className="close"
-        onClick={() => updateImageModal(false)}
+        onClick={() => {
+          updateImageModal(false);
+        }}
       />
       <img
         src={imageProp.URL}
         alt={imageProp.Comment}
         decoding="async"
-        onClick={() => updateImageModal(false)}
+        onClick={() => {
+          updateImageModal(false);
+        }}
       />
     </Modal>
   );

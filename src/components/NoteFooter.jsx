@@ -5,7 +5,10 @@ import {
   IoAddCircle,
   IoEllipsisHorizontal,
 } from "react-icons/io5";
-import { usePostModalContext } from "../utils/ModalContext";
+import {
+  usePostModalContext,
+  useEmojiModalContext,
+} from "../utils/ModalContext";
 // import { useSocketContext } from "../utils/SocketContext";
 
 export default function NoteFooter({ data }) {
@@ -16,6 +19,11 @@ export default function NoteFooter({ data }) {
     updateReplyProp,
     updateRenoteProp,
   } = usePostModalContext();
+  const {
+    updateEmojiModal,
+    updateNoteId,
+    updateEmojiModalPlace,
+  } = useEmojiModalContext();
   return (
     <footer className="noteFooter">
       <div>
@@ -50,7 +58,13 @@ export default function NoteFooter({ data }) {
         </div>
       )}
       <div>
-        <button>
+        <button
+          onClick={(e) => {
+            updateEmojiModal(true);
+            updateNoteId(actualData.id);
+            updateEmojiModalPlace({ x: e.clientX, y: e.clientY });
+          }}
+        >
           <IoAddCircle fontSize="1.2em" />
         </button>
       </div>

@@ -4,15 +4,13 @@ import Note from "./components/Note";
 import Reactions from "./components/Reactions";
 import NoteFooter from "./components/NoteFooter";
 import Loading from "./components/Loading";
-import PostModal from "./components/PostModal";
-import ImageModal from "./components/ImageModal";
-import { usePostModalContext, ImageModalProvider } from "./utils/ModalContext";
+import { usePostModalContext } from "./utils/ModalContext";
 import { useNotesContext } from "./utils/NotesContext";
 import { useSocketContext } from "./utils/SocketContext";
 
 export default function TimeLine() {
   const { notes, dispatch } = useNotesContext();
-  const { postModal, updatePostModal } = usePostModalContext();
+  const { updatePostModal } = usePostModalContext();
   const [oldestNoteId, updateOldest] = useState("");
   const [moreState, updateMore] = useState(false);
   const { socketRef } = useSocketContext();
@@ -40,7 +38,6 @@ export default function TimeLine() {
       if (notes.length <= 0) {
         socketRef.current.send(JSON.stringify(initNoteObject));
       }
-      // console.log("socket opend");
     };
   }, [notes, socketRef]);
   useEffect(() => {
@@ -119,8 +116,6 @@ export default function TimeLine() {
       }
       if (data.id === "home") {
         // console.log("receive new note");
-        // console.log(data.body);
-        // console.log(data);
         dispatch({
           type: "addUpper",
           payload: data.body,
@@ -136,23 +131,6 @@ export default function TimeLine() {
       }
     };
   }, [dispatch, socketRef]);
-  useEffect(() => {
-    document.addEventListener(
-      "keyup",
-      (e) => {
-        if (!postModal && e.key === "n") {
-          document.removeEventListener("keyup", () => {});
-          // updatePostForm(true);
-          updatePostModal(true);
-        }
-      },
-      false
-    );
-
-    return () => {
-      document.removeEventListener("keyup", () => {});
-    };
-  }, [postModal, updatePostModal]);
   const moreNoteObject = {
     type: "api",
     body: {
@@ -174,52 +152,47 @@ export default function TimeLine() {
       <button
         className="post-button"
         onClick={() => {
-          document.removeEventListener("keyup", () => {});
           updatePostModal(true);
         }}
       >
         <IoPencil fontSize="2em" />
       </button>
       <main>
-        <ImageModalProvider>
-          {notes.length <= 0 ? (
-            <Loading />
-          ) : (
-            <>
-              {notes.map((data) => (
-                <div key={data.id} className="note">
-                  <Note
-                    data={data}
-                    socket={socketRef.current}
-                    depth={0}
-                    type={
-                      data.renoteId && !data.text
-                        ? "renote"
-                        : data.renoteId
-                        ? "quote"
-                        : data.replyId
-                        ? "reply"
-                        : "generall"
-                    }
-                  />
-                  <Reactions data={data} />
-                  <NoteFooter data={data} />
-                </div>
-              ))}
-              <button
-                className="motto"
-                onClick={() => {
-                  socketRef.current.send(JSON.stringify(moreNoteObject));
-                  updateMore(true);
-                }}
-              >
-                {moreState ? <Loading size="small" /> : "もっと"}
-              </button>
-            </>
-          )}
-          <ImageModal />
-          <PostModal />
-        </ImageModalProvider>
+        {notes.length <= 0 ? (
+          <Loading />
+        ) : (
+          <>
+            {notes.map((data) => (
+              <div key={data.id} className="note">
+                <Note
+                  data={data}
+                  socket={socketRef.current}
+                  depth={0}
+                  type={
+                    data.renoteId && !data.text
+                      ? "renote"
+                      : data.renoteId
+                      ? "quote"
+                      : data.replyId
+                      ? "reply"
+                      : "generall"
+                  }
+                />
+                <Reactions data={data} />
+                <NoteFooter data={data} />
+              </div>
+            ))}
+            <button
+              className="motto"
+              onClick={() => {
+                socketRef.current.send(JSON.stringify(moreNoteObject));
+                updateMore(true);
+              }}
+            >
+              {moreState ? <Loading size="small" /> : "もっと"}
+            </button>
+          </>
+        )}
       </main>
     </>
   );

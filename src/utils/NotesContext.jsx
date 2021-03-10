@@ -268,4 +268,4 @@ const NotesProvider = ({ children }) => {
 
 const useNotesContext = () => useContext(NotesContext);
 
-export { NotesProvider, useNotesContext, NotesContext };
+export { NotesProvider, useNotesContext };

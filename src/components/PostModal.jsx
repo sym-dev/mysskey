@@ -71,7 +71,6 @@ export default function PostModal() {
               ? "引用(空だと通常のRenoteになります)"
               : "何を考えていますか？"
           }
-          onSubmit={handleSubmit(onSubmitPost)}
           required={!renoteProp}
           autoFocus
         ></textarea>

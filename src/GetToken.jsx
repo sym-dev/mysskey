@@ -26,8 +26,20 @@ const GetToken = (props) => {
         localStorage.setItem("UserToken", text.token);
         localStorage.setItem("UserId", text.user.id);
         localStorage.setItem("UserName", text.user.username);
-        updateLogin(true);
-        history.push("/");
+        fetch("https://" + localStorage.getItem("instanceURL") + "/api/meta", {
+          method: "POST",
+        })
+          .then((res) => {
+            if (!res.ok) {
+              throw new Error(`${res.status} ${res.statusText}`);
+            }
+            return res.json();
+          })
+          .then((text) => {
+            localStorage.setItem("meta", JSON.stringify(text));
+            updateLogin(true);
+            history.push("/");
+          });
       }
     })
     .catch((err) => {
