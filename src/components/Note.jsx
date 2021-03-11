@@ -110,8 +110,8 @@ export default function Note(props) {
             <img src={data.user.avatarUrl} alt="" width="100" height="100" />
           </div>
           <div className="noteBody">
-            <p className="noteHeader">
-              <span>
+            <header className="noteHeader">
+              <span className="userInfo">
                 <Link
                   to={
                     !data.user.host
@@ -119,7 +119,9 @@ export default function Note(props) {
                       : "/user/@" + data.user.username + "@" + data.user.host
                   }
                 >
-                  {data.user.name ? data.user.name : data.user.username}
+                  {data.user.name
+                    ? parseEmojis(data.user.name, data.user.emojis)
+                    : data.user.username}
                 </Link>
                 <span>
                   {!data.user.host
@@ -136,7 +138,7 @@ export default function Note(props) {
                   local={data.localOnly}
                 />
               </span>
-            </p>
+            </header>
             {data.user.instance && (
               <span
                 className="instance"

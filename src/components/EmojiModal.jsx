@@ -2,9 +2,12 @@ import Modal from "react-modal";
 import { useEmojiModalContext } from "../utils/ModalContext";
 import { useSocketContext } from "../utils/SocketContext";
 import { useForm } from "react-hook-form";
-import { IoCheckmark } from "react-icons/io5";
+import { IoCheckmark, IoTime } from "react-icons/io5";
 
 export default function EmojiModal() {
+  let RUEmoji = Array.isArray(JSON.parse(localStorage.getItem("RUEmoji")))
+    ? JSON.parse(localStorage.getItem("RUEmoji"))
+    : [];
   const customEmojis = JSON.parse(localStorage.getItem("meta")).emojis;
   const emojiCategory = [...new Set(customEmojis.map((item) => item.category))];
   const { socketRef } = useSocketContext();
@@ -61,7 +64,7 @@ export default function EmojiModal() {
         content: {
           position: "absolute",
           top: emojiModalPlace.y + 20,
-          left: emojiModalPlace.x - 100,
+          left: emojiModalPlace.x - 200,
         },
       }}
       className="emojiModal"
@@ -84,6 +87,25 @@ export default function EmojiModal() {
       </form>
       <form onSubmit={handleSubmit(onSubmitReactionByEmoji)}>
         <div className="emojis">
+          <p>
+            <IoTime />
+            最近使用
+          </p>
+          <div className="RUEmoji">
+            {Array.isArray(RUEmoji) &&
+              RUEmoji.map((data) => (
+                <button
+                  key={data.id}
+                  onClick={() => {
+                    setValue("emoji", data.name);
+                    handleSubmit(onSubmitReactionByEmoji);
+                  }}
+                >
+                  <img src={data.url} alt={data.name} loading="lazy" />
+                  <input type="hidden" name="emoji" ref={register} />
+                </button>
+              ))}
+          </div>
           {emojiCategory.map((cat) => (
             <details key={cat}>
               <summary>{cat}</summary>
@@ -94,6 +116,14 @@ export default function EmojiModal() {
                     <button
                       key={data.id}
                       onClick={() => {
+                        RUEmoji.unshift(data);
+                        if (RUEmoji.length > 10) {
+                          RUEmoji.pop();
+                        }
+                        localStorage.setItem(
+                          "RUEmoji",
+                          JSON.stringify(RUEmoji)
+                        );
                         setValue("emoji", data.name);
                         handleSubmit(onSubmitReactionByEmoji);
                       }}

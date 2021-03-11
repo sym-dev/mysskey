@@ -137,12 +137,16 @@
     margin-top: 0.5em;
     border-radius: 10px;
     background-color: #385a62;
+    > p {
+      margin: 0.5em 1em 0;
+    }
     summary {
       margin: 0 1em;
       font-size: 1.2em;
       outline: none;
     }
-    .emojisContainer {
+    .emojisContainer,
+    .RUEmoji {
       display: flex;
       flex-wrap: wrap;
       margin: 0 1em;
@@ -233,11 +237,28 @@
       justify-content: space-between;
       color: cadetblue;
       margin-bottom: 0.2em;
-      > a {
+      align-items: center;
+      > .userInfo {
         display: flex;
-        align-items: center;
+        max-width: 80%;
+        > a {
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          overflow: hidden;
+          img {
+            height: 1.2em;
+          }
+        }
+        > span {
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          overflow: hidden;
+        }
       }
       .noteInfo {
+        max-width: 20%;
         display: flex;
         align-items: center;
         gap: 2px;

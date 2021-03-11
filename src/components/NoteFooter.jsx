@@ -62,7 +62,13 @@ export default function NoteFooter({ data }) {
           onClick={(e) => {
             updateEmojiModal(true);
             updateNoteId(actualData.id);
-            updateEmojiModalPlace({ x: e.clientX, y: e.clientY });
+            updateEmojiModalPlace({
+              x: e.clientX,
+              y:
+                e.view.outerHeight - e.clientY > 400
+                  ? e.clientY
+                  : e.clientY - 250,
+            });
           }}
         >
           <IoAddCircle fontSize="1.2em" />
