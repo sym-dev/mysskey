@@ -9,8 +9,6 @@ import noimage from "./components/bg.png";
 import parseEmojis from "./utils/parseEmojis";
 import parseURL from "./utils/parseURL";
 import parseMFM from "./utils/parseMFM";
-import { twemojify } from "react-twemojify";
-import { createImgElement } from "react-twemojify/lib/img";
 
 function User() {
   const [user, update] = useState(null);
@@ -108,10 +106,7 @@ function UserSection(props) {
             <div>
               <h1 className="username">
                 {props.data.name
-                  ? parseEmojis(
-                      twemojify(props.data.name, createImgElement),
-                      props.data.emojis
-                    )
+                  ? parseEmojis(props.data.name, props.data.emojis)
                   : props.data.username}
               </h1>
               <p className="userid">
@@ -122,11 +117,7 @@ function UserSection(props) {
               <div className="desc">
                 {props.data.description ? (
                   parseEmojis(
-                    parseURL(
-                      parseMFM(
-                        twemojify(props.data.description, createImgElement)
-                      )
-                    ),
+                    parseURL(parseMFM(props.data.description)),
                     props.data.emojis
                   )
                 ) : (

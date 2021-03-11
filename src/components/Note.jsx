@@ -12,8 +12,6 @@ import File from "./File";
 import parseEmojis from "../utils/parseEmojis";
 import parseURL from "../utils/parseURL";
 import parseMFM from "../utils/parseMFM";
-import { twemojify } from "react-twemojify";
-import { createImgElement } from "react-twemojify/lib/img";
 
 export default function Note(props) {
   let data = props.data;
@@ -63,7 +61,9 @@ export default function Note(props) {
                   }
                 >
                   <IoRepeat fontSize="1.3em" className="renoteIcon renote" />
-                  {data.user.name ? data.user.name : data.user.username}
+                  {data.user.name
+                    ? parseEmojis(data.user.name, data.user.emojis)
+                    : data.user.username}
                   <span className="renote"> Renoted</span>
                 </Link>
                 <span className="noteInfo">
@@ -157,19 +157,13 @@ export default function Note(props) {
 
                 <p className="noteText">
                   {data.replyId && <IoArrowUndo />}
-                  {parseEmojis(
-                    parseURL(parseMFM(twemojify(data.text, createImgElement))),
-                    data.emojis
-                  )}
+                  {parseEmojis(parseURL(parseMFM(data.text)), data.emojis)}
                 </p>
               </details>
             ) : (
               <div className="noteText">
                 {data.replyId && <IoArrowUndo />}
-                {parseEmojis(
-                  parseURL(parseMFM(twemojify(data.text, createImgElement))),
-                  data.emojis
-                )}
+                {parseEmojis(parseURL(parseMFM(data.text)), data.emojis)}
               </div>
             )}
             {data.files.length <= 0 ? (

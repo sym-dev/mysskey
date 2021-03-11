@@ -1,6 +1,4 @@
 import parseEmojis from "../utils/parseEmojis";
-import { twemojify } from "react-twemojify";
-import { createImgElement } from "react-twemojify/lib/img";
 import { useState } from "react";
 import { useSocketContext } from "../utils/SocketContext";
 
@@ -69,7 +67,7 @@ export default function Reactions({ data }) {
             }
           }}
         >
-          {parseEmojis(twemojify(key, createImgElement), actualData.emojis)}
+          {parseEmojis(key, actualData.emojis)}
           <span>{actualData.reactions[key]}</span>
         </button>
       ))}
