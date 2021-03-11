@@ -55,33 +55,36 @@ function NotLogin() {
       });
   };
   return (
-    <>
-      <h3>ログインしてください。</h3>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <label>
-          アプリの名前:
-          <input
-            type="text"
-            name="appName"
-            onSubmit={handleSubmit(onSubmit)}
-            ref={register}
-            required
-          />
-        </label>
-        <label>
-          Instance:
-          <input
-            type="text"
-            name="instance"
-            onSubmit={handleSubmit(onSubmit)}
-            ref={register}
-            required
-          />
-        </label>
-        <input type="submit" value="Submit" />
-      </form>
-      <p>{miauthState}</p>
-    </>
+    <div className="NotLogin">
+      <header>Mysskey</header>
+      <main>
+        <h3>ログインしてください。</h3>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <label>
+            アプリの名前:
+            <input
+              type="text"
+              name="appName"
+              onSubmit={handleSubmit(onSubmit)}
+              ref={register}
+              required
+            />
+          </label>
+          <label>
+            Instance:
+            <input
+              type="text"
+              name="instance"
+              onSubmit={handleSubmit(onSubmit)}
+              ref={register}
+              required
+            />
+          </label>
+          <input type="submit" value="Submit" />
+        </form>
+        <p>{miauthState}</p>
+      </main>
+    </div>
   );
 }
 

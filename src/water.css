@@ -1,4 +1,10 @@
 @charset "UTF-8";
+
+::selection {
+  background: #3b8d99;
+  color: #fff;
+}
+
 body {
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
     "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
@@ -105,7 +111,7 @@ select,
 button,
 textarea {
   color: #ffffff;
-  background-color: #243542;
+  background-color: #364855;
   font-family: inherit;
   font-size: inherit;
   margin-right: 6px;
@@ -150,11 +156,11 @@ textarea:focus {
   box-shadow: 0 0 0 2px #0096bfab;
 }
 
-input[type="checkbox"]:active,
-input[type="radio"]:active,
-input[type="submit"]:active,
-input[type="button"]:active,
-button:active {
+input[type="checkbox"]:not(:disabled):active,
+input[type="radio"]:not(:disabled):active,
+input[type="submit"]:not(:disabled):active,
+input[type="button"]:not(:disabled):active,
+button:not(:disabled):active {
   transform: translateY(2px);
 }
 

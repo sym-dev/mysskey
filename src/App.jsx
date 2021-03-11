@@ -25,13 +25,13 @@ export default function App() {
   return (
     <LoginProvider>
       <Router>
-        <Header />
         <Switch>
           <Route path="/login">
             <Login />
           </Route>
           <Auth>
             <Providers>
+              <Header />
               <Switch>
                 <Route path="/notes">
                   <ScrollToTop />
