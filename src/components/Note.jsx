@@ -153,27 +153,40 @@ export default function Note(props) {
             )}
             {data.cw || data.cw === "" ? (
               <details>
-                <summary>{data.cw}</summary>
+                <summary className="cwSummary">
+                  {parseEmojis(parseURL(parseMFM(data.cw)), data.emojis)}
+                </summary>
 
                 <p className="noteText">
                   {data.replyId && <IoArrowUndo />}
                   {parseEmojis(parseURL(parseMFM(data.text)), data.emojis)}
                 </p>
+                {data.files.length <= 0 ? (
+                  <></>
+                ) : (
+                  <div className="fileContainer" num={data.files.length}>
+                    {data.files.map((file) => (
+                      <File key={file.id} data={file} />
+                    ))}
+                  </div>
+                )}
               </details>
             ) : (
-              <div className="noteText">
-                {data.replyId && <IoArrowUndo />}
-                {parseEmojis(parseURL(parseMFM(data.text)), data.emojis)}
-              </div>
-            )}
-            {data.files.length <= 0 ? (
-              <></>
-            ) : (
-              <div className="fileContainer" num={data.files.length}>
-                {data.files.map((file) => (
-                  <File key={file.id} data={file} />
-                ))}
-              </div>
+              <>
+                <div className="noteText">
+                  {data.replyId && <IoArrowUndo />}
+                  {parseEmojis(parseURL(parseMFM(data.text)), data.emojis)}
+                </div>
+                {data.files.length <= 0 ? (
+                  <></>
+                ) : (
+                  <div className="fileContainer" num={data.files.length}>
+                    {data.files.map((file) => (
+                      <File key={file.id} data={file} />
+                    ))}
+                  </div>
+                )}
+              </>
             )}
           </div>
         </div>
