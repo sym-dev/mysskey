@@ -2,14 +2,18 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { LoginProvider } from "./utils/LoginContext";
 import { SocketProvider } from "./utils/SocketContext";
 import { NotesProvider } from "./utils/NotesContext";
+import { NotificationProvider } from "./utils/NotificationContext";
 import {
   PostModalProvider,
   EmojiModalProvider,
   ImageModalProvider,
 } from "./utils/ModalContext";
+import SocketManager from "./utils/SocketManager";
 import Modal from "react-modal";
 import Auth from "./components/Auth";
 import Header from "./components/Header";
+import LeftBar from "./components/LeftBar";
+import RightBar from "./components/RightBar";
 import ScrollToTop from "./components/ScrollToTop";
 import PostModal from "./components/PostModal";
 import EmojiModal from "./components/EmojiModal";
@@ -27,27 +31,37 @@ export default function App() {
       <Router>
         <Switch>
           <Route path="/login">
-            <Login />
+            <div id="login">
+              <Login />
+            </div>
           </Route>
           <Auth>
             <Providers>
-              <Header />
-              <Switch>
-                <Route path="/notes">
-                  <ScrollToTop />
-                  <Notes />
-                </Route>
-                <Route path="/user">
-                  <ScrollToTop />
-                  <User />
-                </Route>
-                <Route path="/">
-                  <Home />
-                </Route>
-              </Switch>
-              <EmojiModal />
-              <ImageModal />
-              <PostModal />
+              <SocketManager>
+                <div id="wrapper">
+                  <LeftBar />
+                  <div id="center">
+                    <Header />
+                    <Switch>
+                      <Route path="/notes">
+                        <ScrollToTop />
+                        <Notes />
+                      </Route>
+                      <Route path="/user">
+                        <ScrollToTop />
+                        <User />
+                      </Route>
+                      <Route path="/">
+                        <Home />
+                      </Route>
+                    </Switch>
+                    <EmojiModal />
+                    <ImageModal />
+                    <PostModal />
+                  </div>
+                  <RightBar />
+                </div>
+              </SocketManager>
             </Providers>
           </Auth>
         </Switch>
@@ -60,11 +74,13 @@ function Providers({ children }) {
   return (
     <SocketProvider>
       <NotesProvider>
-        <PostModalProvider>
-          <EmojiModalProvider>
-            <ImageModalProvider>{children}</ImageModalProvider>
-          </EmojiModalProvider>
-        </PostModalProvider>
+        <NotificationProvider>
+          <PostModalProvider>
+            <EmojiModalProvider>
+              <ImageModalProvider>{children}</ImageModalProvider>
+            </EmojiModalProvider>
+          </PostModalProvider>
+        </NotificationProvider>
       </NotesProvider>
     </SocketProvider>
   );

@@ -10,9 +10,9 @@ body {
     "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
     "Helvetica Neue", sans-serif;
   line-height: 1.4;
-  max-width: 800px;
-  margin: 20px auto;
-  padding: 0 10px;
+  /* max-width: 800px; */
+  /* margin: 20px auto; */
+  /* padding: 0 10px; */
   color: #dbdbdb;
   background: #202b38;
   text-rendering: optimizeLegibility;
@@ -244,6 +244,10 @@ th {
 
 tbody tr:nth-child(even) {
   background-color: #161f27;
+}
+
+summary {
+  outline: none;
 }
 
 ::-webkit-scrollbar {

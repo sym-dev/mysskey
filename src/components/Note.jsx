@@ -8,6 +8,7 @@ import {
   IoMail,
   IoFastFood,
 } from "react-icons/io5";
+import { getRelativeTime } from "../utils/getRelativeTime";
 import File from "./File";
 import parseEmojis from "../utils/parseEmojis";
 import parseURL from "../utils/parseURL";
@@ -68,7 +69,7 @@ export default function Note(props) {
                 </Link>
                 <span className="noteInfo">
                   <Link to={"/notes/" + data.id} className="createdAt">
-                    {getTime(data.createdAt)}
+                    {getRelativeTime(data.createdAt)}
                   </Link>
                   <GetVisibility
                     visibility={data.visibility}
@@ -131,7 +132,7 @@ export default function Note(props) {
               </span>
               <span className="noteInfo">
                 <Link to={"/notes/" + data.id} className="createdAt">
-                  {getTime(data.createdAt)}
+                  {getRelativeTime(data.createdAt)}
                 </Link>
                 <GetVisibility
                   visibility={data.visibility}
@@ -231,22 +232,3 @@ function GetVisibility(props) {
     </>
   );
 }
-
-const getTime = (date) => {
-  const d = Date.parse(date);
-  const n = Date.now();
-  const t = n - d;
-  if (t < 0) {
-    return "未来";
-  } else if (t / (365 * 24 * 60 * 60 * 1000) > 1) {
-    return (t / (365 * 24 * 60 * 60 * 1000)).toFixed() + "年";
-  } else if (t / (24 * 60 * 60 * 1000) > 1) {
-    return (t / (24 * 60 * 60 * 1000)).toFixed() + "日";
-  } else if (t / (60 * 60 * 1000) > 1) {
-    return (t / (60 * 60 * 1000)).toFixed() + "時間";
-  } else if (t / (60 * 1000) > 1) {
-    return (t / (60 * 1000)).toFixed() + "分";
-  } else {
-    return (t / 1000).toFixed() + "秒";
-  }
-};
