@@ -80,15 +80,23 @@ export default function EmojiModal() {
                     <button
                       key={data.id}
                       onClick={() => {
+                        RUEmoji.unshift(data);
+                        if (RUEmoji.length > 10) {
+                          RUEmoji.pop();
+                        }
+                        localStorage.setItem(
+                          "RUEmoji",
+                          JSON.stringify(RUEmoji)
+                        );
                         setValue("emoji", data.name);
                         handleSubmit(onSubmitReaction);
                       }}
                     >
-                      <input type="hidden" name="emoji" ref={register} />
                       <img src={data.url} alt={data.name} loading="lazy" />
                     </button>
                   ))}
             </div>
+            <input type="hidden" name="emoji" ref={register} />
           </form>
           <form onSubmit={handleSubmit(onSubmitReaction)}>
             <p>
@@ -106,9 +114,9 @@ export default function EmojiModal() {
                     }}
                   >
                     <img src={data.url} alt={data.name} loading="lazy" />
-                    <input type="hidden" name="emoji" ref={register} />
                   </button>
                 ))}
+              <input type="hidden" name="emoji" ref={register} />
             </div>
             {emojiCategory.map((cat) => (
               <details key={cat}>
@@ -133,9 +141,9 @@ export default function EmojiModal() {
                         }}
                       >
                         <img src={data.url} alt={data.name} loading="lazy" />
-                        <input type="hidden" name="emoji" ref={register} />
                       </button>
                     ))}
+                  <input type="hidden" name="emoji" ref={register} />
                 </div>
               </details>
             ))}
