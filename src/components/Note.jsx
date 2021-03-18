@@ -177,14 +177,25 @@ export default function Note(props) {
                   {data.replyId && <IoArrowUndo />}
                   {parseEmojis(parseURL(parseMFM(data.text)), data.emojis)}
                 </div>
-                {data.files.length <= 0 ? (
-                  <></>
-                ) : (
-                  <div className="fileContainer" num={data.files.length}>
-                    {data.files.map((file) => (
-                      <File key={file.id} data={file} />
-                    ))}
-                  </div>
+                {data.files.length > 0 && (
+                  <>
+                    {depth > 0 ? (
+                      <details>
+                        <summary>File:</summary>
+                        <div className="fileContainer" num={data.files.length}>
+                          {data.files.map((file) => (
+                            <File key={file.id} data={file} />
+                          ))}
+                        </div>
+                      </details>
+                    ) : (
+                      <div className="fileContainer" num={data.files.length}>
+                        {data.files.map((file) => (
+                          <File key={file.id} data={file} />
+                        ))}
+                      </div>
+                    )}
+                  </>
                 )}
               </>
             )}
