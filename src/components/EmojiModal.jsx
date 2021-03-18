@@ -80,6 +80,9 @@ export default function EmojiModal() {
                     <button
                       key={data.id}
                       onClick={() => {
+                        RUEmoji = RUEmoji.filter(
+                          (emoji) => emoji.id !== data.id
+                        );
                         RUEmoji.unshift(data);
                         if (RUEmoji.length > 10) {
                           RUEmoji.pop();
@@ -128,6 +131,9 @@ export default function EmojiModal() {
                       <button
                         key={data.id}
                         onClick={() => {
+                          RUEmoji = RUEmoji.filter(
+                            (emoji) => emoji.id !== data.id
+                          );
                           RUEmoji.unshift(data);
                           if (RUEmoji.length > 10) {
                             RUEmoji.pop();
