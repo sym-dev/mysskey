@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { ImageModalProvider } from "./utils/ModalContext";
 import ImageModal from "./components/ImageModal";
 import Loading from "./components/Loading";
@@ -7,6 +7,7 @@ import Note from "./components/Note";
 
 function Notes() {
   let noteId = document.location.pathname.split("/")[2];
+  let location = useLocation();
   const [note, update] = useState(null);
   useEffect(() => {
     const noteURL =
@@ -32,7 +33,7 @@ function Notes() {
       .catch((err) => {
         console.error(err);
       });
-  }, [noteId]);
+  }, [noteId, location]);
   return (
     <>
       <ImageModalProvider>
