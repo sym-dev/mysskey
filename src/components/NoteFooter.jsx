@@ -67,7 +67,7 @@ export default function NoteFooter({ data }) {
               y:
                 e.view.outerHeight - e.clientY > 400
                   ? e.clientY
-                  : e.clientY - 250,
+                  : e.clientY - 350,
             });
           }}
         >
