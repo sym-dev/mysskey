@@ -1,0 +1,158 @@
+.side {
+  position: sticky;
+  top: 0.3em;
+  height: 90vh;
+}
+
+#right {
+  width: 20em;
+  border-radius: 5px;
+  background-color: #343b53;
+  @media (max-width: 1000px) {
+    display: none;
+  }
+  header {
+    background-color: #102a3a;
+    padding: 0.5em 0em 0.5em 1em;
+  }
+  .notificationWrapper {
+    height: calc(100% - 2.5em);
+    overflow-x: hidden;
+    overflow-y: scroll;
+    padding: 0.5em 0;
+    .customEmoji {
+      height: 1.5em;
+      vertical-align: middle;
+    }
+    .notificationContainer {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.3em 0.5em;
+      .notificationIcon {
+        width: 2.5em;
+        height: 2.5em;
+        margin-right: 0.5em;
+        position: relative;
+        > img {
+          width: 2.5em;
+          height: 2.5em;
+          object-fit: cover;
+          border-radius: 100%;
+        }
+        div {
+          width: 1.5em;
+          height: 1.5em;
+          background-color: #1e2c52;
+          border-radius: 100%;
+          position: absolute;
+          top: 100%;
+          left: 100%;
+          transform: translate(-50%, -70%);
+          .twemoji {
+            width: 1em;
+            height: 1em;
+            transform: translateX(4px);
+          }
+          .customEmoji {
+            width: 1em;
+            height: 1em;
+            transform: translate(4px, -1px);
+          }
+          svg {
+            width: 1em;
+            height: 1em;
+            vertical-align: middle;
+            transform: translateX(1.5px);
+            color: #328bf1;
+          }
+          .renote {
+            color: #0cc734;
+          }
+          .follow {
+            transform: translateX(3.5px);
+          }
+        }
+      }
+      .notificationBody {
+        width: 16em;
+        padding: 0 0.5em;
+        .notificationNoteInfo {
+          display: flex;
+          justify-content: space-between;
+          .username {
+            max-width: 70%;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+          }
+          .createdAt {
+            max-width: 30%;
+            color: darkgray;
+          }
+        }
+        .file {
+          color: gray;
+        }
+      }
+    }
+  }
+}
+
+#left {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  width: 20em;
+  padding: 0.5em 0;
+  background-color: #243142;
+  border-radius: 5px;
+  @media (max-width: 1000px) {
+    width: 3em;
+  }
+  .post-button {
+    margin: 0;
+    padding: 0;
+    width: 2.5em;
+    height: 2.5em;
+    border-radius: 100%;
+    background-color: #99acff;
+    filter: drop-shadow(2px 2px 3px #120c27a2);
+    svg {
+      vertical-align: middle;
+    }
+  }
+}
+
+.menuContainer {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.menu {
+  display: flex;
+  flex-direction: column;
+  background-color: #25354e;
+  border-radius: 5px;
+  position: absolute;
+  z-index: 4;
+  top: 1em;
+  width: 10em;
+  outline: none;
+  opacity: 0;
+  visibility: hidden;
+  &.active {
+    opacity: 1;
+    visibility: visible;
+  }
+  hr {
+    border-color: #6b73b9;
+    width: 70%;
+  }
+  button {
+    background-color: unset;
+    justify-content: center;
+  }
+}

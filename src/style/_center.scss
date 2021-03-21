@@ -1,0 +1,35 @@
+#center {
+  margin: 0 0.5em;
+  width: 100%;
+  @media (max-width: 1000px) {
+    width: calc(100% - 4em);
+  }
+}
+
+.top-header {
+  margin: 0 auto;
+  position: sticky;
+  top: 0.3em;
+  background-color: #102a3a;
+  backdrop-filter: blur(10px) brightness(30%);
+  filter: drop-shadow(1px 3px 2px #16161a9f);
+  mix-blend-mode: screen;
+  padding: 1em 0.5em;
+  border-radius: 5px;
+  display: flex;
+  justify-content: space-between;
+  .user-block {
+    display: flex;
+    gap: 0.5em;
+  }
+  z-index: 2;
+}
+
+.middle-header {
+  margin: 0.5em 0;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #ffffff0a;
+}

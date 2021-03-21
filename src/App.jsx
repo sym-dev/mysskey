@@ -3,11 +3,8 @@ import { LoginProvider } from "./utils/LoginContext";
 import { SocketProvider } from "./utils/SocketContext";
 import { NotesProvider } from "./utils/NotesContext";
 import { NotificationProvider } from "./utils/NotificationContext";
-import {
-  PostModalProvider,
-  EmojiModalProvider,
-  ImageModalProvider,
-} from "./utils/ModalContext";
+import { PostModalProvider, ImageModalProvider } from "./utils/ModalContext";
+import { OverlayProvider } from "./utils/OverlayContext";
 import SocketManager from "./utils/SocketManager";
 import Modal from "react-modal";
 import Auth from "./components/Auth";
@@ -15,6 +12,7 @@ import Header from "./components/Header";
 import LeftBar from "./components/LeftBar";
 import RightBar from "./components/RightBar";
 import ScrollToTop from "./components/ScrollToTop";
+import GeneralOverlay from "./components/GeneralOverlay";
 import PostModal from "./components/PostModal";
 import EmojiModal from "./components/EmojiModal";
 import ImageModal from "./components/ImageModal";
@@ -22,7 +20,7 @@ import Home from "./Home";
 import Notes from "./Notes";
 import User from "./User";
 import Login from "./Login";
-import "./style.scss";
+import "./style/style.scss";
 
 export default function App() {
   Modal.setAppElement("#root");
@@ -61,6 +59,7 @@ export default function App() {
                   </div>
                   <RightBar />
                 </div>
+                <GeneralOverlay />
               </SocketManager>
             </Providers>
           </Auth>
@@ -75,11 +74,11 @@ function Providers({ children }) {
     <SocketProvider>
       <NotesProvider>
         <NotificationProvider>
-          <PostModalProvider>
-            <EmojiModalProvider>
+          <OverlayProvider>
+            <PostModalProvider>
               <ImageModalProvider>{children}</ImageModalProvider>
-            </EmojiModalProvider>
-          </PostModalProvider>
+            </PostModalProvider>
+          </OverlayProvider>
         </NotificationProvider>
       </NotesProvider>
     </SocketProvider>

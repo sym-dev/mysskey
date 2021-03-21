@@ -1,0 +1,77 @@
+@use "center";
+@use "side";
+@use "note";
+@use "userpage";
+@use "notlogin";
+@use "modal";
+@use "overlay";
+
+/* z-index information
+
+4: menu
+3: overlay
+2: top-header
+1: instance name
+0: base
+*/
+
+#root {
+  margin: 0.5em;
+}
+
+#wrapper {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+}
+
+.twemoji {
+  height: 1.3em;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.customEmoji {
+  height: 2.5em;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.button {
+  background-color: #ffffff0f;
+  padding: 5px 0.5em;
+  border-radius: 5px;
+}
+
+.logout {
+  display: flex;
+  align-items: center;
+  color: orangered;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  .ion-icon {
+    animation: 1.2s ease-in-out infinite rotate;
+    @media (prefers-reduced-motion: reduce) {
+      animation: none;
+    }
+  }
+}
+
+.motto {
+  width: 90%;
+  margin: 0 5%;
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}

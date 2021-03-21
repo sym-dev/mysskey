@@ -1,23 +1,16 @@
-import Modal from "react-modal";
-import { useEmojiModalContext } from "../utils/ModalContext";
-import { useSocketContext } from "../utils/SocketContext";
 import { useForm } from "react-hook-form";
+import { useSocketContext } from "../utils/SocketContext";
+import { useOverlayContext } from "../utils/OverlayContext";
 import { IoCheckmark, IoTime } from "react-icons/io5";
 
-export default function EmojiModal() {
+export default function EmojiModal(props) {
+  const { updateOverlay } = useOverlayContext();
   let RUEmoji = Array.isArray(JSON.parse(localStorage.getItem("RUEmoji")))
     ? JSON.parse(localStorage.getItem("RUEmoji"))
     : [];
   const customEmojis = JSON.parse(localStorage.getItem("meta")).emojis;
   const emojiCategory = [...new Set(customEmojis.map((item) => item.category))];
   const { socketRef } = useSocketContext();
-  const {
-    emojiModal,
-    updateEmojiModal,
-    emojiModalPlace,
-    noteId,
-    updateNoteId,
-  } = useEmojiModalContext();
   const { register, watch, handleSubmit, setValue } = useForm();
   const search = watch("searchEmoji");
   const onSubmitReaction = (data) => {
@@ -28,30 +21,21 @@ export default function EmojiModal() {
         endpoint: "notes/reactions/create",
         data: {
           i: localStorage.getItem("UserToken"),
-          noteId: noteId,
+          noteId: props.noteId,
           reaction: data.reaction ? data.reaction : ":" + data.emoji + ":",
         },
       },
     };
     socketRef.current.send(JSON.stringify(createReactionObject));
-    updateNoteId("");
-    updateEmojiModal(false);
+    props.fn(false);
+    updateOverlay(false);
   };
   return (
-    <Modal
-      isOpen={emojiModal}
-      onRequestClose={() => {
-        updateNoteId("");
-        updateEmojiModal(false);
-      }}
+    <div
+      className={`emojiModal ${props.isActive ? "active" : "inactive"}`}
       style={{
-        content: {
-          position: "absolute",
-          top: emojiModalPlace.y + 20,
-        },
+        top: props.y,
       }}
-      className="emojiModal"
-      overlayClassName="Overlay"
     >
       <form onSubmit={handleSubmit(onSubmitReaction)}>
         <div className="userInput">
@@ -166,6 +150,6 @@ export default function EmojiModal() {
           }}
         />
       </div>
-    </Modal>
+    </div>
   );
 }
