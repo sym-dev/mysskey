@@ -97,9 +97,9 @@ export default function Note(props) {
       note = (
         <>
           <div className="replyBlock">
-            <Note data={data.reply} depth={0} type={"general"} />
+            <Note data={data.reply} depth={1} type={"general"} />
           </div>
-          <Note data={data} depth={1} type={"general"} />
+          <Note data={data} depth={0} type={"general"} />
         </>
       );
       break;
