@@ -199,30 +199,29 @@
       grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
     }
   }
-}
-
-.replyBlock {
-  padding: 5px 0.5em;
-  margin: 0.5em 0;
-  border-radius: 5px;
-  border: 2px dotted teal;
-  .icon {
-    filter: brightness(80%);
+  .replyBlock {
+    padding: 5px 0.5em;
+    margin: 0.5em 0;
+    border-radius: 5px;
+    border: 2px dotted teal;
+    .icon {
+      filter: brightness(80%);
+    }
   }
-}
 
-.quote {
-  padding: 5px 0.5em;
-  margin: 0.3em 0 0.3em 3em;
-  border-radius: 5px;
-  border: 2px dotted darkolivegreen;
-  > div {
-    width: 100%;
+  .quote {
+    padding: 5px 0.5em;
+    margin: 0.3em 0 0.3em 3em;
+    border-radius: 5px;
+    border: 2px dotted darkolivegreen;
+    > div {
+      width: 100%;
+    }
   }
-}
 
-.deepQuoteLink {
-  padding-left: 3.5em;
+  .deepQuoteLink {
+    padding-left: 3.5em;
+  }
 }
 
 .reactionBar {

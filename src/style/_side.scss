@@ -24,6 +24,44 @@
       height: 1.5em;
       vertical-align: middle;
     }
+    .replyContainer {
+      display: flex;
+      opacity: 0.7;
+      padding: 0.3em 1em;
+      > img {
+        width: 2em;
+        height: 2em;
+        object-fit: cover;
+        border-radius: 100%;
+      }
+      .replyBody {
+        width: calc(100% - 3em);
+        .replyInfo {
+          padding-left: 0.5em;
+          display: flex;
+          justify-content: space-between;
+          .username {
+            max-width: 70%;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+          }
+          .createdAt {
+            max-width: 30%;
+            color: darkgray;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+          }
+        }
+        .replyNoteBody {
+          word-break: break-word;
+          .file {
+            color: gray;
+          }
+        }
+      }
+    }
     .notificationContainer {
       display: flex;
       justify-content: space-between;
@@ -59,10 +97,7 @@
             transform: translate(4px, -1px);
           }
           svg {
-            width: 1em;
-            height: 1em;
-            vertical-align: middle;
-            transform: translateX(1.5px);
+            transform: translate(15%, 12%);
             color: #328bf1;
           }
           .renote {
@@ -101,6 +136,50 @@
           }
         }
       }
+    }
+    .quoteContainer {
+      display: flex;
+      border: 1px dashed #108d2b;
+      border-radius: 5px;
+      margin: 0.3em 1.3em 0.3em 0.5em;
+      padding: 0.5em;
+      > img {
+        width: 2em;
+        height: 2em;
+        object-fit: cover;
+        border-radius: 100%;
+      }
+      .quoteBody {
+        width: calc(100% - 2em);
+        .quoteInfo {
+          padding-left: 0.5em;
+          display: flex;
+          justify-content: space-between;
+          .username {
+            max-width: 70%;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+          }
+          .createdAt {
+            max-width: 30%;
+            color: darkgray;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+          }
+        }
+        .quoteNoteBody {
+          word-break: break-word;
+          .file {
+            color: gray;
+          }
+        }
+      }
+    }
+    hr {
+      border-color: #4c5f7c;
+      width: 80%;
     }
   }
 }
