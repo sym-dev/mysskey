@@ -112,7 +112,10 @@ export default function RightBar() {
                 <>
                   {reply && (
                     <div className="replyContainer">
-                      <img src={reply.user.avatarUrl} />
+                      <img
+                        src={reply.user.avatarUrl}
+                        alt={reply.user.username}
+                      />
                       <div className="replyBody">
                         <div className="replyInfo">
                           <Link
@@ -198,7 +201,10 @@ export default function RightBar() {
                   </div>
                   {quote && (
                     <div className="quoteContainer">
-                      <img src={quote.user.avatarUrl} />
+                      <img
+                        src={quote.user.avatarUrl}
+                        alt={quote.user.username}
+                      />
                       <div className="quoteBody">
                         <div className="quoteInfo">
                           <Link
