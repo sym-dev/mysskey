@@ -6,8 +6,6 @@ import ImageModal from "./components/ImageModal";
 import Loading from "./components/Loading";
 import Note from "./components/Note";
 import noimage from "./components/bg.png";
-import parseEmojis from "./utils/parseEmojis";
-import parseURL from "./utils/parseURL";
 import parseMFM from "./utils/parseMFM";
 
 function User() {
@@ -34,7 +32,6 @@ function User() {
         return res.json();
       })
       .then((text) => {
-        // console.log(text);
         update(text);
       })
       .catch((err) => {
@@ -90,7 +87,6 @@ function User() {
 export default User;
 
 function UserSection(props) {
-  // console.log(props.data);
   return (
     <>
       <div className="userpage">
@@ -106,7 +102,7 @@ function UserSection(props) {
             <div>
               <h1 className="username">
                 {props.data.name
-                  ? parseEmojis(props.data.name, props.data.emojis)
+                  ? parseMFM(props.data.name, props.data.emojis, "plain")
                   : props.data.username}
               </h1>
               <p className="userid">
@@ -116,10 +112,7 @@ function UserSection(props) {
               </p>
               <div className="desc">
                 {props.data.description ? (
-                  parseEmojis(
-                    parseURL(parseMFM(props.data.description)),
-                    props.data.emojis
-                  )
+                  parseMFM(props.data.description, props.data.emojis, "full")
                 ) : (
                   <i>no description provided.</i>
                 )}

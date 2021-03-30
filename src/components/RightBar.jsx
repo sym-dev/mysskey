@@ -1,3 +1,4 @@
+import React from "react";
 import { useNotificationContext } from "../utils/NotificationContext";
 import { useSocketContext } from "../utils/SocketContext";
 import { getRelativeTime } from "../utils/getRelativeTime";
@@ -109,7 +110,7 @@ export default function RightBar() {
                   break;
               }
               return (
-                <>
+                <React.Fragment key={data.id}>
                   {reply && (
                     <div className="replyContainer">
                       <img
@@ -248,7 +249,7 @@ export default function RightBar() {
                     </div>
                   )}
                   <hr />
-                </>
+                </React.Fragment>
               );
             })}
           <button

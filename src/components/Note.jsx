@@ -10,8 +10,6 @@ import {
 } from "react-icons/io5";
 import { getRelativeTime } from "../utils/getRelativeTime";
 import File from "./File";
-import parseEmojis from "../utils/parseEmojis";
-import parseURL from "../utils/parseURL";
 import parseMFM from "../utils/parseMFM";
 
 export default function Note(props) {
@@ -62,8 +60,8 @@ export default function Note(props) {
                   }
                 >
                   <IoRepeat fontSize="1.3em" className="renoteIcon renote" />
-                  {data.user.name
-                    ? parseEmojis(data.user.name, data.user.emojis)
+                  {data.user.name // ? parseEmojis(data.user.name, data.user.emojis)
+                    ? parseMFM(data.user.name, data.user.emojis, "plain")
                     : data.user.username}
                   <span className="renote"> Renoted</span>
                 </Link>
@@ -121,7 +119,7 @@ export default function Note(props) {
                   }
                 >
                   {data.user.name
-                    ? parseEmojis(data.user.name, data.user.emojis)
+                    ? parseMFM(data.user.name, data.user.emojis, "plain")
                     : data.user.username}
                 </Link>
                 <span>
@@ -155,12 +153,12 @@ export default function Note(props) {
             {data.cw || data.cw === "" ? (
               <details>
                 <summary className="cwSummary">
-                  {parseEmojis(parseURL(parseMFM(data.cw)), data.emojis)}
+                  {parseMFM(data.cw, data.emojis, "full")}
                 </summary>
 
                 <p className="noteText">
                   {data.replyId && <IoArrowUndo />}
-                  {parseEmojis(parseURL(parseMFM(data.text)), data.emojis)}
+                  {parseMFM(data.text, data.emojis, "full")}
                 </p>
                 {data.files.length <= 0 ? (
                   <></>
@@ -176,7 +174,7 @@ export default function Note(props) {
               <>
                 <div className="noteText">
                   {data.replyId && <IoArrowUndo />}
-                  {parseEmojis(parseURL(parseMFM(data.text)), data.emojis)}
+                  {parseMFM(data.text, data.emojis, "full")}
                 </div>
                 {data.files.length > 0 && (
                   <>
