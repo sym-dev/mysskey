@@ -99,15 +99,15 @@ function judge(data, emojis) {
         />
       );
     case "emojiCode":
-      return (
-        emojis && (
-          <img
-            src={emojis.find(({ name }) => name === data.props.name).url}
-            alt={data.props.name}
-            className="customEmoji"
-            decoding="async"
-          />
-        )
+      return emojis && emojis.length > 0 ? (
+        <img
+          src={emojis.find(({ name }) => name === data.props.name).url}
+          alt={data.props.name}
+          className="customEmoji"
+          decoding="async"
+        />
+      ) : (
+        ":" + data.props.name + ":"
       );
     case "quote":
       data.children.forEach((child, i) => {
