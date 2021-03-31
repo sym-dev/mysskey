@@ -231,16 +231,42 @@
     flex-basis: 7em;
     justify-content: space-between;
     .Me {
-      width: 3em;
-      height: 3em;
-      border: 3px solid #1c6999;
-      border-radius: 100em;
-      &:hover {
-        border-color: #3cb4d8;
-      }
-      img {
-        object-fit: cover;
-        border-radius: 100em;
+      a {
+        padding: 0.5em 1em;
+        color: #cccccc;
+        border-radius: 5px;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        &:hover {
+          text-decoration: none;
+          color: white;
+          background-color: #ffffff0f;
+        }
+        @media (max-width: 1000px) {
+          padding: 0;
+        }
+        img {
+          width: 3em;
+          height: 3em;
+          border: 3px solid #1c6999;
+          border-radius: 100%;
+          object-fit: cover;
+          &:hover {
+            border-color: #3cb4d8;
+          }
+        }
+        label {
+          width: 6em;
+          font-size: 1.2em;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          margin-left: 0.5em;
+          @media (max-width: 1000px) {
+            display: none;
+          }
+        }
       }
     }
     .post-button {

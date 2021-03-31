@@ -36,6 +36,7 @@ export default function LeftBar() {
               src={user.avatarUrl}
               alt={user.name ? user.name : user.username}
             />
+            <label>{localStorage.getItem("UserName")}</label>
           </Link>
         </div>
         <button
