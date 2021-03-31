@@ -202,6 +202,9 @@
     > .item {
       cursor: auto;
       padding: 0.5em 1em;
+      @media (max-width: 1000px) {
+        padding: 0.5em;
+      }
       color: #cccccc;
       border-radius: 5px;
       display: flex;
@@ -245,6 +248,9 @@
         }
         @media (max-width: 1000px) {
           padding: 0;
+          &:hover {
+            background-color: initial;
+          }
         }
         img {
           width: 3em;
