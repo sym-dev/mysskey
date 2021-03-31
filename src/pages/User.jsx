@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { IoPin } from "react-icons/io5";
 import { useLocation } from "react-router-dom";
+import { useHeaderContext } from "../utils/HeaderContext";
 import { ImageModalProvider } from "../utils/ModalContext";
 import ImageModal from "../components/ImageModal";
 import Loading from "../components/Loading";
@@ -10,10 +11,12 @@ import parseMFM from "../utils/parseMFM";
 
 function User() {
   const [user, update] = useState(null);
+  const { updateHeaderValue } = useHeaderContext();
   let location = useLocation();
   let userName = document.location.pathname.split("@")[1];
   let userHost = document.location.pathname.split("@")[2];
   useEffect(() => {
+    updateHeaderValue(<>User</>);
     const userURL =
       "https://" + localStorage.getItem("instanceURL") + "/api/users/show";
     const body = {
@@ -33,17 +36,23 @@ function User() {
       })
       .then((text) => {
         update(text);
+        console.log(text);
+        updateHeaderValue(
+          <>
+            <img className="icon" src={text.avatarUrl} alt="user icon" />
+            {text.name
+              ? parseMFM(text.name, text.emojis, "plain")
+              : text.username}
+          </>
+        );
       })
       .catch((err) => {
         console.error(err);
       });
-  }, [userName, userHost, location]);
+  }, [userName, userHost, location, updateHeaderValue]);
   return (
     <>
       <ImageModalProvider>
-        <header className="middle-header">
-          <h3>{userName}</h3>
-        </header>
         <section>
           {user === null ? <Loading /> : <UserSection data={user} />}
         </section>

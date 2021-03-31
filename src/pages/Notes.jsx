@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+import { IoDocumentText } from "react-icons/io5";
+import { useHeaderContext } from "../utils/HeaderContext";
 import { ImageModalProvider } from "../utils/ModalContext";
 import ImageModal from "../components/ImageModal";
 import Loading from "../components/Loading";
@@ -8,8 +10,15 @@ import Note from "../components/Note";
 function Notes() {
   let noteId = document.location.pathname.split("/")[2];
   let location = useLocation();
+  const { updateHeaderValue } = useHeaderContext();
   const [note, update] = useState(null);
   useEffect(() => {
+    updateHeaderValue(
+      <>
+        <IoDocumentText fontSize="1.2em" />
+        Note
+      </>
+    );
     const noteURL =
       "https://" + localStorage.getItem("instanceURL") + "/api/notes/show";
     const body = {
@@ -33,14 +42,10 @@ function Notes() {
       .catch((err) => {
         console.error(err);
       });
-  }, [noteId, location]);
+  }, [noteId, location, updateHeaderValue]);
   return (
     <>
       <ImageModalProvider>
-        <header>
-          <h3>Notes</h3>
-          <Link to="/">戻る</Link>
-        </header>
         <main>
           {note === null ? (
             <Loading />

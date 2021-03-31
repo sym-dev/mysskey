@@ -1,3 +1,6 @@
+import { useHeaderContext } from "../utils/HeaderContext";
+
 export default function Header() {
-  return <header className="top-header"></header>;
+  const { headerValue } = useHeaderContext();
+  return <header className="top-header">{headerValue}</header>;
 }

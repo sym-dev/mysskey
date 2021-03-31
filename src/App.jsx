@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { LoginProvider } from "./utils/LoginContext";
 import { SocketProvider } from "./utils/SocketContext";
+import { HeaderProvider } from "./utils/HeaderContext";
 import { NotesProvider } from "./utils/NotesContext";
 import { NotificationProvider } from "./utils/NotificationContext";
 import {
@@ -81,17 +82,19 @@ export default function App() {
 function Providers({ children }) {
   return (
     <SocketProvider>
-      <NotesProvider>
-        <NotificationProvider>
-          <OverlayProvider>
-            <LogoutModalProvider>
-              <PostModalProvider>
-                <ImageModalProvider>{children}</ImageModalProvider>
-              </PostModalProvider>
-            </LogoutModalProvider>
-          </OverlayProvider>
-        </NotificationProvider>
-      </NotesProvider>
+      <HeaderProvider>
+        <NotesProvider>
+          <NotificationProvider>
+            <OverlayProvider>
+              <LogoutModalProvider>
+                <PostModalProvider>
+                  <ImageModalProvider>{children}</ImageModalProvider>
+                </PostModalProvider>
+              </LogoutModalProvider>
+            </OverlayProvider>
+          </NotificationProvider>
+        </NotesProvider>
+      </HeaderProvider>
     </SocketProvider>
   );
 }
