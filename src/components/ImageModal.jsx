@@ -10,7 +10,7 @@ export default function ImageModal() {
       onRequestClose={() => {
         updateImageModal(false);
       }}
-      className="imgModal"
+      className="modal imgModal"
       overlayClassName="Overlay"
     >
       <IoCloseCircle

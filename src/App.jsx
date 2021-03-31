@@ -3,7 +3,11 @@ import { LoginProvider } from "./utils/LoginContext";
 import { SocketProvider } from "./utils/SocketContext";
 import { NotesProvider } from "./utils/NotesContext";
 import { NotificationProvider } from "./utils/NotificationContext";
-import { PostModalProvider, ImageModalProvider } from "./utils/ModalContext";
+import {
+  LogoutModalProvider,
+  PostModalProvider,
+  ImageModalProvider,
+} from "./utils/ModalContext";
 import { OverlayProvider } from "./utils/OverlayContext";
 import SocketManager from "./utils/SocketManager";
 import Modal from "react-modal";
@@ -13,13 +17,14 @@ import LeftBar from "./components/LeftBar";
 import RightBar from "./components/RightBar";
 import ScrollToTop from "./components/ScrollToTop";
 import GeneralOverlay from "./components/GeneralOverlay";
+import LogoutModal from "./components/LogoutModal";
 import PostModal from "./components/PostModal";
-import EmojiModal from "./components/EmojiModal";
 import ImageModal from "./components/ImageModal";
-import Home from "./Home";
-import Notes from "./Notes";
-import User from "./User";
-import Login from "./Login";
+import Home from "./pages/Home";
+import Notes from "./pages/Notes";
+import User from "./pages/User";
+import Notification from "./pages/Notification";
+import Login from "./pages/Login";
 import "./style/style.scss";
 
 export default function App() {
@@ -49,11 +54,15 @@ export default function App() {
                         <ScrollToTop />
                         <User />
                       </Route>
+                      <Route path="/notification">
+                        <ScrollToTop />
+                        <Notification />
+                      </Route>
                       <Route path="/">
                         <Home />
                       </Route>
                     </Switch>
-                    <EmojiModal />
+                    <LogoutModal />
                     <ImageModal />
                     <PostModal />
                   </div>
@@ -75,9 +84,11 @@ function Providers({ children }) {
       <NotesProvider>
         <NotificationProvider>
           <OverlayProvider>
-            <PostModalProvider>
-              <ImageModalProvider>{children}</ImageModalProvider>
-            </PostModalProvider>
+            <LogoutModalProvider>
+              <PostModalProvider>
+                <ImageModalProvider>{children}</ImageModalProvider>
+              </PostModalProvider>
+            </LogoutModalProvider>
           </OverlayProvider>
         </NotificationProvider>
       </NotesProvider>

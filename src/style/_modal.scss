@@ -1,3 +1,30 @@
+.modal {
+  outline: none;
+  user-select: none;
+  border-radius: 10px;
+  background-color: #1e2b3b;
+}
+
+.logoutModal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 15em;
+  padding: 1em;
+  > p {
+    text-align: center;
+    margin: 1em 0;
+  }
+  > div {
+    display: flex;
+    justify-content: space-around;
+    .yes {
+      background-color: #3cb4d8;
+    }
+  }
+}
+
 .postModal {
   position: absolute;
   top: 30%;
@@ -6,10 +33,6 @@
   width: min(40em, 80vw);
   height: fit-content;
   padding: 1em;
-  background-color: #1e2b3b;
-  border-radius: 10px;
-  outline: none;
-  user-select: none;
   textarea {
     height: 5em;
   }
@@ -27,9 +50,6 @@
   right: 10%;
   bottom: 10%;
   background-color: #151f25c5;
-  border-radius: 10px;
-  outline: none;
-  user-select: none;
   .close {
     color: #99acff;
   }
@@ -54,10 +74,6 @@
     transform: translateX(-50%);
     width: min(30em, 80vw);
     padding: 1em;
-    background-color: #1e2b3b;
-    border-radius: 10px;
-    outline: none;
-    user-select: none;
     .userInput {
       width: 100%;
       display: flex;

@@ -32,7 +32,7 @@ export default function EmojiModal(props) {
   };
   return (
     <div
-      className={`emojiModal ${props.isActive ? "active" : "inactive"}`}
+      className={`modal emojiModal ${props.isActive ? "active" : "inactive"}`}
       style={{
         top: props.y,
       }}

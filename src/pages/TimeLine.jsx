@@ -1,10 +1,10 @@
 import { IoHome } from "react-icons/io5";
-import Note from "./components/Note";
-import Reactions from "./components/Reactions";
-import NoteFooter from "./components/NoteFooter";
-import Loading from "./components/Loading";
-import { useNotesContext } from "./utils/NotesContext";
-import { useSocketContext } from "./utils/SocketContext";
+import Note from "../components/Note";
+import Reactions from "../components/Reactions";
+import NoteFooter from "../components/NoteFooter";
+import Loading from "../components/Loading";
+import { useNotesContext } from "../utils/NotesContext";
+import { useSocketContext } from "../utils/SocketContext";
 
 export default function TimeLine() {
   const { notes, oldestNoteId, moreNote, updateMoreNote } = useNotesContext();

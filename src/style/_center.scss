@@ -1,6 +1,6 @@
 #center {
   margin: 0 0.5em;
-  width: 100%;
+  width: calc(100% - 35em);
   @media (max-width: 1000px) {
     width: calc(100% - 4em);
   }

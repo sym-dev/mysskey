@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
 import { IoPin } from "react-icons/io5";
 import { useLocation } from "react-router-dom";
-import { ImageModalProvider } from "./utils/ModalContext";
-import ImageModal from "./components/ImageModal";
-import Loading from "./components/Loading";
-import Note from "./components/Note";
-import noimage from "./components/bg.png";
-import parseMFM from "./utils/parseMFM";
+import { ImageModalProvider } from "../utils/ModalContext";
+import ImageModal from "../components/ImageModal";
+import Loading from "../components/Loading";
+import Note from "../components/Note";
+import noimage from "../components/bg.png";
+import parseMFM from "../utils/parseMFM";
 
 function User() {
   const [user, update] = useState(null);

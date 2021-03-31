@@ -42,7 +42,7 @@ export default function PostModal() {
         updateRenoteProp("");
         updatePostModal(false);
       }}
-      className="postModal"
+      className="modal postModal"
       overlayClassName="Overlay"
     >
       {replyProp && (

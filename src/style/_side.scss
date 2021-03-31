@@ -1,7 +1,7 @@
 .side {
-  position: sticky;
   top: 0.3em;
   height: 90vh;
+  position: sticky;
 }
 
 #right {
@@ -185,27 +185,75 @@
 }
 
 #left {
+  width: 14em;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-end;
-  width: 20em;
+  justify-content: space-between;
   padding: 0.5em 0;
   background-color: #243142;
   border-radius: 5px;
+  user-select: none;
   @media (max-width: 1000px) {
     width: 3em;
   }
-  .post-button {
-    margin: 0;
-    padding: 0;
-    width: 2.5em;
-    height: 2.5em;
-    border-radius: 100%;
-    background-color: #99acff;
-    filter: drop-shadow(2px 2px 3px #120c27a2);
-    svg {
-      vertical-align: middle;
+  .upper {
+    padding: 0.5em 0;
+    > .item {
+      cursor: auto;
+      padding: 0.5em 1em;
+      color: #cccccc;
+      border-radius: 5px;
+      display: flex;
+      align-items: center;
+      font-size: 1.3em;
+      &:hover {
+        text-decoration: none;
+        color: white;
+        background-color: #ffffff0f;
+      }
+      label {
+        margin-left: 0.5em;
+        @media (max-width: 1000px) {
+          display: none;
+        }
+      }
+      &.logout {
+        color: tomato;
+        position: relative;
+      }
+    }
+  }
+  .lower {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-basis: 7em;
+    justify-content: space-between;
+    .Me {
+      width: 3em;
+      height: 3em;
+      border: 3px solid #1c6999;
+      border-radius: 100em;
+      &:hover {
+        border-color: #3cb4d8;
+      }
+      img {
+        object-fit: cover;
+        border-radius: 100em;
+      }
+    }
+    .post-button {
+      margin: 0;
+      padding: 0;
+      width: 2.5em;
+      height: 2.5em;
+      border-radius: 100%;
+      background-color: #99acff;
+      filter: drop-shadow(2px 2px 3px #120c27a2);
+      svg {
+        vertical-align: middle;
+      }
     }
   }
 }

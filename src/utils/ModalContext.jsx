@@ -1,8 +1,19 @@
 import { useState, createContext, useContext } from "react";
 
+const LogoutModalContext = createContext();
+
 const ImageModalContext = createContext();
 
 const PostModalContext = createContext();
+
+const LogoutModalProvider = ({ children }) => {
+  const [logoutModal, updateLogoutModal] = useState(false);
+  return (
+    <LogoutModalContext.Provider value={{ logoutModal, updateLogoutModal }}>
+      {children}
+    </LogoutModalContext.Provider>
+  );
+};
 
 const ImageModalProvider = ({ children }) => {
   const [imageModal, updateImageModal] = useState(false);
@@ -40,12 +51,15 @@ const PostModalProvider = ({ children }) => {
   );
 };
 
+const useLogoutModalContext = () => useContext(LogoutModalContext);
 const useImageModalContext = () => useContext(ImageModalContext);
 const usePostModalContext = () => useContext(PostModalContext);
 
 export {
+  LogoutModalProvider,
   ImageModalProvider,
   PostModalProvider,
+  useLogoutModalContext,
   useImageModalContext,
   usePostModalContext,
 };

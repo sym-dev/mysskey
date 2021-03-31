@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { ImageModalProvider } from "./utils/ModalContext";
-import ImageModal from "./components/ImageModal";
-import Loading from "./components/Loading";
-import Note from "./components/Note";
+import { ImageModalProvider } from "../utils/ModalContext";
+import ImageModal from "../components/ImageModal";
+import Loading from "../components/Loading";
+import Note from "../components/Note";
 
 function Notes() {
   let noteId = document.location.pathname.split("/")[2];
