@@ -1,3 +1,4 @@
+import React from "react";
 import TimeLine from "./TimeLine";
 import { useHeaderContext } from "../utils/HeaderContext";
 import { IoHome } from "react-icons/io5";

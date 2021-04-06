@@ -1,0 +1,40 @@
+@use "side";
+
+#notification {
+  @extend #right;
+  width: 100%;
+  margin: 0.5em 0;
+  background-color: initial;
+  @media (max-width: 1000px) {
+    display: block;
+  }
+  .notificationsWrapper {
+    overflow: auto;
+    .replyContainer {
+      background-color: #ffffff0a;
+      border: 2px dotted teal;
+      border-radius: 5px;
+      padding: 0.3em 0 0.3em 0.5em;
+    }
+    .notificationContainer {
+      background-color: #ffffff0f;
+      border-radius: 5px;
+      .notificationBody {
+        width: 100%;
+        .notificationNoteInfo {
+          width: 100%;
+        }
+      }
+    }
+    .quoteContainer {
+      width: 100%;
+      margin: 0;
+      background-color: #ffffff0a;
+      border: 2px dotted #357442;
+      border-radius: 5px;
+    }
+    hr {
+      visibility: hidden;
+    }
+  }
+}
