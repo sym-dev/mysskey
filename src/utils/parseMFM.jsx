@@ -99,7 +99,9 @@ function judge(data, emojis) {
         />
       );
     case "emojiCode":
-      return emojis && emojis.length > 0 ? (
+      return emojis &&
+        emojis.length > 0 &&
+        emojis.some((emoji) => emoji.name === data.props.name) ? (
         <img
           src={emojis.find(({ name }) => name === data.props.name).url}
           alt={data.props.name}
