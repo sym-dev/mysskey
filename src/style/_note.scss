@@ -47,14 +47,9 @@
       align-items: center;
       > .userInfo {
         display: flex;
-        max-width: 80%;
-        > a {
-          text-overflow: ellipsis;
-          white-space: nowrap;
-          text-overflow: ellipsis;
-          overflow: hidden;
-        }
-        > span {
+        max-width: 70%;
+        > a,
+        span {
           text-overflow: ellipsis;
           white-space: nowrap;
           text-overflow: ellipsis;
@@ -62,7 +57,7 @@
         }
       }
       .noteInfo {
-        max-width: 20%;
+        max-width: 30%;
         display: flex;
         align-items: center;
         gap: 2px;

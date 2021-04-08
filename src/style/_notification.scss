@@ -21,7 +21,7 @@
       background-color: #ffffff0f;
       border-radius: 5px;
       .notificationBody {
-        width: 100%;
+        width: calc(100% - 3em);
         .notificationNoteInfo {
           width: 100%;
         }
