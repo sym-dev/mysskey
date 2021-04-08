@@ -32,9 +32,7 @@ function fetchData(tokenUrl, history, updateLogin) {
         localStorage.setItem("UserToken", text.token);
         localStorage.setItem("UserId", text.user.id);
         localStorage.setItem("UserName", text.user.username);
-        console.log("hoge");
         Promise.all([fetchMeta(), fetchUser()]).then(() => {
-          console.log("huga");
           updateLogin(true);
           history.push("/");
         });
@@ -46,7 +44,6 @@ function fetchData(tokenUrl, history, updateLogin) {
 }
 
 async function fetchMeta() {
-  console.log("data");
   await fetch("https://" + localStorage.getItem("instanceURL") + "/api/meta", {
     method: "POST",
   })
@@ -66,7 +63,6 @@ async function fetchMeta() {
     });
 }
 async function fetchUser() {
-  console.log("user");
   const body = {
     username: localStorage.getItem("UserName"),
   };
