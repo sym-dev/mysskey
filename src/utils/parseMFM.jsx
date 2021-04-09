@@ -1,10 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { parse } from "twemoji-parser";
 import * as mfm from "mfm-js";
 
-export default function parseMFM(text, emojis, type) {
+export default function ParseMFM(props) {
+  const text = props.text;
+  const emojis = props.emojis;
+  const type = props.type;
   let v = [];
+  // let url = "";
+  const [url, updateUrl] = useState("");
   if (text) {
     switch (type) {
       case "full":
@@ -12,6 +17,12 @@ export default function parseMFM(text, emojis, type) {
           v.push(
             <React.Fragment key={i}>{judge(data, emojis)}</React.Fragment>
           );
+          if (
+            data.type === "url" ||
+            (data.type === "link" && !data.props.silent)
+          ) {
+            updateUrl(data.props.url);
+          }
         });
         break;
       case "plain":
@@ -25,9 +36,14 @@ export default function parseMFM(text, emojis, type) {
         break;
     }
   } else {
-    v = text;
+    v = [text];
   }
-  return v;
+  return (
+    <>
+      {v}
+      {url && <div>{console.log(url)}</div>}
+    </>
+  );
 }
 
 function judge(data, emojis) {

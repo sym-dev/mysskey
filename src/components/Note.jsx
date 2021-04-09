@@ -10,7 +10,7 @@ import {
 } from "react-icons/io5";
 import { getRelativeTime } from "../utils/getRelativeTime";
 import File from "./File";
-import parseMFM from "../utils/parseMFM";
+import ParseMFM from "../utils/ParseMFM";
 
 export default function Note(props) {
   let data = props.data;
@@ -60,9 +60,15 @@ export default function Note(props) {
                   }
                 >
                   <IoRepeat fontSize="1.3em" className="renoteIcon renote" />
-                  {data.user.name // ? parseEmojis(data.user.name, data.user.emojis)
-                    ? parseMFM(data.user.name, data.user.emojis, "plain")
-                    : data.user.username}
+                  {data.user.name ? (
+                    <ParseMFM
+                      text={data.user.name}
+                      emojis={data.user.emojis}
+                      type="plain"
+                    />
+                  ) : (
+                    data.user.username
+                  )}
                   <span className="renote"> Renoted</span>
                 </Link>
                 <span className="noteInfo">
@@ -118,9 +124,15 @@ export default function Note(props) {
                       : "/user/@" + data.user.username + "@" + data.user.host
                   }
                 >
-                  {data.user.name
-                    ? parseMFM(data.user.name, data.user.emojis, "plain")
-                    : data.user.username}
+                  {data.user.name ? (
+                    <ParseMFM
+                      text={data.user.name}
+                      emojis={data.user.emojis}
+                      type="plain"
+                    />
+                  ) : (
+                    data.user.username
+                  )}
                 </Link>
                 <span>
                   {!data.user.host
@@ -153,12 +165,12 @@ export default function Note(props) {
             {data.cw || data.cw === "" ? (
               <details>
                 <summary className="cwSummary">
-                  {parseMFM(data.cw, data.emojis, "full")}
+                  <ParseMFM text={data.cw} emojis={data.emojis} type="full" />
                 </summary>
 
                 <p className="noteText">
                   {data.replyId && <IoArrowUndo />}
-                  {parseMFM(data.text, data.emojis, "full")}
+                  <ParseMFM text={data.text} emojis={data.emojis} type="full" />
                 </p>
                 {data.files.length <= 0 ? (
                   <></>
@@ -174,7 +186,7 @@ export default function Note(props) {
               <>
                 <div className="noteText">
                   {data.replyId && <IoArrowUndo />}
-                  {parseMFM(data.text, data.emojis, "full")}
+                  <ParseMFM text={data.text} emojis={data.emojis} type="full" />
                 </div>
                 {data.files.length > 0 && (
                   <>

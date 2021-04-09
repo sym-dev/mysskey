@@ -7,7 +7,7 @@ import ImageModal from "../components/ImageModal";
 import Loading from "../components/Loading";
 import Note from "../components/Note";
 import noimage from "../components/bg.png";
-import parseMFM from "../utils/parseMFM";
+import ParseMFM from "../utils/ParseMFM";
 
 function User() {
   const [user, update] = useState(null);
@@ -40,9 +40,11 @@ function User() {
         updateHeaderValue(
           <>
             <img className="icon" src={text.avatarUrl} alt="user icon" />
-            {text.name
-              ? parseMFM(text.name, text.emojis, "plain")
-              : text.username}
+            {text.name ? (
+              <ParseMFM text={text.name} emojis={text.emojis} type="plain" />
+            ) : (
+              text.username
+            )}
           </>
         );
       })
@@ -110,9 +112,15 @@ function UserSection(props) {
           <div>
             <div>
               <h1 className="username">
-                {props.data.name
-                  ? parseMFM(props.data.name, props.data.emojis, "plain")
-                  : props.data.username}
+                {props.data.name ? (
+                  <ParseMFM
+                    text={props.data.name}
+                    emojis={props.data.emojis}
+                    type="plain"
+                  />
+                ) : (
+                  props.data.username
+                )}
               </h1>
               <p className="userid">
                 {"@" +
@@ -121,7 +129,11 @@ function UserSection(props) {
               </p>
               <div className="desc">
                 {props.data.description ? (
-                  parseMFM(props.data.description, props.data.emojis, "full")
+                  <ParseMFM
+                    text={props.data.description}
+                    emojis={props.data.emojis}
+                    type="full"
+                  />
                 ) : (
                   <i>no description provided.</i>
                 )}
