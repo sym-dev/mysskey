@@ -62,8 +62,7 @@ export default function PostModal() {
       )}
       <form onSubmit={handleSubmit(onSubmitPost)}>
         <textarea
-          name="text"
-          ref={register}
+          {...register("text")}
           placeholder={
             replyProp
               ? "このノートに返信..."
@@ -76,15 +75,13 @@ export default function PostModal() {
         ></textarea>
         <input
           type="hidden"
-          name="replyId"
+          {...register("replyId")}
           value={replyProp ? replyProp.id : ""}
-          ref={register}
         ></input>
         <input
           type="hidden"
-          name="renoteId"
+          {...register("renoteId")}
           value={renoteProp ? renoteProp.id : ""}
-          ref={register}
         ></input>
         <input type="submit" value="投稿" />
       </form>

@@ -64,9 +64,8 @@ function NotLogin() {
             アプリの名前:
             <input
               type="text"
-              name="appName"
+              {...register("appName")}
               onSubmit={handleSubmit(onSubmit)}
-              ref={register}
               required
             />
           </label>
@@ -74,9 +73,8 @@ function NotLogin() {
             Instance:
             <input
               type="text"
-              name="instance"
+              {...register("instance")}
               onSubmit={handleSubmit(onSubmit)}
-              ref={register}
               required
             />
           </label>

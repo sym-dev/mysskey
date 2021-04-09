@@ -9,7 +9,7 @@ export default function ParseMFM(props) {
   const type = props.type;
   let v = [];
   // let url = "";
-  const [url, updateUrl] = useState("");
+  // const [url, updateUrl] = useState("");
   if (text) {
     switch (type) {
       case "full":
@@ -17,11 +17,9 @@ export default function ParseMFM(props) {
           v.push(
             <React.Fragment key={i}>{judge(data, emojis)}</React.Fragment>
           );
-          if (
-            data.type === "url" ||
-            (data.type === "link" && !data.props.silent)
-          ) {
-            updateUrl(data.props.url);
+          if (data.type === "url") {
+            // url = data.props.url;
+            // updateUrl(data.props.url);
           }
         });
         break;
@@ -41,7 +39,7 @@ export default function ParseMFM(props) {
   return (
     <>
       {v}
-      {url && <div>{console.log(url)}</div>}
+      {/* {url && <div>{url}</div>} */}
     </>
   );
 }

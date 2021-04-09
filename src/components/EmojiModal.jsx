@@ -41,8 +41,7 @@ export default function EmojiModal(props) {
         <div className="userInput">
           <input
             type="text"
-            name="reaction"
-            ref={register}
+            {...register("reaction")}
             placeholder={"input emoji..."}
             onSubmit={handleSubmit(onSubmitReaction)}
             required
@@ -83,7 +82,7 @@ export default function EmojiModal(props) {
                     </button>
                   ))}
             </div>
-            <input type="hidden" name="emoji" ref={register} />
+            <input type="hidden" {...register("emoji")} />
           </form>
           <form onSubmit={handleSubmit(onSubmitReaction)}>
             <p>
@@ -103,7 +102,7 @@ export default function EmojiModal(props) {
                     <img src={data.url} alt={data.name} loading="lazy" />
                   </button>
                 ))}
-              <input type="hidden" name="emoji" ref={register} />
+              <input type="hidden" {...register("emoji")} />
             </div>
             {emojiCategory.map((cat) => (
               <details key={cat}>
@@ -133,7 +132,7 @@ export default function EmojiModal(props) {
                         <img src={data.url} alt={data.name} loading="lazy" />
                       </button>
                     ))}
-                  <input type="hidden" name="emoji" ref={register} />
+                  <input type="hidden" {...register("emoji")} />
                 </div>
               </details>
             ))}
@@ -141,10 +140,9 @@ export default function EmojiModal(props) {
         </div>
         <input
           type="text"
-          name="searchEmoji"
+          {...register("searchEmoji")}
           className="searchEmoji"
           placeholder="検索"
-          ref={register}
           onSubmit={(e) => {
             e.preventDefault();
           }}
