@@ -3,9 +3,6 @@
   "version": "0.2.0",
   "private": true,
   "dependencies": {
-    "@testing-library/jest-dom": "^5.12.0",
-    "@testing-library/react": "^11.2.6",
-    "@testing-library/user-event": "^13.1.5",
     "mfm-js": "^0.16.2",
     "modern-css-reset": "^1.4.0",
     "react": "^17.0.2",
@@ -18,19 +15,15 @@
     "react-string-replace": "^0.4.4",
     "sass": "^1.32.11",
     "twemoji-parser": "^13.0.0",
-    "uuid": "^8.3.2",
-    "web-vitals": "^1.1.1"
+    "uuid": "^8.3.2"
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "build": "react-scripts build"
   },
   "eslintConfig": {
     "extends": [
-      "react-app",
-      "react-app/jest"
+      "react-app"
     ]
   },
   "browserslist": {
