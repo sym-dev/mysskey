@@ -1,0 +1,48 @@
+.hashtag {
+  color: #68cdd4;
+}
+
+.mention {
+  color: #75c241;
+}
+
+.italic {
+  font-style: italic;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.tada {
+  font-weight: bold;
+  font-size: 1.2em;
+}
+
+.small {
+  opacity: 0.7;
+  font-size: 0.8em;
+}
+
+.quoteText {
+  margin: 0.5em 0;
+  font-style: normal;
+  color: #c0c0c0;
+  background-color: #ffffff0a;
+}
+
+.searchBlock {
+  display: flex;
+  .field {
+    flex-grow: 1;
+  }
+}
+
+pre {
+  padding: 1em 0.5em;
+  background-color: #203333;
+}
+
+.centerText {
+  text-align: center;
+}

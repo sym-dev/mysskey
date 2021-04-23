@@ -1,0 +1,41 @@
+{
+  "name": "mysskey",
+  "version": "0.2.0",
+  "private": true,
+  "dependencies": {
+    "mfm-js": "^0.16.2",
+    "modern-css-reset": "^1.4.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-hook-form": "^7.2.3",
+    "react-icons": "^4.2.0",
+    "react-modal": "^3.13.1",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "4.0.3",
+    "react-string-replace": "^0.4.4",
+    "sass": "^1.32.11",
+    "twemoji-parser": "^13.0.0",
+    "uuid": "^8.3.2"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.5%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
