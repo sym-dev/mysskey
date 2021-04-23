@@ -3,11 +3,11 @@ import { IoPin } from "react-icons/io5";
 import { useLocation } from "react-router-dom";
 import { useHeaderContext } from "../utils/HeaderContext";
 import { ImageModalProvider } from "../utils/ModalContext";
+import ParseMFM from "../utils/ParseMFM";
 import ImageModal from "../components/ImageModal";
 import Loading from "../components/Loading";
 import Note from "../components/Note";
 import noimage from "../components/bg.png";
-import ParseMFM from "../utils/ParseMFM";
 
 function User() {
   const [user, update] = useState(null);
