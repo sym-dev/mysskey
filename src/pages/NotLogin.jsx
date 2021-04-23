@@ -8,6 +8,7 @@ function NotLogin() {
   );
   const { register, handleSubmit } = useForm();
   const onSubmit = (data) => {
+    console.log(data);
     const id = uuid();
     const serviceURL = document.location.href.replace("localhost", "127.0.0.1");
     const instanceURL = data.instance;

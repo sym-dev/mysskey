@@ -1,7 +1,5 @@
-import React, { useEffect } from "react";
-import { IoNotifications } from "react-icons/io5";
+import React from "react";
 import { useSocketContext } from "../utils/SocketContext";
-import { useHeaderContext } from "../utils/HeaderContext";
 import { useNotificationContext } from "../utils/NotificationContext";
 import { getRelativeTime } from "../utils/getRelativeTime";
 import Loading from "./Loading";
@@ -19,7 +17,6 @@ import {
 import { Link } from "react-router-dom";
 
 export default function Notifications() {
-  const { updateHeaderValue } = useHeaderContext();
   const {
     notifications,
     oldestNotificationId,
@@ -27,14 +24,6 @@ export default function Notifications() {
     updateMoreNotification,
   } = useNotificationContext();
   const { socketRef } = useSocketContext();
-  useEffect(() => {
-    updateHeaderValue(
-      <>
-        <IoNotifications fontSize="1.2em" />
-        Notification
-      </>
-    );
-  }, [updateHeaderValue]);
   return (
     <>
       {notifications.length <= 0 ? (
