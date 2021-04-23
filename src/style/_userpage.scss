@@ -58,3 +58,26 @@
     text-align: center;
   }
 }
+
+.userNotes {
+  nav {
+    width: 100%;
+    ul {
+      width: 100%;
+      list-style: none;
+      display: flex;
+      justify-content: space-evenly;
+      li {
+        cursor: pointer;
+        padding: 0.5em;
+        border-bottom: 2px solid #a3cbff;
+        &:hover {
+          color: #43baff;
+        }
+        &.active {
+          color: #a3cbff;
+        }
+      }
+    }
+  }
+}

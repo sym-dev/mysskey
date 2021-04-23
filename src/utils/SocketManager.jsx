@@ -1,7 +1,10 @@
 import React, { useEffect } from "react";
+import { useSocketContext } from "./SocketContext";
 import { useNotesContext } from "./NotesContext";
 import { useNotificationContext } from "../utils/NotificationContext";
-import { useSocketContext } from "./SocketContext";
+import { useUserContext } from "../utils/UserContext";
+import { useHeaderContext } from "../utils/HeaderContext";
+import ParseMFM from "../utils/ParseMfm";
 
 export default function SocketManager({ children }) {
   const {
@@ -16,7 +19,14 @@ export default function SocketManager({ children }) {
     updateOldestNotificationId,
     updateMoreNotification,
   } = useNotificationContext();
+  const {
+    updateUserinfo,
+    updateUserNotes,
+    updateOldestUserNoteId,
+    updateMoreUserNote,
+  } = useUserContext();
   const { socketRef } = useSocketContext();
+  const { updateHeaderValue } = useHeaderContext();
   useEffect(() => {
     socketRef.current.onopen = (e) => {
       const initNoteObject = {
@@ -72,6 +82,61 @@ export default function SocketManager({ children }) {
       // console.log("receive anything data");
       // console.log(res);
       switch (res.type) {
+        case "channel":
+          switch (data.id) {
+            case "home":
+              // console.log("receive new note");
+              dispatch({
+                type: "addUpper",
+                payload: data.body,
+              });
+              socketRef.current.send(
+                JSON.stringify({
+                  type: "subNote",
+                  body: {
+                    id: data.body.id,
+                  },
+                })
+              );
+              break;
+            case "notification":
+              switch (data.type) {
+                case "notification":
+                  updateNotifications((n) => [data.body, ...n]);
+                  break;
+                default:
+                  break;
+              }
+              break;
+            default:
+              break;
+          }
+          break;
+        case "noteUpdated":
+          // console.log(data);
+          switch (data.type) {
+            case "reacted":
+              dispatch({
+                type: "updateEmoji",
+                payload: data,
+              });
+              break;
+            case "unreacted":
+              dispatch({
+                type: "deleteEmoji",
+                payload: data,
+              });
+              break;
+            case "deleted":
+              dispatch({
+                type: "remove",
+                payload: data,
+              });
+              break;
+            default:
+              break;
+          }
+          break;
         case "api:initNote":
           // console.log("receive init notes");
           data.res.forEach((note) => {
@@ -124,60 +189,47 @@ export default function SocketManager({ children }) {
           });
           updateOldestNotificationId(data.res[14].id);
           break;
-        case "noteUpdated":
-          // console.log(data);
-          switch (data.type) {
-            case "reacted":
-              dispatch({
-                type: "updateEmoji",
-                payload: data,
-              });
-              break;
-            case "unreacted":
-              dispatch({
-                type: "deleteEmoji",
-                payload: data,
-              });
-              break;
-            case "deleted":
-              dispatch({
-                type: "remove",
-                payload: data,
-              });
-              break;
-            default:
-              break;
-          }
+        case "api:userInfo":
+          updateUserinfo(data.res);
+          updateHeaderValue(
+            <>
+              <img className="icon" src={data.res.avatarUrl} alt="user icon" />
+              {data.res.name ? (
+                <ParseMFM
+                  text={data.res.name}
+                  emojis={data.res.emojis}
+                  type="plain"
+                />
+              ) : (
+                data.res.username
+              )}
+            </>
+          );
+          const userNoteObject = {
+            type: "api",
+            body: {
+              id: "userNotes",
+              endpoint: "users/notes",
+              data: {
+                i: localStorage.getItem("UserToken"),
+                userId: data.res.id,
+                includeReplies: false,
+                limit: 15,
+              },
+            },
+          };
+          socketRef.current.send(JSON.stringify(userNoteObject));
           break;
-        case "channel":
-          switch (data.id) {
-            case "home":
-              // console.log("receive new note");
-              dispatch({
-                type: "addUpper",
-                payload: data.body,
-              });
-              socketRef.current.send(
-                JSON.stringify({
-                  type: "subNote",
-                  body: {
-                    id: data.body.id,
-                  },
-                })
-              );
-              break;
-            case "notification":
-              switch (data.type) {
-                case "notification":
-                  updateNotifications((n) => [data.body, ...n]);
-                  break;
-                default:
-                  break;
-              }
-              break;
-            default:
-              break;
-          }
+        case "api:userNotes":
+          updateUserNotes(data.res);
+          updateOldestUserNoteId(data.res[14].id);
+          break;
+        case "api:moreUserNotes":
+          updateMoreUserNote(false);
+          data.res.forEach((data) => {
+            updateUserNotes((n) => [...n, data]);
+          });
+          updateOldestUserNoteId(data.res[14].id);
           break;
         default:
           break;
@@ -191,6 +243,11 @@ export default function SocketManager({ children }) {
     updateMoreNotification,
     updateNotifications,
     updateOldestNotificationId,
+    updateUserinfo,
+    updateUserNotes,
+    updateOldestUserNoteId,
+    updateMoreUserNote,
+    updateHeaderValue,
   ]);
   return <>{children}</>;
 }

@@ -3,71 +3,59 @@ import { IoPin } from "react-icons/io5";
 import { useLocation } from "react-router-dom";
 import { useHeaderContext } from "../utils/HeaderContext";
 import { ImageModalProvider } from "../utils/ModalContext";
+import { useSocketContext } from "../utils/SocketContext";
+import { useUserContext } from "../utils/UserContext";
 import Note from "../components/Note";
 import ParseMFM from "../utils/ParseMfm";
 import ImageModal from "../components/ImageModal";
 import Loading from "../components/Loading";
 import noimage from "../components/bg.png";
 
-function User() {
-  const [user, update] = useState(null);
+export default function User() {
+  const {
+    userInfo,
+    userNotes,
+    updateUserNotes,
+    oldestUserNoteId,
+    moreUserNote,
+    updateMoreUserNote,
+  } = useUserContext();
+  const { socketRef } = useSocketContext();
   const { updateHeaderValue } = useHeaderContext();
+  const [includeReply, updateIncludeReply] = useState(false);
   let location = useLocation();
   let userName = document.location.pathname.split("@")[1];
   let userHost = document.location.pathname.split("@")[2];
   useEffect(() => {
     updateHeaderValue(<>User</>);
-    const userURL =
-      "https://" + localStorage.getItem("instanceURL") + "/api/users/show";
-    const body = {
-      i: localStorage.getItem("UserToken"),
-      username: userName,
-      host: userHost,
+    const userInfoObject = {
+      type: "api",
+      body: {
+        id: "userInfo",
+        endpoint: "users/show",
+        data: {
+          i: localStorage.getItem("UserToken"),
+          username: userName,
+          host: userHost,
+        },
+      },
     };
-    fetch(userURL, {
-      method: "POST",
-      body: JSON.stringify(body),
-    })
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error(`${res.status} ${res.statusText}`);
-        }
-        return res.json();
-      })
-      .then((text) => {
-        update(text);
-        console.log(text);
-        updateHeaderValue(
-          <>
-            <img className="icon" src={text.avatarUrl} alt="user icon" />
-            {text.name ? (
-              <ParseMFM text={text.name} emojis={text.emojis} type="plain" />
-            ) : (
-              text.username
-            )}
-          </>
-        );
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-  }, [userName, userHost, location, updateHeaderValue]);
+    socketRef.current.send(JSON.stringify(userInfoObject));
+  }, [socketRef, userName, userHost, location, updateHeaderValue]);
   return (
     <>
       <ImageModalProvider>
         <section>
-          {user === null ? <Loading /> : <UserSection data={user} />}
+          {!userInfo ? <Loading /> : <UserSection data={userInfo} />}
         </section>
         <main>
-          {user === null ? (
-            <></>
-          ) : user.pinnedNotes.length > 0 ? (
+          {userInfo && userInfo.pinnedNotes.length > 0 && (
             <div className="pinned-posts">
               <p>
                 <IoPin fontSize="1.2em" />
                 ピン止めされた投稿
               </p>
-              {user.pinnedNotes.map((data) => (
+              {userInfo.pinnedNotes.map((data) => (
                 <div key={data.id} className="note">
                   <Note
                     data={data}
@@ -85,17 +73,114 @@ function User() {
                 </div>
               ))}
             </div>
-          ) : (
-            <></>
           )}
         </main>
+        <section className="userNotes">
+          <nav>
+            <ul>
+              <li
+                className={!includeReply ? "active" : ""}
+                onClick={() => {
+                  if (includeReply) {
+                    updateUserNotes(false);
+                    updateIncludeReply(false);
+                    const userNoteObject = {
+                      type: "api",
+                      body: {
+                        id: "userNotes",
+                        endpoint: "users/notes",
+                        data: {
+                          i: localStorage.getItem("UserToken"),
+                          userId: userInfo.id,
+                          includeReplies: false,
+                          limit: 15,
+                        },
+                      },
+                    };
+                    socketRef.current.send(JSON.stringify(userNoteObject));
+                  }
+                }}
+              >
+                投稿
+              </li>
+              <li
+                className={includeReply ? "active" : ""}
+                onClick={() => {
+                  if (!includeReply) {
+                    updateUserNotes(false);
+                    updateIncludeReply(true);
+                    const userNoteObject = {
+                      type: "api",
+                      body: {
+                        id: "userNotes",
+                        endpoint: "users/notes",
+                        data: {
+                          i: localStorage.getItem("UserToken"),
+                          userId: userInfo.id,
+                          includeReplies: true,
+                          limit: 15,
+                        },
+                      },
+                    };
+                    socketRef.current.send(JSON.stringify(userNoteObject));
+                  }
+                }}
+              >
+                投稿と返信
+              </li>
+            </ul>
+          </nav>
+          {userNotes && (
+            <main>
+              {userNotes.map((data) => (
+                <div key={data.id} className="note">
+                  <Note
+                    data={data}
+                    depth={0}
+                    type={
+                      data.renoteId && !data.text
+                        ? "renote"
+                        : data.renoteId
+                        ? "quote"
+                        : data.replyId
+                        ? "reply"
+                        : "generall"
+                    }
+                  />
+                </div>
+              ))}
+              <button
+                className="motto"
+                onClick={() => {
+                  socketRef.current.send(
+                    JSON.stringify({
+                      type: "api",
+                      body: {
+                        id: "moreUserNotes",
+                        endpoint: "users/notes",
+                        data: {
+                          i: localStorage.getItem("UserToken"),
+                          userId: userInfo.id,
+                          includeReplies: false,
+                          limit: 15,
+                          untilId: oldestUserNoteId,
+                        },
+                      },
+                    })
+                  );
+                  updateMoreUserNote(true);
+                }}
+              >
+                {moreUserNote ? <Loading size="small" /> : "もっと"}
+              </button>
+            </main>
+          )}
+        </section>
         <ImageModal />
       </ImageModalProvider>
     </>
   );
 }
-
-export default User;
 
 function UserSection(props) {
   return (

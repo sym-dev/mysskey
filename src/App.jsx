@@ -4,6 +4,7 @@ import { SocketProvider } from "./utils/SocketContext";
 import { HeaderProvider } from "./utils/HeaderContext";
 import { NotesProvider } from "./utils/NotesContext";
 import { NotificationProvider } from "./utils/NotificationContext";
+import { UserPovider } from "./utils/UserContext";
 import {
   LogoutModalProvider,
   PostModalProvider,
@@ -84,15 +85,17 @@ function Providers({ children }) {
     <SocketProvider>
       <HeaderProvider>
         <NotesProvider>
-          <NotificationProvider>
-            <OverlayProvider>
-              <LogoutModalProvider>
-                <PostModalProvider>
-                  <ImageModalProvider>{children}</ImageModalProvider>
-                </PostModalProvider>
-              </LogoutModalProvider>
-            </OverlayProvider>
-          </NotificationProvider>
+          <UserPovider>
+            <NotificationProvider>
+              <OverlayProvider>
+                <LogoutModalProvider>
+                  <PostModalProvider>
+                    <ImageModalProvider>{children}</ImageModalProvider>
+                  </PostModalProvider>
+                </LogoutModalProvider>
+              </OverlayProvider>
+            </NotificationProvider>
+          </UserPovider>
         </NotesProvider>
       </HeaderProvider>
     </SocketProvider>
