@@ -192,6 +192,7 @@ export default function User() {
 }
 
 function UserSection({ data }) {
+  console.log(data);
   return (
     <>
       <div className="userpage">
@@ -229,7 +230,11 @@ function UserSection({ data }) {
                 )}
               </h1>
               <p className="userid">
-                {"@" + data.username + (data.host ? "@" + data.host : "")}
+                {"@" +
+                  data.username +
+                  (data.host
+                    ? "@" + data.host
+                    : "@" + localStorage.getItem("instanceURL"))}
               </p>
               <p className="state">
                 ステータス:{" "}
