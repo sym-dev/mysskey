@@ -28,7 +28,8 @@
     height: 2em;
     width: 2em;
     object-fit: cover;
-    border: 2px solid #56a9b4;
+    border-width: 2px;
+    border-style: solid;
     border-radius: 100%;
   }
   .customEmoji {

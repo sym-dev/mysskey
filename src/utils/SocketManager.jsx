@@ -65,14 +65,14 @@ export default function SocketManager({ children }) {
           id: "notification",
         },
       };
-      socketRef.current.send(JSON.stringify(homeTimelineObject));
-      socketRef.current.send(JSON.stringify(notificationObject));
       if (notes.length <= 0) {
         socketRef.current.send(JSON.stringify(initNoteObject));
       }
       if (notifications.length <= 0) {
         socketRef.current.send(JSON.stringify(initNotificationObject));
       }
+      socketRef.current.send(JSON.stringify(homeTimelineObject));
+      socketRef.current.send(JSON.stringify(notificationObject));
     };
   }, [notes, notifications, socketRef]);
   useEffect(() => {
@@ -193,7 +193,19 @@ export default function SocketManager({ children }) {
           updateUserinfo(data.res);
           updateHeaderValue(
             <>
-              <img className="icon" src={data.res.avatarUrl} alt="user icon" />
+              <img
+                className="icon"
+                src={data.res.avatarUrl}
+                alt="user icon"
+                style={{
+                  borderColor:
+                    data.res.onlineStatus === "online"
+                      ? "#87cefae0"
+                      : data.res.onlineStatus === "active"
+                      ? "#ffa500e0"
+                      : "#04002cbb",
+                }}
+              />
               {data.res.name ? (
                 <ParseMFM
                   text={data.res.name}

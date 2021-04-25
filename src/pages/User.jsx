@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import { IoPin } from "react-icons/io5";
+import React, { useState, useEffect } from "react";
+import { IoCalendar, IoGolf, IoPin } from "react-icons/io5";
 import { useLocation } from "react-router-dom";
 import { useHeaderContext } from "../utils/HeaderContext";
 import { ImageModalProvider } from "../utils/ModalContext";
@@ -27,6 +27,8 @@ export default function User() {
   let userName = document.location.pathname.split("@")[1];
   let userHost = document.location.pathname.split("@")[2];
   useEffect(() => {
+    updateUserNotes(false);
+    updateIncludeReply(false);
     updateHeaderValue(<>User</>);
     const userInfoObject = {
       type: "api",
@@ -41,7 +43,14 @@ export default function User() {
       },
     };
     socketRef.current.send(JSON.stringify(userInfoObject));
-  }, [socketRef, userName, userHost, location, updateHeaderValue]);
+  }, [
+    socketRef,
+    userName,
+    userHost,
+    location,
+    updateHeaderValue,
+    updateUserNotes,
+  ]);
   return (
     <>
       <ImageModalProvider>
@@ -182,41 +191,59 @@ export default function User() {
   );
 }
 
-function UserSection(props) {
+function UserSection({ data }) {
   return (
     <>
       <div className="userpage">
         <img
           className="banner"
-          src={props.data.bannerUrl ? props.data.bannerUrl : noimage}
+          src={data.bannerUrl ? data.bannerUrl : noimage}
           alt="user banner"
           onError={(e) => (e.target.src = noimage)}
         />
         <div className="user-container">
-          <img className="icon" src={props.data.avatarUrl} alt="user icon" />
-          <div>
+          <div className="user-profile">
+            <img
+              className="icon"
+              src={data.avatarUrl}
+              alt="user icon"
+              style={{
+                borderColor:
+                  data.onlineStatus === "online"
+                    ? "#87cefae0"
+                    : data.onlineStatus === "active"
+                    ? "#ffa500e0"
+                    : "#04002cbb",
+              }}
+            />
             <div>
               <h1 className="username">
-                {props.data.name ? (
+                {data.name ? (
                   <ParseMFM
-                    text={props.data.name}
-                    emojis={props.data.emojis}
+                    text={data.name}
+                    emojis={data.emojis}
                     type="plain"
                   />
                 ) : (
-                  props.data.username
+                  data.username
                 )}
               </h1>
               <p className="userid">
-                {"@" +
-                  props.data.username +
-                  (props.data.host ? "@" + props.data.host : "")}
+                {"@" + data.username + (data.host ? "@" + data.host : "")}
+              </p>
+              <p className="state">
+                ステータス:{" "}
+                {data.onlineStatus === "online"
+                  ? "オンライン"
+                  : data.onlineStatus === "active"
+                  ? "アクティブ"
+                  : "unknown"}
               </p>
               <div className="desc">
-                {props.data.description ? (
+                {data.description ? (
                   <ParseMFM
-                    text={props.data.description}
-                    emojis={props.data.emojis}
+                    text={data.description}
+                    emojis={data.emojis}
                     type="full"
                   />
                 ) : (
@@ -224,17 +251,61 @@ function UserSection(props) {
                 )}
               </div>
             </div>
-            <div className="user-info">
+          </div>
+          <div className="user-info">
+            {data.birthday && (
+              <>
+                <hr />
+                <div className="dates">
+                  <dt>
+                    <IoGolf />
+                    誕生日
+                  </dt>
+                  <dl>{getDate(data.birthday)}</dl>
+                </div>
+              </>
+            )}
+            <hr />
+            <div className="dates">
+              <dt>
+                <IoCalendar />
+                登録日
+              </dt>
+              <dl>{getDate(data.createdAt)}</dl>
+            </div>
+            {data.fields.length > 0 && (
+              <>
+                <hr />
+                <div className="fields">
+                  {data.fields.map((data, i) => (
+                    <div key={i}>
+                      <dt>{data.name}</dt>
+                      <dl>
+                        {
+                          <ParseMFM
+                            text={data.value}
+                            emojis={data.emojis}
+                            type="full"
+                          />
+                        }
+                      </dl>
+                    </div>
+                  ))}
+                </div>
+              </>
+            )}
+            <hr />
+            <div className="count">
               <div>
-                <p>{props.data.notesCount}</p>
+                <p>{data.notesCount}</p>
                 <p>ノート</p>
               </div>
               <div>
-                <p>{props.data.followingCount}</p>
+                <p>{data.followingCount}</p>
                 <p>フォロー</p>
               </div>
               <div>
-                <p>{props.data.followersCount}</p>
+                <p>{data.followersCount}</p>
                 <p>フォロワー</p>
               </div>
             </div>
@@ -243,4 +314,9 @@ function UserSection(props) {
       </div>
     </>
   );
+}
+
+function getDate(d) {
+  const date = new Date(d);
+  return date.getFullYear() + "/" + date.getMonth() + "/" + date.getDay();
 }

@@ -74,6 +74,11 @@
     transform: translateX(-50%);
     width: min(30em, 80vw);
     padding: 1em;
+    @media (max-width: 1000px) {
+      position: fixed;
+      transform: translate(-50%, 120%);
+      left: 50%;
+    }
     .userInput {
       width: 100%;
       display: flex;

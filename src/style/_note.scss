@@ -52,7 +52,6 @@
         span {
           text-overflow: ellipsis;
           white-space: nowrap;
-          text-overflow: ellipsis;
           overflow: hidden;
         }
       }
@@ -76,6 +75,9 @@
         height: 1.2em;
         width: inherit;
       }
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
     }
 
     .renote {

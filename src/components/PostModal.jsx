@@ -3,6 +3,7 @@ import { usePostModalContext } from "../utils/ModalContext";
 import { useSocketContext } from "../utils/SocketContext";
 import { useForm } from "react-hook-form";
 import Note from "./Note";
+import { useEffect } from "react";
 
 export default function PostModal() {
   const { socketRef } = useSocketContext();
@@ -14,7 +15,7 @@ export default function PostModal() {
     renoteProp,
     updateRenoteProp,
   } = usePostModalContext();
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, reset, formState } = useForm();
   const onSubmitPost = (data) => {
     let createNoteObject = {
       type: "api",
@@ -34,6 +35,11 @@ export default function PostModal() {
     updateRenoteProp("");
     updatePostModal(false);
   };
+  useEffect(() => {
+    if (formState.isSubmitSuccessful) {
+      reset({ text: "" });
+    }
+  });
   return (
     <Modal
       isOpen={postModal}
