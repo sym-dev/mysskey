@@ -6,10 +6,14 @@
 
 ![timeline](asset/timeline.png)
 
-#### 絵文字ピッカー
+#### 通知ページ & 通知バー
 
-![emojipicker](asset/emojipicker.png)
+![notification](asset/notification.png)
 
 #### ユーザーページ
 
 ![userpage](asset/userpage.png)
+
+#### 絵文字ピッカー
+
+![emojipicker](asset/emojipicker.png)
