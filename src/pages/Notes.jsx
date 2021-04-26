@@ -1,8 +1,10 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { IoDocumentText } from "react-icons/io5";
 import { useHeaderContext } from "../utils/HeaderContext";
 import { ImageModalProvider } from "../utils/ModalContext";
+import { useSocketContext } from "../utils/SocketContext";
+import { useNoteDetailsContext } from "../utils/NoteDetailsContext";
 import ImageModal from "../components/ImageModal";
 import Loading from "../components/Loading";
 import Note from "../components/Note";
@@ -11,7 +13,8 @@ function Notes() {
   let noteId = document.location.pathname.split("/")[2];
   let location = useLocation();
   const { updateHeaderValue } = useHeaderContext();
-  const [note, update] = useState(null);
+  const { socketRef } = useSocketContext();
+  const { noteDetails } = useNoteDetailsContext();
   useEffect(() => {
     updateHeaderValue(
       <>
@@ -19,45 +22,34 @@ function Notes() {
         Note
       </>
     );
-    const noteURL =
-      "https://" + localStorage.getItem("instanceURL") + "/api/notes/show";
-    const body = {
-      i: localStorage.getItem("UserToken"),
-      noteId: noteId,
+    const noteDetailsObject = {
+      type: "api",
+      body: {
+        id: "noteDetails",
+        endpoint: "notes/show",
+        data: {
+          i: localStorage.getItem("UserToken"),
+          noteId: noteId,
+        },
+      },
     };
-    fetch(noteURL, {
-      method: "POST",
-      body: JSON.stringify(body),
-    })
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error(`${res.status} ${res.statusText}`);
-        }
-        return res.json();
-      })
-      .then((text) => {
-        // console.log(text);
-        update(text);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-  }, [noteId, location, updateHeaderValue]);
+    socketRef.current.send(JSON.stringify(noteDetailsObject));
+  }, [noteId, location, updateHeaderValue, socketRef]);
   return (
     <>
       <ImageModalProvider>
         <main>
-          {note === null ? (
+          {noteDetails === false ? (
             <Loading />
           ) : (
-            <div key={note.id} className="note">
+            <div key={noteDetails.id} className="note">
               <Note
-                data={note}
+                data={noteDetails}
                 depth={0}
                 type={
-                  !note.renoteId
+                  !noteDetails.renoteId
                     ? "general"
-                    : note.text || note.files.length
+                    : noteDetails.text || noteDetails.files.length
                     ? "quote"
                     : "renote"
                 }

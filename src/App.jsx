@@ -5,6 +5,7 @@ import { HeaderProvider } from "./utils/HeaderContext";
 import { NotesProvider } from "./utils/NotesContext";
 import { NotificationProvider } from "./utils/NotificationContext";
 import { UserPovider } from "./utils/UserContext";
+import { NoteDetailsProvider } from "./utils/NoteDetailsContext";
 import {
   LogoutModalProvider,
   PostModalProvider,
@@ -86,15 +87,17 @@ function Providers({ children }) {
       <HeaderProvider>
         <NotesProvider>
           <UserPovider>
-            <NotificationProvider>
-              <OverlayProvider>
-                <LogoutModalProvider>
-                  <PostModalProvider>
-                    <ImageModalProvider>{children}</ImageModalProvider>
-                  </PostModalProvider>
-                </LogoutModalProvider>
-              </OverlayProvider>
-            </NotificationProvider>
+            <NoteDetailsProvider>
+              <NotificationProvider>
+                <OverlayProvider>
+                  <LogoutModalProvider>
+                    <PostModalProvider>
+                      <ImageModalProvider>{children}</ImageModalProvider>
+                    </PostModalProvider>
+                  </LogoutModalProvider>
+                </OverlayProvider>
+              </NotificationProvider>
+            </NoteDetailsProvider>
           </UserPovider>
         </NotesProvider>
       </HeaderProvider>

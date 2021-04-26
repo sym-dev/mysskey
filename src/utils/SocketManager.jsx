@@ -3,6 +3,7 @@ import { useSocketContext } from "./SocketContext";
 import { useNotesContext } from "./NotesContext";
 import { useNotificationContext } from "../utils/NotificationContext";
 import { useUserContext } from "../utils/UserContext";
+import { useNoteDetailsContext } from "../utils/NoteDetailsContext";
 import { useHeaderContext } from "../utils/HeaderContext";
 import ParseMFM from "../utils/ParseMfm";
 
@@ -25,6 +26,7 @@ export default function SocketManager({ children }) {
     updateOldestUserNoteId,
     updateMoreUserNote,
   } = useUserContext();
+  const { updateNoteDetails } = useNoteDetailsContext();
   const { socketRef } = useSocketContext();
   const { updateHeaderValue } = useHeaderContext();
   useEffect(() => {
@@ -243,6 +245,10 @@ export default function SocketManager({ children }) {
           });
           updateOldestUserNoteId(data.res[14].id);
           break;
+        case "api:noteDetails":
+          updateNoteDetails(data.res);
+          // console.log(data.res);
+          break;
         default:
           break;
       }
@@ -259,6 +265,7 @@ export default function SocketManager({ children }) {
     updateUserNotes,
     updateOldestUserNoteId,
     updateMoreUserNote,
+    updateNoteDetails,
     updateHeaderValue,
   ]);
   return <>{children}</>;
