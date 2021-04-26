@@ -86,6 +86,8 @@ export default function User() {
                         : "generall"
                     }
                   />
+                  <Reactions data={data} />
+                  <NoteFooter data={data} />
                 </div>
               ))}
             </div>
