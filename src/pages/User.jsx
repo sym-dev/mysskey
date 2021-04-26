@@ -9,6 +9,8 @@ import Note from "../components/Note";
 import ParseMFM from "../utils/ParseMfm";
 import ImageModal from "../components/ImageModal";
 import Loading from "../components/Loading";
+import Reactions from "../components/Reactions";
+import NoteFooter from "../components/NoteFooter";
 import noimage from "../components/bg.png";
 
 export default function User() {
@@ -90,7 +92,7 @@ export default function User() {
           )}
         </main>
         <section className="userNotes">
-          <nav>
+          <nav className="noteNav">
             <ul>
               <li
                 className={!includeReply ? "active" : ""}
@@ -161,6 +163,8 @@ export default function User() {
                         : "generall"
                     }
                   />
+                  <Reactions data={data} />
+                  <NoteFooter data={data} />
                 </div>
               ))}
               <button

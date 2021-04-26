@@ -8,6 +8,8 @@ import { useNoteDetailsContext } from "../utils/NoteDetailsContext";
 import ImageModal from "../components/ImageModal";
 import Loading from "../components/Loading";
 import Note from "../components/Note";
+import Reactions from "../components/Reactions";
+import NoteFooter from "../components/NoteFooter";
 
 function Notes() {
   let noteId = document.location.pathname.split("/")[2];
@@ -59,6 +61,8 @@ function Notes() {
                     : "renote"
                 }
               />
+              <Reactions data={noteDetails} />
+              <NoteFooter data={noteDetails} />
             </div>
           )}
         </main>
