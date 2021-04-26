@@ -11,11 +11,23 @@ export default function LeftBar() {
   return (
     <div className="side" id="left">
       <div className="upper">
-        <Link to="/" className="item">
+        <Link
+          to="/"
+          className="item"
+          onClick={() => {
+            window.scrollTo(0, 0);
+          }}
+        >
           <IoHome fontSize="1.2em" />
           <label>タイムライン</label>
         </Link>
-        <Link to="/notification" className="item">
+        <Link
+          to="/notification"
+          className="item"
+          onClick={() => {
+            window.scrollTo(0, 0);
+          }}
+        >
           <IoNotifications fontSize="1.2em" />
           <label>通知</label>
         </Link>
