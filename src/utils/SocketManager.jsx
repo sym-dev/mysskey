@@ -26,7 +26,11 @@ export default function SocketManager({ children }) {
     updateOldestUserNoteId,
     updateMoreUserNote,
   } = useUserContext();
-  const { updateNoteDetails } = useNoteDetailsContext();
+  const {
+    updateNoteDetails,
+    updateNoteConversation,
+    updateNoteChildren,
+  } = useNoteDetailsContext();
   const { socketRef } = useSocketContext();
   const { updateHeaderValue } = useHeaderContext();
   useEffect(() => {
@@ -249,6 +253,12 @@ export default function SocketManager({ children }) {
           updateNoteDetails(data.res);
           // console.log(data.res);
           break;
+        case "api:noteConversation":
+          updateNoteConversation(data.res.reverse());
+          break;
+        case "api:noteChildren":
+          updateNoteChildren(data.res);
+          break;
         default:
           break;
       }
@@ -266,6 +276,8 @@ export default function SocketManager({ children }) {
     updateOldestUserNoteId,
     updateMoreUserNote,
     updateNoteDetails,
+    updateNoteConversation,
+    updateNoteChildren,
     updateHeaderValue,
   ]);
   return <>{children}</>;

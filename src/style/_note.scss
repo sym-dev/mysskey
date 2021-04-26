@@ -99,6 +99,9 @@
       overflow-wrap: break-word;
       word-break: break-word;
       white-space: pre-wrap;
+      .replyArrow {
+        margin-right: 0.3em;
+      }
     }
 
     .codeBlock {
@@ -111,6 +114,7 @@
     .fileContainer {
       width: 100%;
       max-height: 20em;
+      margin-top: 0.5em;
       gap: 5px;
       .imageBlock {
         background-color: #ffffff0a;

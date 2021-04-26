@@ -16,7 +16,11 @@ function Notes() {
   let location = useLocation();
   const { updateHeaderValue } = useHeaderContext();
   const { socketRef } = useSocketContext();
-  const { noteDetails } = useNoteDetailsContext();
+  const {
+    noteDetails,
+    noteConversation,
+    noteChildren,
+  } = useNoteDetailsContext();
   useEffect(() => {
     updateHeaderValue(
       <>
@@ -35,9 +39,35 @@ function Notes() {
         },
       },
     };
+    const noteConversationObject = {
+      type: "api",
+      body: {
+        id: "noteConversation",
+        endpoint: "notes/conversation",
+        data: {
+          i: localStorage.getItem("UserToken"),
+          noteId: noteId,
+          limit: 15,
+        },
+      },
+    };
+    const noteChildrenObject = {
+      type: "api",
+      body: {
+        id: "noteChildren",
+        endpoint: "notes/children",
+        data: {
+          i: localStorage.getItem("UserToken"),
+          noteId: noteId,
+          limit: 15,
+        },
+      },
+    };
     const socketState = setInterval(() => {
       if (socketRef.current.readyState === 1) {
         socketRef.current.send(JSON.stringify(noteDetailsObject));
+        socketRef.current.send(JSON.stringify(noteConversationObject));
+        socketRef.current.send(JSON.stringify(noteChildrenObject));
         clearInterval(socketState);
       }
     }, 100);
@@ -46,6 +76,25 @@ function Notes() {
     <>
       <ImageModalProvider>
         <main>
+          {noteConversation.length > 0 && (
+            <div className="context">
+              {noteConversation.map((data) => (
+                <div className="note" key={data.id}>
+                  <Note
+                    data={data}
+                    depth={1}
+                    type={
+                      !data.renoteId
+                        ? "general"
+                        : data.text || data.files.length
+                        ? "quote"
+                        : "renote"
+                    }
+                  />
+                </div>
+              ))}
+            </div>
+          )}
           {noteDetails === false ? (
             <Loading />
           ) : (
@@ -63,6 +112,25 @@ function Notes() {
               />
               <Reactions data={noteDetails} />
               <NoteFooter data={noteDetails} />
+            </div>
+          )}
+          {noteChildren.length > 0 && (
+            <div className="children">
+              {noteChildren.map((data) => (
+                <div className="note" key={data.id}>
+                  <Note
+                    data={data}
+                    depth={1}
+                    type={
+                      !data.renoteId
+                        ? "general"
+                        : data.text || data.files.length
+                        ? "quote"
+                        : "renote"
+                    }
+                  />
+                </div>
+              ))}
             </div>
           )}
         </main>

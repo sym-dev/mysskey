@@ -1,0 +1,11 @@
+.context,
+.children {
+  width: 96%;
+  margin: 0 auto;
+  padding-left: 2%;
+  border-left: 2px solid #8ed9ff70;
+  .note {
+    background-color: #ffffff0a;
+    filter: brightness(90%);
+  }
+}

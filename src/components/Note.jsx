@@ -169,7 +169,7 @@ export default function Note(props) {
                 </summary>
 
                 <p className="noteText">
-                  {data.replyId && <IoArrowUndo />}
+                  {data.replyId && <IoArrowUndo className="replyArrow" />}
                   <ParseMFM text={data.text} emojis={data.emojis} type="full" />
                 </p>
                 {data.files.length <= 0 ? (
@@ -185,7 +185,7 @@ export default function Note(props) {
             ) : (
               <>
                 <div className="noteText">
-                  {data.replyId && <IoArrowUndo />}
+                  {data.replyId && <IoArrowUndo className="replyArrow" />}
                   <ParseMFM text={data.text} emojis={data.emojis} type="full" />
                 </div>
                 {data.files.length > 0 && (
