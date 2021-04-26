@@ -103,7 +103,9 @@ export default function NoteFooter({ data }) {
           >
             <button
               onClick={() => {
-                navigator.clipboard.writeText(data.text);
+                navigator.clipboard.writeText(
+                  !data.text && data.renoteId ? data.renote.text : data.text
+                );
                 setEtc(!isEtcActive);
                 updateOverlay(false);
               }}
