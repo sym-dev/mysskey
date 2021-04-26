@@ -42,7 +42,12 @@ export default function User() {
         },
       },
     };
-    socketRef.current.send(JSON.stringify(userInfoObject));
+    const socketState = setInterval(() => {
+      if (socketRef.current.readyState === 1) {
+        socketRef.current.send(JSON.stringify(userInfoObject));
+        clearInterval(socketState);
+      }
+    }, 100);
   }, [
     socketRef,
     userName,
@@ -192,7 +197,7 @@ export default function User() {
 }
 
 function UserSection({ data }) {
-  console.log(data);
+  // console.log(data);
   return (
     <>
       <div className="userpage">

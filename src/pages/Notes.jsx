@@ -33,7 +33,12 @@ function Notes() {
         },
       },
     };
-    socketRef.current.send(JSON.stringify(noteDetailsObject));
+    const socketState = setInterval(() => {
+      if (socketRef.current.readyState === 1) {
+        socketRef.current.send(JSON.stringify(noteDetailsObject));
+        clearInterval(socketState);
+      }
+    }, 100);
   }, [noteId, location, updateHeaderValue, socketRef]);
   return (
     <>
