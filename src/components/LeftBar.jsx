@@ -1,4 +1,10 @@
-import { IoHome, IoNotifications, IoPencil, IoPower } from "react-icons/io5";
+import {
+  IoHome,
+  IoNotifications,
+  IoPencil,
+  IoPower,
+  IoSettings,
+} from "react-icons/io5";
 import { Link } from "react-router-dom";
 import { usePostModalContext } from "../utils/ModalContext";
 import { useLogoutModalContext } from "../utils/ModalContext";
@@ -30,6 +36,16 @@ export default function LeftBar() {
         >
           <IoNotifications fontSize="1.2em" />
           <label>通知</label>
+        </Link>
+        <Link
+          to="/settings"
+          className="item"
+          onClick={() => {
+            window.scrollTo(0, 0);
+          }}
+        >
+          <IoSettings fontSize="1.2em" />
+          <label>設定</label>
         </Link>
         <span
           className="item logout"

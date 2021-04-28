@@ -27,6 +27,7 @@ import Home from "./pages/Home";
 import Notes from "./pages/Notes";
 import User from "./pages/User";
 import Notification from "./pages/Notification";
+import Settings from "./pages/Settings";
 import Login from "./pages/Login";
 import "./style/style.scss";
 
@@ -60,6 +61,10 @@ export default function App() {
                       <Route path="/notification">
                         <ScrollToTop />
                         <Notification />
+                      </Route>
+                      <Route path="/settings">
+                        <ScrollToTop />
+                        <Settings />
                       </Route>
                       <Route path="/">
                         <Home />

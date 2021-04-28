@@ -10,6 +10,13 @@ const GetToken = (props) => {
     "/api/miauth/" +
     props.uuid +
     "/check";
+  localStorage.setItem(
+    // default settings
+    "settings",
+    JSON.stringify({
+      auto_motto: true,
+    })
+  );
   fetchData(tokenUrl, history, updateLogin);
   return <h3>logining...</h3>;
 };
