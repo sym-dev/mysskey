@@ -1,4 +1,5 @@
 import {
+  IoArchive,
   IoHome,
   IoNotifications,
   IoPencil,
@@ -6,10 +7,12 @@ import {
   IoSettings,
 } from "react-icons/io5";
 import { Link } from "react-router-dom";
+import { useNotesContext } from "../utils/NotesContext";
 import { usePostModalContext } from "../utils/ModalContext";
 import { useLogoutModalContext } from "../utils/ModalContext";
 
 export default function LeftBar() {
+  const { notes, dispatch, updateOldestNote } = useNotesContext();
   const { updateLogoutModal } = useLogoutModalContext();
   const { updatePostModal } = usePostModalContext();
   const user = JSON.parse(localStorage.getItem("user"));
@@ -47,6 +50,18 @@ export default function LeftBar() {
           <IoSettings fontSize="1.2em" />
           <label>設定</label>
         </Link>
+        <span
+          className="item clean"
+          onClick={() => {
+            dispatch({
+              type: "clear",
+            });
+            updateOldestNote(notes[9].id);
+          }}
+        >
+          <IoArchive fontSize="1.2em" />
+          <label>クリア</label>
+        </span>
         <span
           className="item logout"
           onClick={() => {

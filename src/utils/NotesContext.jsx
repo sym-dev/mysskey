@@ -251,7 +251,7 @@ function reducer(notes, action) {
     case "remove":
       return notes.filter((note) => note.id !== action.payload.id);
     case "clear":
-      return initialState;
+      return notes.slice(0, 10);
     default:
       return notes;
   }
