@@ -7044,10 +7044,10 @@ methods@~1.1.2:
   resolved "https://registry.yarnpkg.com/methods/-/methods-1.1.2.tgz#5529a4d67654134edcc5266656835b0f851afcee"
   integrity sha1-VSmk1nZUE07cxSZmVoNbD4Ua/O4=
 
-mfm-js@^0.16.2:
-  version "0.16.2"
-  resolved "https://registry.yarnpkg.com/mfm-js/-/mfm-js-0.16.2.tgz#6dfa44a9b6ac0fd9d55d6f8c21eaa60c75bcd9fa"
-  integrity sha512-Ah/XTPsg88il3kRwXxY6QqlNGkc9ToWWFhW9BGBk6V6T108iLjS30pd79WL02Nd1tw1Jl/JduJMgpb5QzCE45w==
+mfm-js@^0.16.3:
+  version "0.16.3"
+  resolved "https://registry.yarnpkg.com/mfm-js/-/mfm-js-0.16.3.tgz#5ec8f0c50f73d328d72b6a99c2651568e9a1e218"
+  integrity sha512-4/IjdUZqF2vd03gWOxpMxNtf0B9DfvzFsUER7ZcSyX1qdILLkrtDuasiGztGmqGcpi0VXdBI+5jdE5mEhNylSw==
   dependencies:
     twemoji-parser "13.0.x"
 
@@ -8976,10 +8976,10 @@ react-error-overlay@^6.0.9:
   resolved "https://registry.yarnpkg.com/react-error-overlay/-/react-error-overlay-6.0.9.tgz#3c743010c9359608c375ecd6bc76f35d93995b0a"
   integrity sha512-nQTTcUu+ATDbrSD1BZHr5kgSD4oF8OFjxun8uAaL8RwPBacGBNPf/yAuVVdx17N8XNzRDMrZ9XcKZHCjPW+9ew==
 
-react-hook-form@^7.2.3:
-  version "7.2.3"
-  resolved "https://registry.yarnpkg.com/react-hook-form/-/react-hook-form-7.2.3.tgz#a4be9214cab3a6e6358f95d342da2e7ded37e3f0"
-  integrity sha512-ki83pkQH/NK6HbSWb4zHLD78s8nh6OW2j4GC5kAjhB2C3yiiVGvNAvybgAfnsXBbx+xb9mPgSpRRVOQUbss+JQ==
+react-hook-form@^7.3.5:
+  version "7.3.5"
+  resolved "https://registry.yarnpkg.com/react-hook-form/-/react-hook-form-7.3.5.tgz#8154fdf0401ddb6e8a5f8787f162a26839258f0d"
+  integrity sha512-T7PgHpFa4lPfVVnqm5+nDMB/CCrZ7OUBQC17ZXQ2QAZMxfc8qDbETo+Nrsd2TE5mszg6fT0bjb3EeE2DAzv7lQ==
 
 react-icons@^4.2.0:
   version "4.2.0"
@@ -9630,10 +9630,10 @@ sass-loader@^10.0.5:
     schema-utils "^3.0.0"
     semver "^7.3.2"
 
-sass@^1.32.11:
-  version "1.32.11"
-  resolved "https://registry.yarnpkg.com/sass/-/sass-1.32.11.tgz#b236b3ea55c76602c2ef2bd0445f0db581baa218"
-  integrity sha512-O9tRcob/fegUVSIV1ihLLZcftIOh0AF1VpKgusUfLqnb2jQ0GLDwI5ivv1FYWivGv8eZ/AwntTyTzjcHu0c/qw==
+sass@^1.32.12:
+  version "1.32.12"
+  resolved "https://registry.yarnpkg.com/sass/-/sass-1.32.12.tgz#a2a47ad0f1c168222db5206444a30c12457abb9f"
+  integrity sha512-zmXn03k3hN0KaiVTjohgkg98C3UowhL1/VSGdj4/VAAiMKGQOE80PFPxFP2Kyq0OUskPKcY5lImkhBKEHlypJA==
   dependencies:
     chokidar ">=3.0.0 <4.0.0"
 
