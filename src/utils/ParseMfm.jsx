@@ -63,7 +63,7 @@ function judge(data, emojis) {
     case "url":
       return (
         <a href={data.props.url} target="_blank" rel="noreferrer">
-          {data.props.url}
+          {decodeURI(data.props.url)}
         </a>
       );
     case "hashtag":
