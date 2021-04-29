@@ -198,9 +198,13 @@
   @media (max-width: 1000px) {
     width: 3em;
   }
-  .upper {
+  main {
     padding: 0.5em 0;
-    > .item {
+    display: flex;
+    flex-direction: column;
+    flex-basis: 85%;
+    justify-content: space-between;
+    .item {
       cursor: auto;
       padding: 0.5em 1em;
       @media (max-width: 1000px) {
@@ -222,13 +226,16 @@
           display: none;
         }
       }
+      &.clean {
+        color: cadetblue;
+      }
       &.logout {
         color: tomato;
         position: relative;
       }
     }
   }
-  .lower {
+  .bottom {
     display: flex;
     flex-direction: column;
     align-items: center;
