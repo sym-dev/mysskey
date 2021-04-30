@@ -32,38 +32,20 @@ export default function Reactions({ data }) {
               );
               updateMyReaction(key);
             } else {
-              if (key === myReaction) {
-                socketRef.current.send(
-                  JSON.stringify({
-                    type: "api",
-                    body: {
-                      id: "reactionDelete",
-                      endpoint: "notes/reactions/delete",
-                      data: {
-                        i: localStorage.getItem("UserToken"),
-                        noteId: actualData.id,
-                      },
+              socketRef.current.send(
+                JSON.stringify({
+                  type: "api",
+                  body: {
+                    id: "reactionDelete",
+                    endpoint: "notes/reactions/delete",
+                    data: {
+                      i: localStorage.getItem("UserToken"),
+                      noteId: actualData.id,
                     },
-                  })
-                );
-                updateMyReaction(false);
-              } else {
-                socketRef.current.send(
-                  JSON.stringify({
-                    type: "api",
-                    body: {
-                      id: "reactionCreate",
-                      endpoint: "notes/reactions/create",
-                      data: {
-                        i: localStorage.getItem("UserToken"),
-                        noteId: actualData.id,
-                        reaction: key,
-                      },
-                    },
-                  })
-                );
-                updateMyReaction(key);
-              }
+                  },
+                })
+              );
+              updateMyReaction(false);
             }
           }}
         >

@@ -1,4 +1,5 @@
-import { useState, useReducer, createContext, useContext } from "react";
+import { useState, createContext, useContext } from "react";
+import { useImmerReducer } from "use-immer";
 
 const NotesContext = createContext();
 
@@ -7,134 +8,54 @@ const initialState = [];
 function reducer(notes, action) {
   switch (action.type) {
     case "addLower":
-      return [...notes, action.payload];
+      return void notes.push(action.payload);
     case "addUpper":
-      return [action.payload, ...notes];
+      return void notes.unshift(action.payload);
     case "updateEmoji":
       if (action.payload.body.userId === localStorage.getItem("UserId")) {
-        return notes.map((note) => {
-          if (note.id === action.payload.id) {
-            if (
-              Object.keys(note.reactions).includes(action.payload.body.reaction)
-            ) {
-              return {
-                ...note,
-                reactions: {
-                  ...note.reactions,
-                  [action.payload.body.reaction]:
-                    note.reactions[action.payload.body.reaction] + 1,
-                },
-                myReaction: action.payload.body.reaction,
-              };
-            } else {
-              if (action.payload.body.emoji) {
-                return {
-                  ...note,
-                  emojis: [...note.emojis, action.payload.body.emoji],
-                  reactions: {
-                    ...note.reactions,
-                    [action.payload.body.reaction]: 1,
-                  },
-                  myReaction: action.payload.body.reaction,
-                };
-              } else {
-                return {
-                  ...note,
-                  reactions: {
-                    ...note.reactions,
-                    [action.payload.body.reaction]: 1,
-                  },
-                  myReaction: action.payload.body.reaction,
-                };
-              }
-            }
-          } else if (
-            note.renote &&
-            !note.text &&
-            note.renote.id === action.payload.id
-          ) {
+        notes.forEach((note) => {
+          if (note.renoteId === action.payload.id) {
             if (
               Object.keys(note.renote.reactions).includes(
                 action.payload.body.reaction
               )
             ) {
-              return {
-                ...note,
-                renote: {
-                  ...note.renote,
-                  reactions: {
-                    ...note.renote.reactions,
-                    [action.payload.body.reaction]:
-                      note.renote.reactions[action.payload.body.reaction] + 1,
-                  },
-                  myReaction: action.payload.body.reaction,
-                },
-              };
+              note.renote.reactions[action.payload.body.reaction]++;
+              note.renote.myReaction = action.payload.body.reaction;
             } else {
               if (action.payload.body.emoji) {
-                return {
-                  ...note,
-                  renote: {
-                    ...note.renote,
-                    emojis: [...note.renote.emojis, action.payload.body.emoji],
-                    reactions: {
-                      ...note.renote.reactions,
-                      [action.payload.body.reaction]: 1,
-                    },
-                    myReaction: action.payload.body.reaction,
-                  },
-                };
-              } else {
-                return {
-                  ...note,
-                  renote: {
-                    ...note.renote,
-                    reactions: {
-                      ...note.renote.reactions,
-                      [action.payload.body.reaction]: 1,
-                    },
-                    myReaction: action.payload.body.reaction,
-                  },
-                };
+                note.renote.emojis.push(action.payload.body.emoji);
               }
+              note.renote.reactions[action.payload.body.reaction] = 1;
+              note.renote.myReaction = action.payload.body.reaction;
             }
-          } else {
-            return note;
+          } else if (note.id === action.payload.id) {
+            if (
+              Object.keys(note.reactions).includes(action.payload.body.reaction)
+            ) {
+              note.reactions[action.payload.body.reaction]++;
+              note.myReaction = action.payload.body.reaction;
+            } else {
+              if (action.payload.body.emoji) {
+                note.emojis.push(action.payload.body.emoji);
+              }
+              note.reactions[action.payload.body.reaction] = 1;
+              note.myReaction = action.payload.body.reaction;
+            }
           }
         });
       } else {
-        return notes.map((note) => {
+        notes.forEach((note) => {
           if (note.id === action.payload.id) {
             if (
               Object.keys(note.reactions).includes(action.payload.body.reaction)
             ) {
-              return {
-                ...note,
-                reactions: {
-                  ...note.reactions,
-                  [action.payload.body.reaction]:
-                    note.reactions[action.payload.body.reaction] + 1,
-                },
-              };
+              note.reactions[action.payload.body.reaction]++;
             } else {
               if (action.payload.body.emoji) {
-                return {
-                  ...note,
-                  emojis: [...note.emojis, action.payload.body.emoji],
-                  reactions: {
-                    ...note.reactions,
-                    [action.payload.body.reaction]: 1,
-                  },
-                };
-              } else {
-                return {
-                  ...note,
-                  reactions: {
-                    ...note.reactions,
-                    [action.payload.body.reaction]: 1,
-                  },
-                };
+                note.emojis.push(action.payload.body.emoji);
               }
+              note.reactions[action.payload.body.reaction] = 1;
             }
           } else if (
             note.renote &&
@@ -146,108 +67,54 @@ function reducer(notes, action) {
                 action.payload.body.reaction
               )
             ) {
-              return {
-                ...note,
-                renote: {
-                  ...note.renote,
-                  reactions: {
-                    ...note.renote.reactions,
-                    [action.payload.body.reaction]:
-                      note.renote.reactions[action.payload.body.reaction] + 1,
-                  },
-                },
-              };
+              note.renote.reactions[action.payload.body.reaction]++;
             } else {
               if (action.payload.body.emoji) {
-                return {
-                  ...note,
-                  renote: {
-                    ...note.renote,
-                    emojis: [...note.renote.emojis, action.payload.body.emoji],
-                    reactions: {
-                      ...note.renote.reactions,
-                      [action.payload.body.reaction]: 1,
-                    },
-                  },
-                };
-              } else {
-                return {
-                  ...note,
-                  renote: {
-                    ...note.renote,
-                    reactions: {
-                      ...note.renote.reactions,
-                      [action.payload.body.reaction]: 1,
-                    },
-                  },
-                };
+                note.renote.emojis.push(action.payload.body.emoji);
               }
+              note.renote.reactions[action.payload.body.reaction] = 1;
             }
-          } else {
-            return note;
           }
         });
       }
+      return;
     case "deleteEmoji":
-      return notes.map((note) => {
-        if (note.id === action.payload.id) {
-          if (note.reactions[action.payload.body.reaction] - 1 > 0) {
-            const { myReaction, ...obj1 } = note;
-            return {
-              ...obj1,
-              reactions: {
-                ...obj1.reactions,
-                [action.payload.body.reaction]:
-                  obj1.reactions[action.payload.body.reaction] - 1,
-              },
-            };
-          } else {
-            const { myReaction, ...obj2 } = note;
-            const {
-              [action.payload.body.reaction]: foo,
-              ...obj3
-            } = obj2.reactions;
-            return {
-              ...obj2,
-              reactions: obj3,
-            };
+      if (action.payload.body.userId === localStorage.getItem("UserId")) {
+        notes.forEach((note) => {
+          if (note.renoteId === action.payload.id) {
+            if (note.renote.reactions[action.payload.body.reaction] - 1 > 0) {
+              note.renote.reactions[action.payload.body.reaction]--;
+            } else {
+              delete note.renote.reactions[action.payload.body.reaction];
+            }
+            delete note.renote.myReaction;
+          } else if (note.id === action.payload.id) {
+            if (note.reactions[action.payload.body.reaction] - 1 > 0) {
+              note.reactions[action.payload.body.reaction]--;
+            } else {
+              delete note.reactions[action.payload.body.reaction];
+            }
+            delete note.myReaction;
           }
-        } else if (
-          note.renote &&
-          !note.text &&
-          note.renote.id === action.payload.id
-        ) {
-          if (note.renote.reactions[action.payload.body.reaction] - 1 > 0) {
-            const { myReaction, ...obj1 } = note.renote;
-            return {
-              ...note,
-              renote: {
-                ...obj1,
-                reactions: {
-                  ...obj1.reactions,
-                  [action.payload.body.reaction]:
-                    obj1.reactions[action.payload.body.reaction] - 1,
-                },
-              },
-            };
-          } else {
-            const { myReaction, ...obj2 } = note.renote;
-            const {
-              [action.payload.body.reaction]: foo,
-              ...obj3
-            } = obj2.reactions;
-            return {
-              ...note,
-              renote: {
-                ...obj2,
-                reactions: obj3,
-              },
-            };
+        });
+      } else {
+        notes.forEach((note) => {
+          if (note.renoteId === action.payload.id) {
+            if (note.renote.reactions[action.payload.body.reaction] - 1 > 0) {
+              note.renote.reactions[action.payload.body.reaction]--;
+            } else {
+              delete note.renote.reactions[action.payload.body.reaction];
+            }
+          } else if (note.id === action.payload.id) {
+            if (note.reactions[action.payload.body.reaction] - 1 > 0) {
+              note.reactions[action.payload.body.reaction]--;
+            } else {
+              delete note.reactions[action.payload.body.reaction];
+            }
           }
-        } else {
-          return note;
-        }
-      });
+        });
+      }
+      return;
     case "remove":
       return notes.filter((note) => note.id !== action.payload.id);
     case "clear":
@@ -258,7 +125,8 @@ function reducer(notes, action) {
 }
 
 const NotesProvider = ({ children }) => {
-  const [notes, dispatch] = useReducer(reducer, initialState);
+  // const [notes, dispatch] = useReducer(reducer, initialState);
+  const [notes, dispatch] = useImmerReducer(reducer, initialState);
   const [oldestNoteId, updateOldestNote] = useState("");
   const [moreNote, updateMoreNote] = useState(false);
   return (
