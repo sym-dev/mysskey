@@ -6,113 +6,124 @@ const NotesContext = createContext();
 const initialState = [];
 
 function reducer(notes, action) {
+  let indexOfId = -1;
+  let indexOfRenoteId = -1;
   switch (action.type) {
     case "addLower":
       return void notes.push(action.payload);
     case "addUpper":
       return void notes.unshift(action.payload);
     case "updateEmoji":
+      indexOfId = notes.findIndex((note) => note.id === action.payload.id);
+      indexOfRenoteId = notes.findIndex(
+        (note) => note.renoteId === action.payload.id
+      );
       if (action.payload.body.userId === localStorage.getItem("UserId")) {
-        notes.forEach((note) => {
-          if (note.renoteId === action.payload.id) {
-            if (
-              Object.keys(note.renote.reactions).includes(
-                action.payload.body.reaction
-              )
-            ) {
-              note.renote.reactions[action.payload.body.reaction]++;
-              note.renote.myReaction = action.payload.body.reaction;
-            } else {
-              if (action.payload.body.emoji) {
-                note.renote.emojis.push(action.payload.body.emoji);
-              }
-              note.renote.reactions[action.payload.body.reaction] = 1;
-              note.renote.myReaction = action.payload.body.reaction;
-            }
-          } else if (note.id === action.payload.id) {
-            if (
-              Object.keys(note.reactions).includes(action.payload.body.reaction)
-            ) {
-              note.reactions[action.payload.body.reaction]++;
-              note.myReaction = action.payload.body.reaction;
-            } else {
-              if (action.payload.body.emoji) {
-                note.emojis.push(action.payload.body.emoji);
-              }
-              note.reactions[action.payload.body.reaction] = 1;
-              note.myReaction = action.payload.body.reaction;
-            }
-          }
-        });
-      } else {
-        notes.forEach((note) => {
-          if (note.id === action.payload.id) {
-            if (
-              Object.keys(note.reactions).includes(action.payload.body.reaction)
-            ) {
-              note.reactions[action.payload.body.reaction]++;
-            } else {
-              if (action.payload.body.emoji) {
-                note.emojis.push(action.payload.body.emoji);
-              }
-              note.reactions[action.payload.body.reaction] = 1;
-            }
-          } else if (
-            note.renote &&
-            !note.text &&
-            note.renote.id === action.payload.id
+        if (indexOfRenoteId > -1) {
+          if (
+            Object.keys(notes[indexOfRenoteId].renote.reactions).includes(
+              action.payload.body.reaction
+            )
           ) {
-            if (
-              Object.keys(note.renote.reactions).includes(
-                action.payload.body.reaction
-              )
-            ) {
-              note.renote.reactions[action.payload.body.reaction]++;
-            } else {
-              if (action.payload.body.emoji) {
-                note.renote.emojis.push(action.payload.body.emoji);
-              }
-              note.renote.reactions[action.payload.body.reaction] = 1;
+            notes[indexOfRenoteId].renote.reactions[
+              action.payload.body.reaction
+            ]++;
+            notes[indexOfRenoteId].renote.myReaction =
+              action.payload.body.reaction;
+          } else {
+            if (action.payload.body.emoji) {
+              notes[indexOfRenoteId].renote.emojis.push(
+                action.payload.body.emoji
+              );
             }
+            notes[indexOfRenoteId].renote.reactions[
+              action.payload.body.reaction
+            ] = 1;
+            notes[indexOfRenoteId].renote.myReaction =
+              action.payload.body.reaction;
           }
-        });
+        }
+        if (indexOfId > -1) {
+          if (
+            Object.keys(notes[indexOfId].reactions).includes(
+              action.payload.body.reaction
+            )
+          ) {
+            notes[indexOfId].reactions[action.payload.body.reaction]++;
+            notes[indexOfId].myReaction = action.payload.body.reaction;
+          } else {
+            if (action.payload.body.emoji) {
+              notes[indexOfId].emojis.push(action.payload.body.emoji);
+            }
+            notes[indexOfId].reactions[action.payload.body.reaction] = 1;
+            notes[indexOfId].myReaction = action.payload.body.reaction;
+          }
+        }
+      } else {
+        if (indexOfRenoteId > -1) {
+          if (
+            Object.keys(notes[indexOfRenoteId].renote.reactions).includes(
+              action.payload.body.reaction
+            )
+          ) {
+            notes[indexOfRenoteId].renote.reactions[
+              action.payload.body.reaction
+            ]++;
+          } else {
+            if (action.payload.body.emoji) {
+              notes[indexOfRenoteId].renote.emojis.push(
+                action.payload.body.emoji
+              );
+            }
+            notes[indexOfRenoteId].renote.reactions[
+              action.payload.body.reaction
+            ] = 1;
+          }
+        }
+        if (indexOfId > -1) {
+          if (
+            Object.keys(notes[indexOfId].reactions).includes(
+              action.payload.body.reaction
+            )
+          ) {
+            notes[indexOfId].reactions[action.payload.body.reaction]++;
+          } else {
+            if (action.payload.body.emoji) {
+              notes[indexOfId].emojis.push(action.payload.body.emoji);
+            }
+            notes[indexOfId].reactions[action.payload.body.reaction] = 1;
+          }
+        }
       }
       return;
     case "deleteEmoji":
-      if (action.payload.body.userId === localStorage.getItem("UserId")) {
-        notes.forEach((note) => {
-          if (note.renoteId === action.payload.id) {
-            if (note.renote.reactions[action.payload.body.reaction] - 1 > 0) {
-              note.renote.reactions[action.payload.body.reaction]--;
-            } else {
-              delete note.renote.reactions[action.payload.body.reaction];
-            }
-            delete note.renote.myReaction;
-          } else if (note.id === action.payload.id) {
-            if (note.reactions[action.payload.body.reaction] - 1 > 0) {
-              note.reactions[action.payload.body.reaction]--;
-            } else {
-              delete note.reactions[action.payload.body.reaction];
-            }
-            delete note.myReaction;
-          }
-        });
-      } else {
-        notes.forEach((note) => {
-          if (note.renoteId === action.payload.id) {
-            if (note.renote.reactions[action.payload.body.reaction] - 1 > 0) {
-              note.renote.reactions[action.payload.body.reaction]--;
-            } else {
-              delete note.renote.reactions[action.payload.body.reaction];
-            }
-          } else if (note.id === action.payload.id) {
-            if (note.reactions[action.payload.body.reaction] - 1 > 0) {
-              note.reactions[action.payload.body.reaction]--;
-            } else {
-              delete note.reactions[action.payload.body.reaction];
-            }
-          }
-        });
+      indexOfId = notes.findIndex((note) => note.id === action.payload.id);
+      indexOfRenoteId = notes.findIndex(
+        (note) => note.renoteId === action.payload.id
+      );
+      if (indexOfId > -1) {
+        if (notes[indexOfId].reactions[action.payload.body.reaction] > 2) {
+          notes[indexOfId].reactions[action.payload.body.reaction]--;
+        } else {
+          delete notes[indexOfId].reactions[action.payload.body.reaction];
+        }
+        delete notes[indexOfId].myReaction;
+      }
+      if (indexOfRenoteId > -1) {
+        if (
+          notes[indexOfRenoteId].renote.reactions[
+            action.payload.body.reaction
+          ] > 2
+        ) {
+          notes[indexOfRenoteId].renote.reactions[
+            action.payload.body.reaction
+          ]--;
+        } else {
+          delete notes[indexOfRenoteId].renote.reactions[
+            action.payload.body.reaction
+          ];
+        }
+        delete notes[indexOfRenoteId].renote.myReaction;
       }
       return;
     case "remove":
@@ -125,7 +136,6 @@ function reducer(notes, action) {
 }
 
 const NotesProvider = ({ children }) => {
-  // const [notes, dispatch] = useReducer(reducer, initialState);
   const [notes, dispatch] = useImmerReducer(reducer, initialState);
   const [oldestNoteId, updateOldestNote] = useState("");
   const [moreNote, updateMoreNote] = useState(false);
