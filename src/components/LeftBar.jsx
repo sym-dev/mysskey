@@ -1,5 +1,6 @@
 import {
   IoArchive,
+  IoFish,
   IoHome,
   IoNotifications,
   IoPencil,
@@ -40,6 +41,16 @@ export default function LeftBar() {
           >
             <IoNotifications fontSize="1.2em" />
             <label>通知</label>
+          </Link>
+          <Link
+            to="/followrequests"
+            className="item"
+            onClick={() => {
+              window.scrollTo(0, 0);
+            }}
+          >
+            <IoFish fontSize="1.2em" />
+            <label>フォローリクエスト</label>
           </Link>
           <Link
             to="/settings"

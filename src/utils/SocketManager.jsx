@@ -25,6 +25,7 @@ export default function SocketManager({ children }) {
     updateUserNotes,
     updateOldestUserNoteId,
     updateMoreUserNote,
+    updateFollowRequests,
   } = useUserContext();
   const {
     updateNoteDetails,
@@ -249,6 +250,10 @@ export default function SocketManager({ children }) {
           });
           updateOldestUserNoteId(data.res[14].id);
           break;
+        case "api:followRequests":
+          console.log(data);
+          updateFollowRequests(data.res);
+          break;
         case "api:noteDetails":
           updateNoteDetails(data.res);
           // console.log(data.res);
@@ -273,6 +278,7 @@ export default function SocketManager({ children }) {
     updateOldestNotificationId,
     updateUserinfo,
     updateUserNotes,
+    updateFollowRequests,
     updateOldestUserNoteId,
     updateMoreUserNote,
     updateNoteDetails,

@@ -1,6 +1,4 @@
-import React from "react";
 import { Redirect } from "react-router-dom";
-
 import NotLogin from "./NotLogin";
 import GetToken from "./GetToken";
 

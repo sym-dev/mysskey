@@ -1,8 +1,7 @@
-import React from "react";
-import TimeLine from "./TimeLine";
-import { useHeaderContext } from "../utils/HeaderContext";
-import { IoHome } from "react-icons/io5";
 import { useEffect } from "react";
+import { IoHome } from "react-icons/io5";
+import { useHeaderContext } from "../utils/HeaderContext";
+import TimeLine from "./TimeLine";
 
 function Home() {
   const { updateHeaderValue } = useHeaderContext();

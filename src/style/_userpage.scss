@@ -64,6 +64,8 @@
           }
           dl {
             width: 70%;
+            word-break: break-word;
+            white-space: break-spaces;
           }
         }
       }

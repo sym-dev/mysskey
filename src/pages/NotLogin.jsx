@@ -36,7 +36,7 @@ function NotLogin() {
             appName +
             "&callback=" +
             serviceURL +
-            "&permission=read:account,write:account,write:notes,read:reactions,write:reactions,read:notifications,write:notifications,read:messaging,write:messaging";
+            "&permission=read:account,write:account,read:blocks,write:blocks,read:drive,write:drive,read:favorites,write:favorites,read:following,write:following,read:messaging,write:messaging,read:mutes,write:mutes,write:notes,read:notifications,write:notifications,read:reactions,write:reactions,write:votes,read:pages,write:pages,write:page-likes,read:page-likes,read:user-groups,write:user-groups,read:channels,write:channels,read:gallery,write:gallery,read:gallery-likes,write:gallery-likes";
           window.location.href = authURL;
         } else {
           updateMiauthState(
@@ -67,6 +67,7 @@ function NotLogin() {
               type="text"
               {...register("appName")}
               onSubmit={handleSubmit(onSubmit)}
+              placeholder="mysskey"
               required
             />
           </label>
@@ -76,6 +77,7 @@ function NotLogin() {
               type="text"
               {...register("instance")}
               onSubmit={handleSubmit(onSubmit)}
+              placeholder="example.com"
               required
             />
           </label>
