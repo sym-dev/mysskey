@@ -1,4 +1,5 @@
 .userpage {
+  position: relative;
   background-color: #ffffff0f;
   border-radius: 5px;
   margin-bottom: 1em;
@@ -30,6 +31,13 @@
       }
       .userid {
         color: #97aac3;
+      }
+      .blocked {
+        width: fit-content;
+        padding: 0 0.5em;
+        color: tomato;
+        border: 1px solid tomato;
+        border-radius: 5px;
       }
       .state {
         color: #6197df;

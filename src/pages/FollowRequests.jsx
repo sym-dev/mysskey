@@ -42,7 +42,7 @@ function Home() {
             <>
               {followRequests.map((data) => (
                 <div key={data.id}>
-                  <img src={data.follower.avatarUrl} />
+                  <img src={data.follower.avatarUrl} alt="icon" />
                   <div>
                     <div className="text">
                       <Link

@@ -8,6 +8,7 @@ import { useUserContext } from "../utils/UserContext";
 import { InView, useInView } from "react-intersection-observer";
 import Note from "../components/Note";
 import ParseMFM from "../utils/ParseMfm";
+import FollowButton from "../components/FollowButton";
 import ImageModal from "../components/ImageModal";
 import Loading from "../components/Loading";
 import Reactions from "../components/Reactions";
@@ -254,6 +255,9 @@ function UserSection({ data }) {
   return (
     <>
       <div className="userpage">
+        {data.username !== localStorage.getItem("UserName") && (
+          <FollowButton type="default" />
+        )}
         <img
           className="banner"
           src={data.bannerUrl ? data.bannerUrl : noimage}
@@ -272,6 +276,8 @@ function UserSection({ data }) {
                     ? "#87cefae0"
                     : data.onlineStatus === "active"
                     ? "#ffa500e0"
+                    : data.onlineStatus === "offline"
+                    ? "#ff6347e0"
                     : "#04002cbb",
               }}
             />
@@ -294,12 +300,17 @@ function UserSection({ data }) {
                     ? "@" + data.host
                     : "@" + localStorage.getItem("instanceURL"))}
               </p>
+              {data.isBlocked && (
+                <p className="blocked">ブロックされています</p>
+              )}
               <p className="state">
                 ステータス:{" "}
                 {data.onlineStatus === "online"
                   ? "オンライン"
                   : data.onlineStatus === "active"
                   ? "アクティブ"
+                  : data.onlineStatus === "offline"
+                  ? "オフライン"
                   : "unknown"}
               </p>
               <div className="desc">

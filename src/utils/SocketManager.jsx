@@ -8,12 +8,8 @@ import { useHeaderContext } from "../utils/HeaderContext";
 import ParseMFM from "../utils/ParseMfm";
 
 export default function SocketManager({ children }) {
-  const {
-    notes,
-    dispatch,
-    updateOldestNote,
-    updateMoreNote,
-  } = useNotesContext();
+  const { notes, dispatch, updateOldestNote, updateMoreNote } =
+    useNotesContext();
   const {
     notifications,
     updateNotifications,
@@ -27,11 +23,8 @@ export default function SocketManager({ children }) {
     updateMoreUserNote,
     updateFollowRequests,
   } = useUserContext();
-  const {
-    updateNoteDetails,
-    updateNoteConversation,
-    updateNoteChildren,
-  } = useNoteDetailsContext();
+  const { updateNoteDetails, updateNoteConversation, updateNoteChildren } =
+    useNoteDetailsContext();
   const { socketRef } = useSocketContext();
   const { updateHeaderValue } = useHeaderContext();
   useEffect(() => {
@@ -210,6 +203,8 @@ export default function SocketManager({ children }) {
                       ? "#87cefae0"
                       : data.res.onlineStatus === "active"
                       ? "#ffa500e0"
+                      : data.onlineStatus === "offline"
+                      ? "#ff6347e0"
                       : "#04002cbb",
                 }}
               />
@@ -251,7 +246,7 @@ export default function SocketManager({ children }) {
           updateOldestUserNoteId(data.res[14].id);
           break;
         case "api:followRequests":
-          console.log(data);
+          // console.log(data);
           updateFollowRequests(data.res);
           break;
         case "api:noteDetails":
@@ -263,6 +258,22 @@ export default function SocketManager({ children }) {
           break;
         case "api:noteChildren":
           updateNoteChildren(data.res);
+          break;
+        case "api:followingUpdate":
+          socketRef.current.send(
+            JSON.stringify({
+              type: "api",
+              body: {
+                id: "userInfo",
+                endpoint: "users/show",
+                data: {
+                  i: localStorage.getItem("UserToken"),
+                  username: data.res.username,
+                  host: data.res.host,
+                },
+              },
+            })
+          );
           break;
         default:
           break;

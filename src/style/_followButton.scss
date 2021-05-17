@@ -1,0 +1,49 @@
+.followButton {
+  &.mini {
+    p {
+      display: none;
+    }
+  }
+  position: absolute;
+  right: 1em;
+  top: 1em;
+  cursor: pointer;
+  > div {
+    display: flex;
+    align-items: center;
+    user-select: none;
+    padding: 0.5em;
+    border-radius: 5px;
+    transition: color 0.2s, background-color 0.2s;
+    &.inactive {
+      border: 2px solid skyblue;
+      color: skyblue;
+      background-color: white;
+      &:hover {
+        color: white;
+        background-color: skyblue;
+      }
+    }
+    &.active {
+      border: 2px solid skyblue;
+      background-color: skyblue;
+      color: white;
+      &:hover {
+        border: 2px solid skyblue;
+        color: skyblue;
+        background-color: white;
+      }
+    }
+    &[disabled] {
+      cursor: not-allowed;
+      border: 2px solid tomato;
+      color: tomato;
+      background-color: firebrick;
+      &:hover {
+        border: 2px solid tomato;
+        color: tomato;
+        background-color: firebrick;
+      }
+    }
+  }
+}
