@@ -33,7 +33,9 @@
 
 .searchBlock {
   display: flex;
+  margin-top: 0.5em;
   .field {
+    max-width: calc(100% - 6em);
     flex-grow: 1;
   }
 }

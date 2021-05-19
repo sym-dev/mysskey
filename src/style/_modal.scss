@@ -30,16 +30,45 @@
   top: 30%;
   left: 50%;
   transform: translateX(-50%);
-  width: min(40em, 80vw);
+  width: min(40em, 90vw);
   height: fit-content;
   padding: 1em;
+  .cw {
+    width: 100%;
+  }
   textarea {
     height: 5em;
+  }
+  input[type="submit"] {
+    background-color: #3cb4d8;
   }
   > img {
     width: 100%;
     height: 90%;
     object-fit: contain;
+  }
+  .postFooter {
+    position: absolute;
+    right: 1em;
+    transform: translateY(-2.8em);
+    display: flex;
+    button {
+      &.visibilityButton {
+        background-color: #19587c;
+      }
+      svg {
+        vertical-align: middle;
+      }
+      padding: 0.5em;
+    }
+    .menu {
+      > button {
+        display: flex;
+      }
+      hr {
+        margin: 0 auto;
+      }
+    }
   }
 }
 
@@ -75,9 +104,7 @@
     width: min(30em, 80vw);
     padding: 1em;
     @media (max-width: 1000px) {
-      position: fixed;
-      transform: translate(-50%, 120%);
-      left: 50%;
+      transform: translateX(-70%);
     }
     .userInput {
       width: 100%;

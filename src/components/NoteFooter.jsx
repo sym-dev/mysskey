@@ -22,11 +22,8 @@ export default function NoteFooter({ data }) {
   const [emojiModalPlace, setEmojiModalPlace] = useState(0);
 
   const actualData = data.renoteId && !data.text ? data.renote : data;
-  const {
-    updatePostModal,
-    updateReplyProp,
-    updateRenoteProp,
-  } = usePostModalContext();
+  const { updatePostModal, updateReplyProp, updateRenoteProp } =
+    usePostModalContext();
   return (
     <footer className="noteFooter">
       <div>
@@ -78,6 +75,7 @@ export default function NoteFooter({ data }) {
         {isEmojiActive && (
           <div ref={emojiRef}>
             <EmojiModal
+              type="reaction"
               fn={setEmoji}
               isActive={isEmojiActive}
               y={emojiModalPlace}

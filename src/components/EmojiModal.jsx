@@ -14,19 +14,23 @@ export default function EmojiModal(props) {
   const { register, watch, handleSubmit, setValue } = useForm();
   const search = watch("searchEmoji");
   const onSubmitReaction = (data) => {
-    let createReactionObject = {
-      type: "api",
-      body: {
-        id: "reaction",
-        endpoint: "notes/reactions/create",
-        data: {
-          i: localStorage.getItem("UserToken"),
-          noteId: props.noteId,
-          reaction: data.reaction ? data.reaction : ":" + data.emoji + ":",
+    if (props.type === "reaction") {
+      const createReactionObject = {
+        type: "api",
+        body: {
+          id: "reaction",
+          endpoint: "notes/reactions/create",
+          data: {
+            i: localStorage.getItem("UserToken"),
+            noteId: props.noteId,
+            reaction: data.reaction ? data.reaction : ":" + data.emoji + ":",
+          },
         },
-      },
-    };
-    socketRef.current.send(JSON.stringify(createReactionObject));
+      };
+      socketRef.current.send(JSON.stringify(createReactionObject));
+    } else if (props.type === "emoji") {
+      props.addEmoji(data.reaction ? data.reaction : ":" + data.emoji + ":");
+    }
     props.fn(false);
     updateOverlay(false);
   };
