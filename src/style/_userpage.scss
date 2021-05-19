@@ -17,6 +17,9 @@
     transform: translateY(-4em);
     border-width: 5px;
     border-style: solid;
+    @media (max-width: 1000px) {
+      transform: translateY(-2em);
+    }
   }
   .user-container {
     .user-profile {
@@ -44,12 +47,21 @@
         margin-bottom: 1em;
       }
       > div {
-        min-width: 40%;
-        max-width: 60%;
+        width: 60%;
       }
       .desc {
         word-break: break-word;
         white-space: break-spaces;
+      }
+      @media (max-width: 1000px) {
+        flex-direction: column;
+        align-items: center;
+        * {
+          text-align: center;
+        }
+        > div {
+          width: 95%;
+        }
       }
     }
     .user-info {
@@ -67,8 +79,9 @@
           justify-content: space-around;
           flex-wrap: wrap;
           dt {
-            width: 25%;
+            width: 30%;
             text-align: center;
+            word-break: break-word;
           }
           dl {
             width: 70%;
@@ -81,14 +94,14 @@
         padding: 0 5%;
         display: flex;
         dt {
-          width: 25%;
+          width: 30%;
           text-align: center;
           svg {
             margin-right: 0.5em;
           }
         }
         dl {
-          width: 75%;
+          width: 70%;
         }
       }
       .count {
