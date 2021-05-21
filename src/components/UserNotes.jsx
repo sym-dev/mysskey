@@ -67,146 +67,148 @@ export default function UserNotes() {
   ]);
   return (
     <>
-      <InView>
-        <ImageModalProvider>
-          <main>
-            {userInfo && userInfo.pinnedNotes.length > 0 && (
-              <div className="pinned-posts">
-                <p>
-                  <IoPin fontSize="1.2em" />
-                  ピン止めされた投稿
-                </p>
-                {userInfo.pinnedNotes.map((data) => (
-                  <div key={data.id} className="note">
-                    <Note
-                      data={data}
-                      depth={0}
-                      type={
-                        data.renoteId && !data.text
-                          ? "renote"
-                          : data.renoteId
-                          ? "quote"
-                          : data.replyId
-                          ? "reply"
-                          : "generall"
-                      }
-                    />
-                    <Reactions data={data} />
-                    <NoteFooter data={data} />
-                  </div>
-                ))}
-              </div>
-            )}
-          </main>
-          <section className="userNotes">
-            <nav className="noteNav">
-              <ul>
-                <li
-                  className={!includeReply ? "active" : ""}
-                  onClick={() => {
-                    if (includeReply) {
-                      updateUserNotes(false);
-                      updateIncludeReply(false);
-                      const userNoteObject = {
-                        type: "api",
-                        body: {
-                          id: "userNotes",
-                          endpoint: "users/notes",
-                          data: {
-                            i: localStorage.getItem("UserToken"),
-                            userId: userInfo.id,
-                            includeReplies: false,
-                            limit: 15,
-                          },
-                        },
-                      };
-                      socketRef.current.send(JSON.stringify(userNoteObject));
-                    }
-                  }}
-                >
-                  投稿
-                </li>
-                <li
-                  className={includeReply ? "active" : ""}
-                  onClick={() => {
-                    if (!includeReply) {
-                      updateUserNotes(false);
-                      updateIncludeReply(true);
-                      const userNoteObject = {
-                        type: "api",
-                        body: {
-                          id: "userNotes",
-                          endpoint: "users/notes",
-                          data: {
-                            i: localStorage.getItem("UserToken"),
-                            userId: userInfo.id,
-                            includeReplies: true,
-                            limit: 15,
-                          },
-                        },
-                      };
-                      socketRef.current.send(JSON.stringify(userNoteObject));
-                    }
-                  }}
-                >
-                  投稿と返信
-                </li>
-              </ul>
-            </nav>
-            {userNotes && (
-              <main>
-                {userNotes.map((data) => (
-                  <div key={data.id} className="note">
-                    <Note
-                      data={data}
-                      depth={0}
-                      type={
-                        data.renoteId && !data.text
-                          ? "renote"
-                          : data.renoteId
-                          ? "quote"
-                          : data.replyId
-                          ? "reply"
-                          : "generall"
-                      }
-                    />
-                    <Reactions data={data} />
-                    <NoteFooter data={data} />
-                  </div>
-                ))}
-                {!isLastUserNote && (
-                  <button
-                    className="motto"
-                    ref={ref}
+      {userInfo && (
+        <InView>
+          <ImageModalProvider>
+            <main>
+              {userInfo.pinnedNotes.length > 0 && (
+                <div className="pinned-posts">
+                  <p>
+                    <IoPin fontSize="1.2em" />
+                    ピン止めされた投稿
+                  </p>
+                  {userInfo.pinnedNotes.map((data) => (
+                    <div key={data.id} className="note">
+                      <Note
+                        data={data}
+                        depth={0}
+                        type={
+                          data.renoteId && !data.text
+                            ? "renote"
+                            : data.renoteId
+                            ? "quote"
+                            : data.replyId
+                            ? "reply"
+                            : "generall"
+                        }
+                      />
+                      <Reactions data={data} />
+                      <NoteFooter data={data} />
+                    </div>
+                  ))}
+                </div>
+              )}
+            </main>
+            <section className="userNotes">
+              <nav className="noteNav">
+                <ul>
+                  <li
+                    className={!includeReply ? "active" : ""}
                     onClick={() => {
-                      socketRef.current.send(
-                        JSON.stringify({
+                      if (includeReply) {
+                        updateUserNotes(false);
+                        updateIncludeReply(false);
+                        const userNoteObject = {
                           type: "api",
                           body: {
-                            id: "moreUserNotes",
+                            id: "userNotes",
                             endpoint: "users/notes",
                             data: {
                               i: localStorage.getItem("UserToken"),
                               userId: userInfo.id,
                               includeReplies: false,
                               limit: 15,
-                              untilId: oldestUserNoteId,
                             },
                           },
-                        })
-                      );
-                      updateMoreUserNote(true);
+                        };
+                        socketRef.current.send(JSON.stringify(userNoteObject));
+                      }
                     }}
                   >
-                    {moreUserNote ? <Loading size="small" /> : "もっと"}
-                  </button>
-                )}
-              </main>
-            )}
-          </section>
-          <ImageModal />
-        </ImageModalProvider>
-      </InView>
+                    投稿
+                  </li>
+                  <li
+                    className={includeReply ? "active" : ""}
+                    onClick={() => {
+                      if (!includeReply) {
+                        updateUserNotes(false);
+                        updateIncludeReply(true);
+                        const userNoteObject = {
+                          type: "api",
+                          body: {
+                            id: "userNotes",
+                            endpoint: "users/notes",
+                            data: {
+                              i: localStorage.getItem("UserToken"),
+                              userId: userInfo.id,
+                              includeReplies: true,
+                              limit: 15,
+                            },
+                          },
+                        };
+                        socketRef.current.send(JSON.stringify(userNoteObject));
+                      }
+                    }}
+                  >
+                    投稿と返信
+                  </li>
+                </ul>
+              </nav>
+              {userNotes && (
+                <main>
+                  {userNotes.map((data) => (
+                    <div key={data.id} className="note">
+                      <Note
+                        data={data}
+                        depth={0}
+                        type={
+                          data.renoteId && !data.text
+                            ? "renote"
+                            : data.renoteId
+                            ? "quote"
+                            : data.replyId
+                            ? "reply"
+                            : "generall"
+                        }
+                      />
+                      <Reactions data={data} />
+                      <NoteFooter data={data} />
+                    </div>
+                  ))}
+                  {!isLastUserNote && (
+                    <button
+                      className="motto"
+                      ref={ref}
+                      onClick={() => {
+                        socketRef.current.send(
+                          JSON.stringify({
+                            type: "api",
+                            body: {
+                              id: "moreUserNotes",
+                              endpoint: "users/notes",
+                              data: {
+                                i: localStorage.getItem("UserToken"),
+                                userId: userInfo.id,
+                                includeReplies: false,
+                                limit: 15,
+                                untilId: oldestUserNoteId,
+                              },
+                            },
+                          })
+                        );
+                        updateMoreUserNote(true);
+                      }}
+                    >
+                      {moreUserNote ? <Loading size="small" /> : "もっと"}
+                    </button>
+                  )}
+                </main>
+              )}
+            </section>
+            <ImageModal />
+          </ImageModalProvider>
+        </InView>
+      )}
     </>
   );
 }

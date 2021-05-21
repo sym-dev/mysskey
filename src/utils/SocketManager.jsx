@@ -22,8 +22,10 @@ export default function SocketManager({ children }) {
     updateUserNotes,
     updateOldestUserNoteId,
     updateMoreUserNote,
-    updateFollowRequests,
     updateLastUserNote,
+    updateFollowRequests,
+    updateFollowers,
+    updateFollowings,
   } = useUserContext();
   const { updateNoteDetails, updateNoteConversation, updateNoteChildren } =
     useNoteDetailsContext();
@@ -212,6 +214,7 @@ export default function SocketManager({ children }) {
           );
           break;
         case "api:userInfo":
+          // console.log(data);
           updateUserinfo(data.res);
           updateHeaderValue(
             <>
@@ -308,6 +311,13 @@ export default function SocketManager({ children }) {
             })
           );
           break;
+        case "api:followers":
+          updateFollowers(data.res);
+          // console.log(data.res);
+          break;
+        case "api:followings":
+          updateFollowings(data.res);
+          break;
         default:
           break;
       }
@@ -326,6 +336,8 @@ export default function SocketManager({ children }) {
     updateUserNotes,
     updateLastUserNote,
     updateFollowRequests,
+    updateFollowers,
+    updateFollowings,
     updateOldestUserNoteId,
     updateMoreUserNote,
     updateNoteDetails,

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { IoCalendar, IoGolf } from "react-icons/io5";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useHeaderContext } from "../utils/HeaderContext";
 import { useSocketContext } from "../utils/SocketContext";
 import { useUserContext } from "../utils/UserContext";
@@ -8,21 +8,25 @@ import ParseMFM from "../utils/ParseMfm";
 import FollowButton from "../components/FollowButton";
 import Loading from "../components/Loading";
 import noimage from "../components/bg.png";
-import UserNotes from "../components/UserNotes";
 
 export default function UserSection() {
   const dontEffect = useRef(false);
   const settings = useRef(JSON.parse(localStorage.getItem("settings")));
-  const { userInfo, updateUserNotes, oldestUserNoteId } = useUserContext();
+  const { userInfo, updateUserinfo, updateUserNotes, oldestUserNoteId } =
+    useUserContext();
   const { socketRef } = useSocketContext();
   const { updateHeaderValue } = useHeaderContext();
   const [includeReply, updateIncludeReply] = useState(false);
-  let location = useLocation();
-  let userName = document.location.pathname.split("@")[1];
+  const location = useLocation();
+  const userName = document.location.pathname.split("@")[1].split("/")[0];
   let userHost = document.location.pathname.split("@")[2];
+  userHost = userHost ? userHost.split("/")[0] : undefined;
   useEffect(() => {
     dontEffect.current = true;
   }, [oldestUserNoteId, userInfo, includeReply, settings]);
+  useEffect(() => {
+    updateUserinfo(false);
+  }, [userName, userHost, updateUserinfo]);
   useEffect(() => {
     updateUserNotes(false);
     updateIncludeReply(false);
@@ -176,28 +180,37 @@ export default function UserSection() {
                 <hr />
                 <div className="count">
                   <div>
-                    <p>{userInfo.notesCount}</p>
-                    <p>ノート</p>
+                    <Link
+                      to={`/user/@${userName}${userHost ? `@${userHost}` : ""}`}
+                    >
+                      <p>{userInfo.notesCount}</p>
+                      <p>ノート</p>
+                    </Link>
                   </div>
                   <div>
-                    <p>{userInfo.followingCount}</p>
-                    <p>フォロー</p>
+                    <Link
+                      to={`/user/@${userName}${
+                        userHost ? `@${userHost}` : ""
+                      }/following`}
+                    >
+                      <p>{userInfo.followingCount}</p>
+                      <p>フォロー</p>
+                    </Link>
                   </div>
                   <div>
-                    <p>{userInfo.followersCount}</p>
-                    <p>フォロワー</p>
+                    <Link
+                      to={`/user/@${userName}${
+                        userHost ? `@${userHost}` : ""
+                      }/followers`}
+                    >
+                      <p>{userInfo.followersCount}</p>
+                      <p>フォロワー</p>
+                    </Link>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        )}
-      </section>
-      <section>
-        {userInfo && (
-          <>
-            <UserNotes />
-          </>
         )}
       </section>
     </>
