@@ -1,8 +1,17 @@
+import { useEffect } from "react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { v4 as uuid } from "uuid";
 
 function NotLogin() {
+  useEffect(() => {
+    if (document.location.href.includes("localhost")) {
+      document.location = document.location.href.replace(
+        "localhost",
+        "127.0.0.1"
+      );
+    }
+  }, []);
   const [miauthState, updateMiauthState] = useState(
     "Mysskeyを利用するには、インスタンスがMiAuthに対応している必要があります。"
   );
