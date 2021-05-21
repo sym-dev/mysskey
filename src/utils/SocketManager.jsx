@@ -8,13 +8,14 @@ import { useHeaderContext } from "../utils/HeaderContext";
 import ParseMFM from "../utils/ParseMfm";
 
 export default function SocketManager({ children }) {
-  const { notes, dispatch, updateOldestNote, updateMoreNote } =
+  const { notes, dispatch, updateOldestNote, updateMoreNote, updateLastNote } =
     useNotesContext();
   const {
     notifications,
     updateNotifications,
     updateOldestNotificationId,
     updateMoreNotification,
+    updateLastNotification,
   } = useNotificationContext();
   const {
     updateUserinfo,
@@ -22,6 +23,7 @@ export default function SocketManager({ children }) {
     updateOldestUserNoteId,
     updateMoreUserNote,
     updateFollowRequests,
+    updateLastUserNote,
   } = useUserContext();
   const { updateNoteDetails, updateNoteConversation, updateNoteChildren } =
     useNoteDetailsContext();
@@ -154,13 +156,23 @@ export default function SocketManager({ children }) {
             );
             // console.log(note);
           });
-          updateOldestNote(data.res[14].id);
+          if (data.res.length - 1 < 14) {
+            updateLastNote(true);
+          }
+          updateOldestNote(
+            data.res[data.res.length - 1 < 14 ? data.res.length - 1 : 14].id
+          );
           break;
         case "api:initNotification":
           data.res.forEach((data) => {
             updateNotifications((n) => [...n, data]);
           });
-          updateOldestNotificationId(data.res[14].id);
+          if (data.res.length - 1 < 14) {
+            updateLastNotification(true);
+          }
+          updateOldestNotificationId(
+            data.res[data.res.length - 1 < 14 ? data.res.length - 1 : 14].id
+          );
           break;
         case "api:moreNote":
           // console.log("clicked motto");
@@ -180,14 +192,24 @@ export default function SocketManager({ children }) {
             );
             // console.log(note);
           });
-          updateOldestNote(data.res[14].id);
+          if (data.res.length - 1 < 14) {
+            updateLastNote(true);
+          }
+          updateOldestNote(
+            data.res[data.res.length - 1 < 14 ? data.res.length - 1 : 14].id
+          );
           break;
         case "api:moreNotification":
           updateMoreNotification(false);
           data.res.forEach((data) => {
             updateNotifications((n) => [...n, data]);
           });
-          updateOldestNotificationId(data.res[14].id);
+          if (data.res.length - 1 < 14) {
+            updateLastNotification(true);
+          }
+          updateOldestNotificationId(
+            data.res[data.res.length - 1 < 14 ? data.res.length - 1 : 14].id
+          );
           break;
         case "api:userInfo":
           updateUserinfo(data.res);
@@ -236,14 +258,25 @@ export default function SocketManager({ children }) {
           break;
         case "api:userNotes":
           updateUserNotes(data.res);
-          updateOldestUserNoteId(data.res[14].id);
+          if (data.res.length - 1 < 14) {
+            updateLastUserNote(true);
+          }
+          updateOldestUserNoteId(
+            data.res[data.res.length - 1 < 14 ? data.res.length - 1 : 14].id
+          );
           break;
         case "api:moreUserNotes":
           updateMoreUserNote(false);
+          // console.log(data.res);
           data.res.forEach((data) => {
             updateUserNotes((n) => [...n, data]);
           });
-          updateOldestUserNoteId(data.res[14].id);
+          if (data.res.length - 1 < 14) {
+            updateLastUserNote(true);
+          }
+          updateOldestUserNoteId(
+            data.res[data.res.length - 1 < 14 ? data.res.length - 1 : 14].id
+          );
           break;
         case "api:followRequests":
           // console.log(data);
@@ -284,11 +317,14 @@ export default function SocketManager({ children }) {
     dispatch,
     updateMoreNote,
     updateOldestNote,
+    updateLastNote,
     updateMoreNotification,
     updateNotifications,
     updateOldestNotificationId,
+    updateLastNotification,
     updateUserinfo,
     updateUserNotes,
+    updateLastUserNote,
     updateFollowRequests,
     updateOldestUserNoteId,
     updateMoreUserNote,

@@ -139,6 +139,7 @@ const NotesProvider = ({ children }) => {
   const [notes, dispatch] = useImmerReducer(reducer, initialState);
   const [oldestNoteId, updateOldestNote] = useState("");
   const [moreNote, updateMoreNote] = useState(false);
+  const [isLastNote, updateLastNote] = useState(false);
   return (
     <NotesContext.Provider
       value={{
@@ -148,6 +149,8 @@ const NotesProvider = ({ children }) => {
         updateOldestNote,
         moreNote,
         updateMoreNote,
+        isLastNote,
+        updateLastNote,
       }}
     >
       {children}

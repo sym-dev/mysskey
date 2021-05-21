@@ -6,6 +6,7 @@ const NotificationProvider = ({ children }) => {
   const [notifications, updateNotifications] = useState([]);
   const [oldestNotificationId, updateOldestNotificationId] = useState("");
   const [moreNotification, updateMoreNotification] = useState(false);
+  const [isLastNotification, updateLastNotification] = useState(false);
   return (
     <NotificationContext.Provider
       value={{
@@ -15,6 +16,8 @@ const NotificationProvider = ({ children }) => {
         updateOldestNotificationId,
         moreNotification,
         updateMoreNotification,
+        isLastNotification,
+        updateLastNotification,
       }}
     >
       {children}

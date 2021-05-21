@@ -14,7 +14,8 @@ export default function TimeLine() {
   });
   const dontEffect = useRef(false);
   const settings = useRef(JSON.parse(localStorage.getItem("settings")));
-  const { notes, oldestNoteId, moreNote, updateMoreNote } = useNotesContext();
+  const { notes, oldestNoteId, moreNote, updateMoreNote, isLastNote } =
+    useNotesContext();
   const { socketRef } = useSocketContext();
   useEffect(() => {
     dontEffect.current = true;
@@ -76,29 +77,31 @@ export default function TimeLine() {
                   <NoteFooter data={data} />
                 </div>
               ))}
-              <button
-                ref={ref}
-                className="motto"
-                onClick={() => {
-                  updateMoreNote(true);
-                  socketRef.current.send(
-                    JSON.stringify({
-                      type: "api",
-                      body: {
-                        id: "moreNote",
-                        endpoint: "notes/timeline",
-                        data: {
-                          i: localStorage.getItem("UserToken"),
-                          limit: 15,
-                          untilId: oldestNoteId,
+              {!isLastNote && (
+                <button
+                  ref={ref}
+                  className="motto"
+                  onClick={() => {
+                    updateMoreNote(true);
+                    socketRef.current.send(
+                      JSON.stringify({
+                        type: "api",
+                        body: {
+                          id: "moreNote",
+                          endpoint: "notes/timeline",
+                          data: {
+                            i: localStorage.getItem("UserToken"),
+                            limit: 15,
+                            untilId: oldestNoteId,
+                          },
                         },
-                      },
-                    })
-                  );
-                }}
-              >
-                {moreNote ? <Loading size="small" /> : "もっと"}
-              </button>
+                      })
+                    );
+                  }}
+                >
+                  {moreNote ? <Loading size="small" /> : "もっと"}
+                </button>
+              )}
             </>
           )}
         </main>

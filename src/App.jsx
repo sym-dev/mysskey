@@ -25,7 +25,8 @@ import PostModal from "./components/PostModal";
 import ImageModal from "./components/ImageModal";
 import Home from "./pages/Home";
 import Notes from "./pages/Notes";
-import User from "./pages/User";
+// import User from "./pages/User";
+import UserPage from "./pages/UserPage";
 import Notification from "./pages/Notification";
 import FollowRequests from "./pages/FollowRequests";
 import Settings from "./pages/Settings";
@@ -57,7 +58,8 @@ export default function App() {
                       </Route>
                       <Route path="/user">
                         <ScrollToTop />
-                        <User />
+                        {/* <User /> */}
+                        <UserPage />
                       </Route>
                       <Route path="/notification">
                         <ScrollToTop />

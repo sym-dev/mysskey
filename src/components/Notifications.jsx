@@ -22,6 +22,7 @@ export default function Notifications() {
     oldestNotificationId,
     moreNotification,
     updateMoreNotification,
+    isLastNotification,
   } = useNotificationContext();
   const { socketRef } = useSocketContext();
   return (
@@ -252,28 +253,30 @@ export default function Notifications() {
                 </React.Fragment>
               );
             })}
-          <button
-            className="motto"
-            onClick={() => {
-              socketRef.current.send(
-                JSON.stringify({
-                  type: "api",
-                  body: {
-                    id: "moreNotification",
-                    endpoint: "i/notifications",
-                    data: {
-                      i: localStorage.getItem("UserToken"),
-                      limit: 15,
-                      untilId: oldestNotificationId,
+          {!isLastNotification && (
+            <button
+              className="motto"
+              onClick={() => {
+                socketRef.current.send(
+                  JSON.stringify({
+                    type: "api",
+                    body: {
+                      id: "moreNotification",
+                      endpoint: "i/notifications",
+                      data: {
+                        i: localStorage.getItem("UserToken"),
+                        limit: 15,
+                        untilId: oldestNotificationId,
+                      },
                     },
-                  },
-                })
-              );
-              updateMoreNotification(true);
-            }}
-          >
-            {moreNotification ? <Loading size="small" /> : "もっと"}
-          </button>
+                  })
+                );
+                updateMoreNotification(true);
+              }}
+            >
+              {moreNotification ? <Loading size="small" /> : "もっと"}
+            </button>
+          )}
         </div>
       )}
     </>
