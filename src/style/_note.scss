@@ -159,6 +159,12 @@
       audio {
         width: 100%;
       }
+      video {
+        max-height: 20em;
+        width: 100%;
+        background-color: #00000060;
+        border-radius: 15px;
+      }
     }
 
     .fileContainer[num="1"] {
@@ -174,10 +180,12 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       grid-template-rows: 1fr 1fr;
-      img {
+      img,
+      video {
         max-height: 10em;
       }
-      .imageBlock:first-child {
+      .imageBlock:first-child,
+      video:first-child {
         grid-row: 1/3;
         max-height: calc(20em + 5px);
         img {
@@ -190,7 +198,8 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       grid-template-rows: 1fr 1fr;
-      img {
+      img,
+      video {
         max-height: 10em;
       }
     }
