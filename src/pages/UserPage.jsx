@@ -33,7 +33,7 @@ export default function UserSection() {
   useEffect(() => {
     updateLastUserNote(false);
     updateLastFols(false);
-  }, [location]);
+  }, [location, updateLastFols, updateLastUserNote]);
   useEffect(() => {
     updateUserinfo(false);
     updateHeaderValue(<>User</>);
