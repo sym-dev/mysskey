@@ -4,6 +4,11 @@
   background-color: #ffffff0f;
   border-radius: 5px;
   margin-bottom: 1em;
+  > .followButton {
+    position: absolute;
+    right: 1em;
+    top: 1em;
+  }
   .banner {
     height: 15em;
     width: 100%;
@@ -151,36 +156,63 @@
 }
 
 .userRelation {
-  > div {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  > .relationContainer {
+    margin: 0.5em;
+    position: relative;
     display: flex;
     flex-wrap: wrap;
-    margin: 0;
-    width: min(20em, calc(100vw - 5em));
+    width: calc(50% - 1em);
+    @media (max-width: 1000px) {
+      width: calc(100% - 2em);
+    }
     border-radius: 5px;
+    background-color: #ffffff0f;
+    overflow: hidden;
+    .followButton {
+      position: absolute;
+      top: 0.5em;
+      right: 0.5em;
+    }
     .banner {
       width: 100%;
-      height: 3.5em;
+      height: 5em;
       object-fit: cover;
     }
-    .relationContainer {
+    .userContainer {
       width: 100%;
       display: flex;
       border-bottom: 5px;
-      > img {
-        width: 2.5em;
-        height: 2.5em;
-        border-radius: 100%;
-        border-width: 2px;
-        border-style: solid;
+      padding: 0.5em;
+      > .img {
+        width: 3.5em;
+        height: 3.5em;
+        margin-right: 0.5em;
+        img {
+          width: 100%;
+          height: 100%;
+          margin-right: 0.5em;
+          border-width: 2.5px;
+          border-style: solid;
+          border-radius: 100%;
+          object-fit: cover;
+        }
       }
-      > div {
-        width: 100%;
+      > .userInfo {
+        width: calc(100% - 5em);
         p,
         a {
+          display: block;
           width: 100%;
           text-overflow: ellipsis;
           white-space: nowrap;
           overflow: hidden;
+          .customEmoji {
+            height: 1.5em;
+          }
         }
       }
     }

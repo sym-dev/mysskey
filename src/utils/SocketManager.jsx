@@ -23,9 +23,12 @@ export default function SocketManager({ children }) {
     updateOldestUserNoteId,
     updateMoreUserNote,
     updateLastUserNote,
-    updateFollowRequests,
     updateFollowers,
     updateFollowings,
+    updateOldefsFols,
+    updateMoreFols,
+    updateLastFols,
+    updateFollowRequests,
   } = useUserContext();
   const { updateNoteDetails, updateNoteConversation, updateNoteChildren } =
     useNoteDetailsContext();
@@ -313,10 +316,46 @@ export default function SocketManager({ children }) {
           break;
         case "api:followers":
           updateFollowers(data.res);
+          if (data.res.length - 1 < 13) {
+            updateLastFols(true);
+          }
+          updateOldefsFols(
+            data.res[data.res.length - 1 < 13 ? data.res.length - 1 : 13].id
+          );
           // console.log(data.res);
           break;
         case "api:followings":
           updateFollowings(data.res);
+          if (data.res.length - 1 < 13) {
+            updateLastFols(true);
+          }
+          updateOldefsFols(
+            data.res[data.res.length - 1 < 13 ? data.res.length - 1 : 13].id
+          );
+          break;
+        case "api:moreFollowers":
+          updateMoreFols(false);
+          data.res.forEach((data) => {
+            updateFollowers((n) => [...n, data]);
+          });
+          if (data.res.length - 1 < 13) {
+            updateLastFols(true);
+          }
+          updateOldefsFols(
+            data.res[data.res.length - 1 < 13 ? data.res.length - 1 : 13].id
+          );
+          break;
+        case "api:moreFollowings":
+          updateMoreFols(false);
+          data.res.forEach((data) => {
+            updateFollowings((n) => [...n, data]);
+          });
+          if (data.res.length - 1 < 13) {
+            updateLastFols(true);
+          }
+          updateOldefsFols(
+            data.res[data.res.length - 1 < 13 ? data.res.length - 1 : 13].id
+          );
           break;
         default:
           break;
@@ -338,6 +377,9 @@ export default function SocketManager({ children }) {
     updateFollowRequests,
     updateFollowers,
     updateFollowings,
+    updateMoreFols,
+    updateLastFols,
+    updateOldefsFols,
     updateOldestUserNoteId,
     updateMoreUserNote,
     updateNoteDetails,

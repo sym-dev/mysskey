@@ -10,6 +10,9 @@ const UserPovider = ({ children }) => {
   const [isLastUserNote, updateLastUserNote] = useState(false);
   const [followers, updateFollowers] = useState(false);
   const [followings, updateFollowings] = useState(false);
+  const [oldestFols, updateOldefsFols] = useState("");
+  const [moreFols, updateMoreFols] = useState(false);
+  const [isLastFols, updateLastFols] = useState(false);
   const [followRequests, updateFollowRequests] = useState(false);
   return (
     <UserContext.Provider
@@ -22,14 +25,20 @@ const UserPovider = ({ children }) => {
         updateOldestUserNoteId,
         moreUserNote,
         updateMoreUserNote,
-        followRequests,
-        updateFollowRequests,
         isLastUserNote,
         updateLastUserNote,
         followers,
         updateFollowers,
         followings,
         updateFollowings,
+        oldestFols,
+        updateOldefsFols,
+        moreFols,
+        updateMoreFols,
+        isLastFols,
+        updateLastFols,
+        followRequests,
+        updateFollowRequests,
       }}
     >
       {children}

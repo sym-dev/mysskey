@@ -12,8 +12,13 @@ import noimage from "../components/bg.png";
 export default function UserSection() {
   const dontEffect = useRef(false);
   const settings = useRef(JSON.parse(localStorage.getItem("settings")));
-  const { userInfo, updateUserinfo, updateUserNotes, oldestUserNoteId } =
-    useUserContext();
+  const {
+    userInfo,
+    updateUserinfo,
+    updateUserNotes,
+    oldestUserNoteId,
+    updateLastUserNote,
+  } = useUserContext();
   const { socketRef } = useSocketContext();
   const { updateHeaderValue } = useHeaderContext();
   const [includeReply, updateIncludeReply] = useState(false);
@@ -26,11 +31,18 @@ export default function UserSection() {
   }, [oldestUserNoteId, userInfo, includeReply, settings]);
   useEffect(() => {
     updateUserinfo(false);
-  }, [userName, userHost, updateUserinfo]);
+    updateLastUserNote(false);
+    updateHeaderValue(<>User</>);
+  }, [
+    userName,
+    userHost,
+    updateUserinfo,
+    updateLastUserNote,
+    updateHeaderValue,
+  ]);
   useEffect(() => {
     updateUserNotes(false);
     updateIncludeReply(false);
-    updateHeaderValue(<>User</>);
     const userInfoObject = {
       type: "api",
       body: {
@@ -49,14 +61,7 @@ export default function UserSection() {
         clearInterval(socketState);
       }
     }, 100);
-  }, [
-    socketRef,
-    userName,
-    userHost,
-    location,
-    updateHeaderValue,
-    updateUserNotes,
-  ]);
+  }, [socketRef, userName, userHost, location, updateUserNotes]);
   return (
     <>
       <section>
@@ -65,7 +70,7 @@ export default function UserSection() {
         ) : (
           <div className="userpage">
             {userInfo.username !== localStorage.getItem("UserName") && (
-              <FollowButton type="default" />
+              <FollowButton type="default" userInfo={userInfo} />
             )}
             <img
               className="banner"

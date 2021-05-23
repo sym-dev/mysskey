@@ -1,10 +1,9 @@
 import { IoAdd, IoRemove, IoSend } from "react-icons/io5";
 import { useSocketContext } from "../utils/SocketContext";
-import { useUserContext } from "../utils/UserContext";
 
 export default function FollowButton(props) {
   const { socketRef } = useSocketContext();
-  const { userInfo } = useUserContext();
+  const userInfo = props.userInfo;
   const type = props.type ? props.type : "default";
   return (
     <div className={`followButton ${type}`}>

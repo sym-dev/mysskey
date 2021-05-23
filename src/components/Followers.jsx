@@ -4,10 +4,13 @@ import { useSocketContext } from "../utils/SocketContext";
 import { useUserContext } from "../utils/UserContext";
 import FollowButton from "./FollowButton";
 import noimage from "./bg.png";
+import Loading from "./Loading";
+import ParseMFM from "../utils/ParseMfm";
 
 export default function Followers() {
   const { socketRef } = useSocketContext();
-  const { followers } = useUserContext();
+  const { followers, oldestFols, moreFols, updateMoreFols, isLastFols } =
+    useUserContext();
   const userName = document.location.pathname.split("@")[1].split("/")[0];
   let userHost = document.location.pathname.split("@")[2];
   userHost = userHost ? userHost.split("/")[0] : undefined;
@@ -21,6 +24,7 @@ export default function Followers() {
           i: localStorage.getItem("UserToken"),
           username: userName,
           host: userHost,
+          limit: 14,
         },
       },
     };
@@ -33,10 +37,13 @@ export default function Followers() {
   }, [socketRef, userName, userHost]);
   return (
     <>
+      <header className="middle-header">
+        <h3>フォロワー</h3>
+      </header>
       {followers && (
         <section className="userRelation">
           {followers.map((user) => (
-            <div key={user.follower.id}>
+            <div key={user.follower.id} className="relationContainer">
               <img
                 className="banner"
                 src={
@@ -45,31 +52,40 @@ export default function Followers() {
                 alt="user banner"
                 onError={(e) => (e.target.src = noimage)}
               />
-              <div className="relationContainer">
-                <img
-                  className="icon"
-                  src={user.follower.avatarUrl}
-                  alt="user icon"
-                  style={{
-                    borderColor:
-                      user.follower.onlineStatus === "online"
-                        ? "#87cefae0"
-                        : user.follower.onlineStatus === "active"
-                        ? "#ffa500e0"
-                        : user.follower.onlineStatus === "offline"
-                        ? "#ff6347e0"
-                        : "#04002cbb",
-                  }}
-                />
-                <div>
+              <FollowButton type="mini" userInfo={user.follower} />
+              <div className="userContainer">
+                <div className="img">
+                  <img
+                    className="icon"
+                    src={user.follower.avatarUrl}
+                    alt="user icon"
+                    style={{
+                      borderColor:
+                        user.follower.onlineStatus === "online"
+                          ? "#87cefae0"
+                          : user.follower.onlineStatus === "active"
+                          ? "#ffa500e0"
+                          : user.follower.onlineStatus === "offline"
+                          ? "#ff6347e0"
+                          : "#04002cbb",
+                    }}
+                  />
+                </div>
+                <div className="userInfo">
                   <Link
                     to={`/user/@${user.follower.username}${
                       user.follower.host ? `@${user.follower.host}` : ""
                     }`}
                   >
-                    {user.follower.name
-                      ? user.follower.name
-                      : user.follower.username}
+                    {user.follower.name ? (
+                      <ParseMFM
+                        text={user.follower.name}
+                        emojis={user.follower.emojis}
+                        type="plain"
+                      />
+                    ) : (
+                      user.follower.username
+                    )}
                   </Link>
                   <p>{`@${user.follower.username}${
                     user.follower.host ? `@${user.follower.host}` : ""
@@ -78,6 +94,32 @@ export default function Followers() {
               </div>
             </div>
           ))}
+          {!isLastFols && (
+            <button
+              className="motto"
+              onClick={() => {
+                socketRef.current.send(
+                  JSON.stringify({
+                    type: "api",
+                    body: {
+                      id: "moreFollowers",
+                      endpoint: "users/followers",
+                      data: {
+                        i: localStorage.getItem("UserToken"),
+                        username: userName,
+                        host: userHost,
+                        limit: 14,
+                        untilId: oldestFols,
+                      },
+                    },
+                  })
+                );
+                updateMoreFols(true);
+              }}
+            >
+              {moreFols ? <Loading size="small" /> : "もっと"}
+            </button>
+          )}
         </section>
       )}
     </>
