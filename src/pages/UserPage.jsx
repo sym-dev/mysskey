@@ -18,6 +18,7 @@ export default function UserSection() {
     updateUserNotes,
     oldestUserNoteId,
     updateLastUserNote,
+    updateLastFols,
   } = useUserContext();
   const { socketRef } = useSocketContext();
   const { updateHeaderValue } = useHeaderContext();
@@ -30,14 +31,18 @@ export default function UserSection() {
     dontEffect.current = true;
   }, [oldestUserNoteId, userInfo, includeReply, settings]);
   useEffect(() => {
-    updateUserinfo(false);
     updateLastUserNote(false);
+    updateLastFols(false);
+  }, [location]);
+  useEffect(() => {
+    updateUserinfo(false);
     updateHeaderValue(<>User</>);
   }, [
     userName,
     userHost,
     updateUserinfo,
     updateLastUserNote,
+    updateLastFols,
     updateHeaderValue,
   ]);
   useEffect(() => {
