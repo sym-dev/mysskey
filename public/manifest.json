@@ -1,6 +1,6 @@
 {
-  "short_name": "mysskey",
-  "name": "simple misskey client",
+  "short_name": "Mysskey",
+  "name": "Mysskey - simple misskey client",
   "icons": [
     {
       "src": "icon.png",

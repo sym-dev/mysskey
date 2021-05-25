@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { IoCalendar, IoGolf } from "react-icons/io5";
+import { IoCalendar, IoGolf, IoPin } from "react-icons/io5";
 import { Link, useLocation } from "react-router-dom";
 import { useHeaderContext } from "../utils/HeaderContext";
 import { useSocketContext } from "../utils/SocketContext";
@@ -146,6 +146,18 @@ export default function UserSection() {
                 </div>
               </div>
               <div className="user-info">
+                {userInfo.location && (
+                  <>
+                    <hr />
+                    <div className="dates">
+                      <dt>
+                        <IoPin />
+                        場所
+                      </dt>
+                      <dl>{userInfo.location}</dl>
+                    </div>
+                  </>
+                )}
                 {userInfo.birthday && (
                   <>
                     <hr />
