@@ -51,26 +51,28 @@ export default function Note(props) {
               <img src={data.user.avatarUrl} alt="" />
             </div>
             <div className="noteBody">
-              <p className="noteHeader">
-                <Link
-                  to={
-                    !data.user.host
-                      ? "/user/@" + data.user.username
-                      : "/user/@" + data.user.username + "@" + data.user.host
-                  }
-                >
-                  <IoRepeat fontSize="1.3em" className="renoteIcon renote" />
-                  {data.user.name ? (
-                    <ParseMFM
-                      text={data.user.name}
-                      emojis={data.user.emojis}
-                      type="plain"
-                    />
-                  ) : (
-                    data.user.username
-                  )}
-                  <span className="renote"> Renoted</span>
-                </Link>
+              <p className="noteHeader renoteHeader">
+                <span className="userInfo">
+                  <Link
+                    to={
+                      !data.user.host
+                        ? "/user/@" + data.user.username
+                        : "/user/@" + data.user.username + "@" + data.user.host
+                    }
+                  >
+                    <IoRepeat fontSize="1.3em" className="renoteIcon renote" />
+                    {data.user.name ? (
+                      <ParseMFM
+                        text={data.user.name}
+                        emojis={data.user.emojis}
+                        type="plain"
+                      />
+                    ) : (
+                      data.user.username
+                    )}
+                    <span className="renote"> Renoted</span>
+                  </Link>
+                </span>
                 <span className="noteInfo">
                   <Link to={"/notes/" + data.id} className="createdAt">
                     {getRelativeTime(data.createdAt)}

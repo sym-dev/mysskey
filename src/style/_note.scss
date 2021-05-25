@@ -47,7 +47,10 @@
       align-items: center;
       > .userInfo {
         display: flex;
-        max-width: 70%;
+        max-width: 80%;
+        @media (max-width: 1000px) {
+          max-width: 60%;
+        }
         > a,
         span {
           text-overflow: ellipsis;
@@ -56,7 +59,10 @@
         }
       }
       .noteInfo {
-        max-width: 30%;
+        max-width: 20%;
+        @media (max-width: 1000px) {
+          max-width: 40%;
+        }
         display: flex;
         align-items: center;
         gap: 2px;
@@ -64,6 +70,22 @@
       .customEmoji {
         height: 1.2em;
       }
+      &.renoteHeader {
+        .userInfo {
+          @media (max-width: 1000px) {
+            max-width: 70%;
+          }
+        }
+        .noteInfo {
+          @media (max-width: 1000px) {
+            max-width: 30%;
+          }
+        }
+      }
+    }
+
+    .createdAt {
+      color: darkgray;
     }
 
     .instance {
@@ -89,10 +111,6 @@
       @media (prefers-reduced-motion: reduce) {
         animation: none;
       }
-    }
-
-    .createdAt {
-      color: darkgray;
     }
 
     .noteText {
