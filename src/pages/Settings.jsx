@@ -43,6 +43,50 @@ export default function Settings() {
           disabled={isSubmitted}
         />
       </form>
+      <hr />
+      <div className="about">
+        <h3>Mysskeyについて</h3>
+        <p>Mysskeyはオープンソースで提供されています。</p>
+        <p>
+          <a
+            href="https://github.com/sym-dev/mysskey"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            リポジトリ(GitHub)
+          </a>{" "}
+          - by{" "}
+          <a
+            href="https://github.com/sym-dev"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Sym
+          </a>
+        </p>
+        <p>
+          Mysskeyは
+          <a
+            href="https://github.com/misskey-dev/misskey"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Misskey
+          </a>
+          のAPIを利用しています
+        </p>
+        <p>
+          現在ログインしているインスタンスは
+          <a
+            href={"https://" + localStorage.getItem("instanceURL")}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {localStorage.getItem("instanceURL")}
+          </a>
+          です
+        </p>
+      </div>
     </div>
   );
 }
