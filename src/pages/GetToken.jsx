@@ -39,7 +39,14 @@ function fetchData(tokenUrl, history, updateLogin) {
         localStorage.setItem("UserToken", text.token);
         localStorage.setItem("UserId", text.user.id);
         localStorage.setItem("UserName", text.user.username);
-        Promise.all([fetchMeta(), fetchUser()]).then(() => {
+        localStorage.setItem(
+          "TimeLine",
+          JSON.stringify({
+            stream: "homeTimeline",
+            api: "timeline",
+          })
+        );
+        Promise.allSettled([fetchMeta(), fetchUser()]).then(() => {
           updateLogin(true);
           history.push("/");
         });

@@ -36,11 +36,12 @@ export default function SocketManager({ children }) {
   const { updateHeaderValue } = useHeaderContext();
   useEffect(() => {
     socketRef.current.onopen = (e) => {
+      const { stream, api } = JSON.parse(localStorage.getItem("TimeLine"));
       const initNoteObject = {
         type: "api",
         body: {
           id: "initNote",
-          endpoint: "notes/timeline",
+          endpoint: "notes/" + api,
           data: {
             i: localStorage.getItem("UserToken"),
             limit: 15,
@@ -58,11 +59,11 @@ export default function SocketManager({ children }) {
           },
         },
       };
-      const homeTimelineObject = {
+      const timeLineObject = {
         type: "connect",
         body: {
-          channel: "homeTimeline",
-          id: "home",
+          channel: stream,
+          id: "timeline",
         },
       };
       const notificationObject = {
@@ -78,7 +79,7 @@ export default function SocketManager({ children }) {
       if (notifications.length <= 0) {
         socketRef.current.send(JSON.stringify(initNotificationObject));
       }
-      socketRef.current.send(JSON.stringify(homeTimelineObject));
+      socketRef.current.send(JSON.stringify(timeLineObject));
       socketRef.current.send(JSON.stringify(notificationObject));
     };
   }, [notes, notifications, socketRef]);
@@ -91,7 +92,7 @@ export default function SocketManager({ children }) {
       switch (res.type) {
         case "channel":
           switch (data.id) {
-            case "home":
+            case "timeline":
               // console.log("receive new note");
               dispatch({
                 type: "addUpper",

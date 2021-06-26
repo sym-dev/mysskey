@@ -9,7 +9,7 @@ Mysskey(まいすきー)は分散型SNS[Misskey](https://github.com/misskey-dev/
   <details>
     <summary>Available</summary>
     <ul>
-      <li> タイムライン(ホーム)の閲覧</li>
+      <li> タイムライン(ホーム、ローカル、ソーシャル、グローバル)の閲覧</li>
       <li>  画像のNSFW(Not Safe For Work, 閲覧注意)の対応</li>
       <li>投稿詳細の閲覧(リプツリー、被引用など)</li>
       <li>ユーザーページの閲覧</li>
@@ -35,7 +35,6 @@ Mysskey(まいすきー)は分散型SNS[Misskey](https://github.com/misskey-dev/
   <details>
     <summary>Unavailable</summary>
     <ul>
-      <li>ローカル、ソーシャル、グローバルのTLの閲覧</li>
       <li>あなた宛て、DM、チャンネル、アンテナ、リストなどのTLの閲覧</li>
       <ul><li>投稿時のDM公開範囲設定</li></ul>
       <li>チャット</li>

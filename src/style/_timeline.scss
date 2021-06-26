@@ -1,0 +1,25 @@
+.middle-header {
+  margin: 0.5em 0;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  background-color: #ffffff0a;
+  > button {
+    padding: 0.3em;
+    margin: 0.3em 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    h3 {
+      margin: 0;
+      margin-left: 0.2em;
+      @media (max-width: 1000px) {
+        display: none;
+      }
+    }
+    &.active {
+      background: linear-gradient(to right, #2a2a79, #25629b);
+    }
+  }
+}

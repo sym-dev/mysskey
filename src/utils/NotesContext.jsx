@@ -130,6 +130,8 @@ function reducer(notes, action) {
       return notes.filter((note) => note.id !== action.payload.id);
     case "clear":
       return notes.slice(0, 10);
+    case "clearAll":
+      return [];
     default:
       return notes;
   }
