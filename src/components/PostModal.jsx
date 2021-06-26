@@ -28,7 +28,7 @@ export default function PostModal() {
     renoteProp,
     updateRenoteProp,
   } = usePostModalContext();
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, reset } = useForm();
   const textareaElement = useRef(null);
   const emojiRef = useRef(null);
   const cwElement = useRef(null);
@@ -56,6 +56,7 @@ export default function PostModal() {
       },
     };
     socketRef.current.send(JSON.stringify(createNoteObject));
+    reset();
     updateReplyProp("");
     updateRenoteProp("");
     updateCW(false);
