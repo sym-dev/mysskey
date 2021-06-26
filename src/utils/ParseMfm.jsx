@@ -7,9 +7,8 @@ export default function ParseMFM(props) {
   const text = props.text;
   const emojis = props.emojis;
   const type = props.type;
+  console.log(mfm.parse("?[⭐test](https://example.com/)"));
   let v = [];
-  // let url = "";
-  // const [url, updateUrl] = useState("");
   if (text) {
     switch (type) {
       case "full":
@@ -17,10 +16,6 @@ export default function ParseMFM(props) {
           v.push(
             <React.Fragment key={i}>{judge(data, emojis)}</React.Fragment>
           );
-          if (data.type === "url") {
-            // url = data.props.url;
-            // updateUrl(data.props.url);
-          }
         });
         break;
       case "plain":
@@ -36,12 +31,7 @@ export default function ParseMFM(props) {
   } else {
     v = [text];
   }
-  return (
-    <>
-      {v}
-      {/* {url && <div>{url}</div>} */}
-    </>
-  );
+  return <>{v}</>;
 }
 
 function judge(data, emojis) {
@@ -55,9 +45,12 @@ function judge(data, emojis) {
       });
       return <span className={data.props.name}>{c}</span>;
     case "link":
+      data.children.forEach((child, i) => {
+        c.push(<React.Fragment key={i}>{judge(child, emojis)}</React.Fragment>);
+      });
       return (
         <a href={data.props.url} target="_blank" rel="noreferrer">
-          {data.children[0].props.text}
+          {c}
         </a>
       );
     case "url":
