@@ -7,7 +7,6 @@ export default function ParseMFM(props) {
   const text = props.text;
   const emojis = props.emojis;
   const type = props.type;
-  console.log(mfm.parse("?[⭐test](https://example.com/)"));
   let v = [];
   if (text) {
     switch (type) {
