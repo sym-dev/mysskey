@@ -14,6 +14,7 @@ export default function File({ data }) {
             {NSFWstate && <p>閲覧注意(クリックで表示)</p>}
             {!NSFWstate && (
               <button
+                aria-label="hide image"
                 onClick={() => {
                   updateNSFWstate(true);
                 }}
@@ -23,7 +24,7 @@ export default function File({ data }) {
             )}
             <img
               src={data.thumbnailUrl}
-              alt={data.comment}
+              alt={data.comment ? data.comment : data.name}
               decoding="async"
               className={NSFWstate ? "NSFW" : ""}
               onClick={() => {
@@ -44,11 +45,22 @@ export default function File({ data }) {
     );
   } else if (/^audio/.exec(data.type)) {
     file = (
-      <audio src={data.url} title={data.name} preload="metadata" controls />
+      <audio
+        alt={data.comment ? data.comment : data.name}
+        src={data.url}
+        title={data.name}
+        preload="metadata"
+        controls
+      />
     );
   } else if (/^video/.exec(data.type)) {
     file = (
-      <video title={data.name} controls preload="metadata">
+      <video
+        alt={data.comment ? data.comment : data.name}
+        title={data.name}
+        controls
+        preload="metadata"
+      >
         <source src={data.url} type={data.type} />
         埋め込み動画に対応していないようです
       </video>

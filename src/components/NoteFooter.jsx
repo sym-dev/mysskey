@@ -28,6 +28,7 @@ export default function NoteFooter({ data }) {
     <footer className="noteFooter">
       <div>
         <button
+          aria-label="reply"
           onClick={() => {
             updatePostModal(true);
             updateReplyProp(data);
@@ -40,13 +41,14 @@ export default function NoteFooter({ data }) {
 
       {data.visibility === "specified" || data.visibility === "followers" ? (
         <div>
-          <button disabled>
+          <button disabled aria-label="not allowed renote">
             <IoBan fontSize="1.2em" />
           </button>
         </div>
       ) : (
         <div>
           <button
+            aria-label="renote"
             onClick={() => {
               updatePostModal(true);
               updateRenoteProp(data);
@@ -60,6 +62,7 @@ export default function NoteFooter({ data }) {
 
       <div className="emojiContainer">
         <button
+          aria-label="reactopm"
           onClick={(e) => {
             setEmojiModalPlace(
               e.view.outerHeight - e.clientY > 400
@@ -88,6 +91,7 @@ export default function NoteFooter({ data }) {
       <div>
         <div className="menuContainer">
           <button
+            aria-label="menu"
             onClick={() => {
               setEtc(!isEtcActive);
               updateOverlay(true);

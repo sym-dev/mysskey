@@ -132,6 +132,7 @@ export default function TimeLine() {
                 <button
                   ref={ref}
                   className="motto"
+                  aria-label="motto"
                   onClick={() => {
                     updateMoreNote(true);
                     socketRef.current.send(

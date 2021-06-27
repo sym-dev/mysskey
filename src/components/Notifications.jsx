@@ -256,6 +256,7 @@ export default function Notifications() {
           {!isLastNotification && (
             <button
               className="motto"
+              aria-label="motto"
               onClick={() => {
                 socketRef.current.send(
                   JSON.stringify({

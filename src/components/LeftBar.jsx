@@ -99,6 +99,7 @@ export default function LeftBar() {
         </div>
         <button
           className="post-button"
+          aria-label="post button"
           onClick={() => {
             updatePostModal(true);
           }}
