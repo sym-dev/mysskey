@@ -2,8 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { parse } from "twemoji-parser";
 import * as mfm from "mfm-js";
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { nord } from "react-syntax-highlighter/dist/esm/styles/prism";
+import { PrismLight as SyntaxHighlighter } from "react-syntax-highlighter";
+import nord from "react-syntax-highlighter/dist/esm/styles/prism/nord";
 
 export default function ParseMFM(props) {
   const text = props.text;
@@ -145,11 +145,6 @@ function judge(data, emojis) {
         </div>
       );
     case "blockCode":
-      // return (
-      //   <pre lang={data.props.lang} className="codeBlock">
-      //     {data.props.code}
-      //   </pre>
-      // );
       return (
         <SyntaxHighlighter
           language={data.props.lang}
