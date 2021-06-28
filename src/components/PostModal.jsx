@@ -56,11 +56,11 @@ export default function PostModal() {
       },
     };
     socketRef.current.send(JSON.stringify(createNoteObject));
-    reset();
-    updateReplyProp("");
-    updateRenoteProp("");
+    updateReplyProp(false);
+    updateRenoteProp(false);
     updateCW(false);
     updatePostModal(false);
+    reset();
   };
   useEffect(() => {
     if (addedEmoji) {

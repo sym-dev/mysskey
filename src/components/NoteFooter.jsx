@@ -30,8 +30,8 @@ export default function NoteFooter({ data }) {
         <button
           aria-label="reply"
           onClick={() => {
-            updatePostModal(true);
             updateReplyProp(data);
+            updatePostModal(true);
           }}
         >
           <IoArrowUndo fontSize="1.2em" />
@@ -50,8 +50,8 @@ export default function NoteFooter({ data }) {
           <button
             aria-label="renote"
             onClick={() => {
-              updatePostModal(true);
               updateRenoteProp(data);
+              updatePostModal(true);
             }}
           >
             <IoRepeat fontSize="1.2em" />
