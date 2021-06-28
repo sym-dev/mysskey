@@ -165,9 +165,11 @@ export default function SocketManager({ children }) {
           if (data.res.length - 1 < 14) {
             updateLastNote(true);
           }
-          updateOldestNote(
-            data.res[data.res.length - 1 < 14 ? data.res.length - 1 : 14].id
-          );
+          if (data.res.length > 0) {
+            updateOldestNote(
+              data.res[data.res.length - 1 < 14 ? data.res.length - 1 : 14].id
+            );
+          }
           break;
         case "api:initNotification":
           data.res.forEach((data) => {
@@ -176,9 +178,11 @@ export default function SocketManager({ children }) {
           if (data.res.length - 1 < 14) {
             updateLastNotification(true);
           }
-          updateOldestNotificationId(
-            data.res[data.res.length - 1 < 14 ? data.res.length - 1 : 14].id
-          );
+          if (data.res.length > 0) {
+            updateOldestNotificationId(
+              data.res[data.res.length - 1 < 14 ? data.res.length - 1 : 14].id
+            );
+          }
           break;
         case "api:moreNote":
           // console.log("clicked motto");
